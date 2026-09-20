@@ -1,28 +1,26 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { BentoGrid } from "../components/BentoGrid";
+import { PortfolioGrid } from "../components/PortfolioGrid";
 import { Analytics } from "../components/Analytics";
+import type { WorkingOnRepo } from "../components/WorkingOnCard";
+import excludedReposJson from "../data/excluded-repos.json";
+
+const excludedRepos = excludedReposJson as string[];
 import "../styles/global.css";
 
 // Fetch GitHub data at build time
 let avatarUrl = "https://avatars.githubusercontent.com/u/22333076?v=4";
-let starredRepos: Array<{
-  name: string;
-  full_name: string;
-  description: string | null;
-  stargazers_count: number;
-  language: string | null;
-  html_url: string;
-}> = [];
+let workingOnRepos: WorkingOnRepo[] = [];
 
 try {
-  const [profileRes, starredRes] = await Promise.all([
+  const [profileRes, reposRes] = await Promise.all([
     fetch("https://api.github.com/users/enzoftware", {
       headers: { Accept: "application/vnd.github.v3+json" },
     }),
-    fetch("https://api.github.com/users/enzoftware/starred?per_page=8", {
-      headers: { Accept: "application/vnd.github.v3+json" },
-    }),
+    fetch(
+      "https://api.github.com/users/enzoftware/repos?sort=pushed&direction=desc&per_page=20",
+      { headers: { Accept: "application/vnd.github.v3+json" } },
+    ),
   ]);
 
   if (profileRes.ok) {
@@ -30,16 +28,19 @@ try {
     avatarUrl = profile.avatar_url ?? avatarUrl;
   }
 
-  if (starredRes.ok) {
-    const starred = await starredRes.json();
-    starredRepos = starred.map((r: Record<string, unknown>) => ({
-      name: r.name as string,
-      full_name: r.full_name as string,
-      description: r.description as string | null,
-      stargazers_count: r.stargazers_count as number,
-      language: r.language as string | null,
-      html_url: r.html_url as string,
-    }));
+  if (reposRes.ok) {
+    const repos = await reposRes.json();
+    workingOnRepos = repos
+      .filter(
+        (r: Record<string, unknown>) =>
+          !r.fork && !excludedRepos.includes(r.name as string),
+      )
+      .slice(0, 3)
+      .map((r: Record<string, unknown>) => ({
+        name: r.name as string,
+        html_url: r.html_url as string,
+        pushed_at: r.pushed_at as string,
+      }));
   }
 } catch (_e) {
   // Use defaults on fetch failure
@@ -49,8 +50,12 @@ const mixpanelToken = import.meta.env.PUBLIC_MIXPANEL_TOKEN ?? "";
 ---
 
 <Layout>
-  <main class="w-full overflow-x-hidden lg:h-dvh lg:overflow-hidden bg-surface">
-    <BentoGrid client:load avatarUrl={avatarUrl} starredRepos={starredRepos} />
+  <main class="w-full min-h-dvh bg-surface">
+    <PortfolioGrid
+      client:load
+      avatarUrl={avatarUrl}
+      workingOnRepos={workingOnRepos}
+    />
   </main>
   <Analytics client:load token={mixpanelToken} />
 </Layout>

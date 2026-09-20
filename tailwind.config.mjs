@@ -4,20 +4,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        surface: "#F8F7F4",
-        "surface-elevated": "#EFEDE8",
-        ink: "#1A1A1A",
-        "ink-muted": "#666666",
+        surface: "#FAF9F6",
+        "surface-elevated": "#F1EFE9",
+        ink: "#171717",
+        "ink-muted": "#6B6B6B",
         accent: "#2B5C8A",
         "accent-light": "#3A7AB8",
         "accent-subtle": "#EBF2FA",
         card: "#FFFFFF",
-        border: "#E2DDD6",
+        border: "#E5E1D8",
       },
       fontFamily: {
         display: ["DM Serif Display", "Georgia", "serif"],
         body: ["DM Sans", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
+      },
+      fontSize: {
+        hero: [
+          "clamp(3rem, 9vw, 7.5rem)",
+          { lineHeight: "0.95", letterSpacing: "-0.02em" },
+        ],
       },
       animation: {
         float: "float 6s ease-in-out infinite",
