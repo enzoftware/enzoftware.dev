@@ -8,10 +8,16 @@ const skills = [
   { label: "Android", color: "bg-green-50 text-green-700 border-green-200" },
   { label: "Swift", color: "bg-orange-50 text-orange-700 border-orange-200" },
   { label: "TypeScript", color: "bg-blue-50 text-blue-800 border-blue-200" },
-  { label: "Firebase", color: "bg-yellow-50 text-yellow-700 border-yellow-200" },
+  {
+    label: "Firebase",
+    color: "bg-yellow-50 text-yellow-700 border-yellow-200",
+  },
   { label: "GraphQL", color: "bg-pink-50 text-pink-700 border-pink-200" },
   { label: "Clean Arch", color: "bg-slate-50 text-slate-700 border-slate-200" },
-  { label: "CI/CD", color: "bg-emerald-50 text-emerald-700 border-emerald-200" },
+  {
+    label: "CI/CD",
+    color: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  },
   { label: "RevenueCat", color: "bg-red-50 text-red-700 border-red-200" },
   { label: "TDD", color: "bg-indigo-50 text-indigo-700 border-indigo-200" },
 ];
@@ -30,8 +36,16 @@ export function SkillsCard({ t }: SkillsCardProps) {
     >
       <div className="flex items-center gap-2 mb-4">
         <div className="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2B5C8A" strokeWidth="2">
-            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#2B5C8A"
+            strokeWidth="2"
+          >
+            <polyline points="16 18 22 12 16 6" />
+            <polyline points="8 6 2 12 8 18" />
           </svg>
         </div>
         <h2 className="text-sm font-semibold text-ink">{t.title}</h2>

@@ -59,9 +59,16 @@ export function ExperienceCard({ t }: ExperienceCardProps) {
       {/* Header */}
       <div className="flex items-center gap-2 mb-5">
         <div className="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2B5C8A" strokeWidth="2">
-            <rect x="2" y="7" width="20" height="14" rx="2"/>
-            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#2B5C8A"
+            strokeWidth="2"
+          >
+            <rect x="2" y="7" width="20" height="14" rx="2" />
+            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
           </svg>
         </div>
         <h2 className="text-sm font-semibold text-ink">{t.title}</h2>
@@ -75,7 +82,7 @@ export function ExperienceCard({ t }: ExperienceCardProps) {
         {experiences.map((exp, i) => (
           <motion.div
             key={exp.company}
-            className={`flex gap-3 p-3 rounded-xl border transition-colors ${exp.current ? `${exp.borderColor} ${exp.bgColor}` : 'border-transparent hover:bg-surface-elevated hover:border-border'}`}
+            className={`flex gap-3 p-3 rounded-xl border transition-colors ${exp.current ? `${exp.borderColor} ${exp.bgColor}` : "border-transparent hover:bg-surface-elevated hover:border-border"}`}
             initial={{ opacity: 0, x: -12 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.35 + i * 0.08, duration: 0.4 }}
@@ -90,7 +97,9 @@ export function ExperienceCard({ t }: ExperienceCardProps) {
 
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2 flex-wrap">
-                <span className="text-sm font-semibold text-ink leading-tight">{exp.company}</span>
+                <span className="text-sm font-semibold text-ink leading-tight">
+                  {exp.company}
+                </span>
                 {exp.current && (
                   <span className="text-xs px-1.5 py-0.5 rounded-md bg-violet-100 text-violet-700 font-medium flex-shrink-0">
                     current
@@ -99,7 +108,9 @@ export function ExperienceCard({ t }: ExperienceCardProps) {
               </div>
               <p className="text-xs text-ink-muted mt-0.5">{exp.role}</p>
               <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                <span className="text-xs text-ink-muted font-mono">{exp.period}</span>
+                <span className="text-xs text-ink-muted font-mono">
+                  {exp.period}
+                </span>
                 <span className="text-ink-muted/40 text-xs">·</span>
                 <span className="text-xs text-ink-muted">{exp.location}</span>
               </div>

@@ -24,18 +24,25 @@ export function ContactCard({ t }: ContactCardProps) {
           animate={{ rotate: [0, 8, -8, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
           </svg>
         </motion.div>
 
         <h2 className="font-display text-2xl lg:text-3xl text-white leading-tight mb-2">
-          {t.title_line1}<br />{t.title_line2}
+          {t.title_line1}
+          <br />
+          {t.title_line2}
         </h2>
-        <p className="text-white/70 text-xs leading-relaxed">
-          {t.subtitle}
-        </p>
+        <p className="text-white/70 text-xs leading-relaxed">{t.subtitle}</p>
       </div>
 
       <motion.a
@@ -46,8 +53,15 @@ export function ContactCard({ t }: ContactCardProps) {
         data-mixpanel="contact_cta_click"
       >
         lizama.enzo@gmail.com
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </motion.a>
     </motion.div>

@@ -25,8 +25,15 @@ export function KodecoCard() {
     >
       <div className="flex items-center gap-2 mb-4">
         <div className="w-7 h-7 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2">
-            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#16a34a"
+            strokeWidth="2"
+          >
+            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
           </svg>
         </div>
         <h2 className="text-sm font-semibold text-ink">Technical Author</h2>
@@ -50,8 +57,16 @@ export function KodecoCard() {
             data-mixpanel="article_click"
             data-article={article.title}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2B5C8A" strokeWidth="2" className="flex-shrink-0 mt-0.5">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#2B5C8A"
+              strokeWidth="2"
+              className="flex-shrink-0 mt-0.5"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
             <span className="text-xs text-ink leading-snug group-hover:text-accent transition-colors">
               {article.title}

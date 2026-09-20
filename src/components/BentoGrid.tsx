@@ -20,11 +20,10 @@ interface Repo {
 
 interface BentoGridProps {
   avatarUrl: string;
-  name: string;
   starredRepos: Repo[];
 }
 
-export function BentoGrid({ avatarUrl, name, starredRepos }: BentoGridProps) {
+export function BentoGrid({ avatarUrl, starredRepos }: BentoGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
   const t = translations[locale];
 
@@ -40,9 +39,16 @@ export function BentoGrid({ avatarUrl, name, starredRepos }: BentoGridProps) {
         whileTap={{ scale: 0.96 }}
         aria-label="Toggle language"
       >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2B5C8A" strokeWidth="2">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        <svg
+          width="13"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#2B5C8A"
+          strokeWidth="2"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
         </svg>
         <span className="text-ink-muted font-mono">
           {locale === "en" ? "EN" : "ES"}

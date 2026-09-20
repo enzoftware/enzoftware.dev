@@ -27,8 +27,15 @@ export function StarredReposCard({ repos, t }: StarredReposCardProps) {
     >
       <div className="flex items-center gap-2 mb-3">
         <div className="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2B5C8A" strokeWidth="2">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#2B5C8A"
+            strokeWidth="2"
+          >
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
           </svg>
         </div>
         <h2 className="text-sm font-semibold text-ink">{t.title}</h2>
@@ -58,13 +65,23 @@ export function StarredReposCard({ repos, t }: StarredReposCardProps) {
             data-mixpanel="starred_repo_click"
             data-repo={repo.full_name}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#999" className="flex-shrink-0">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="#999"
+              className="flex-shrink-0"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-ink truncate font-mono">{repo.full_name}</p>
+              <p className="text-xs font-semibold text-ink truncate font-mono">
+                {repo.full_name}
+              </p>
               {repo.description && (
-                <p className="text-xs text-ink-muted truncate mt-0.5 leading-tight">{repo.description}</p>
+                <p className="text-xs text-ink-muted truncate mt-0.5 leading-tight">
+                  {repo.description}
+                </p>
               )}
             </div>
             <div className="text-ink-muted text-xs flex-shrink-0 font-mono">
