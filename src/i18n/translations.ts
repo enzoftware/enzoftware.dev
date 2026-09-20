@@ -1,4 +1,33 @@
-export const translations = {
+export type Locale = "en" | "es";
+
+export interface Translations {
+  hero: {
+    status: string;
+    subtitle: string;
+    bio: string;
+    badge_kodeco: string;
+    badge_flutter: string;
+    badge_location: string;
+    cta_contact: string;
+    cta_linkedin: string;
+    highlight_arch: string;
+    highlight_releases: string;
+    highlight_teams: string;
+  };
+  skills: { title: string };
+  experience: { title: string; years: string };
+  social: { title: string };
+  contact: {
+    title_line1: string;
+    title_line2: string;
+    subtitle: string;
+  };
+  projects: { title: string; github: string };
+  starred: { title: string; view_all: string };
+  lang_toggle: string;
+}
+
+export const translations: Record<Locale, Translations> = {
   en: {
     hero: {
       status: "Available for new roles",
@@ -51,7 +80,4 @@ export const translations = {
     starred: { title: "Destacados en GitHub", view_all: "Ver todos →" },
     lang_toggle: "EN",
   },
-} as const;
-
-export type Locale = keyof typeof translations;
-export type Translations = typeof translations.en;
+};

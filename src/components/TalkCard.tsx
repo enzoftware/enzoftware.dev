@@ -12,9 +12,16 @@ export function TalkCard() {
       <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-accent/8 blur-2xl pointer-events-none" />
 
       <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center mb-3 flex-shrink-0">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="1.8">
-          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-          <polygon points="10 8 16 12 10 16 10 8"/>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#dc2626"
+          strokeWidth="1.8"
+        >
+          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+          <polygon points="10 8 16 12 10 16 10 8" />
         </svg>
       </div>
 
