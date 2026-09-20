@@ -4,25 +4,27 @@ export default {
   theme: {
     extend: {
       colors: {
-        surface: "#FAF9F6",
-        "surface-elevated": "#F1EFE9",
-        ink: "#171717",
-        "ink-muted": "#6B6B6B",
-        accent: "#2B5C8A",
-        "accent-light": "#3A7AB8",
-        "accent-subtle": "#EBF2FA",
+        surface: "#F6F4EE",
+        "surface-elevated": "#FFFFFF",
+        ink: "#14161A",
+        "ink-muted": "#5B5F67",
+        "ink-faint": "#93968F",
+        accent: "#2F49E0",
+        "accent-light": "#5468FF",
+        "accent-subtle": "#EEF0FF",
+        signal: "#16A34A",
         card: "#FFFFFF",
-        border: "#E5E1D8",
+        border: "#DDD8CC",
       },
       fontFamily: {
-        display: ["DM Serif Display", "Georgia", "serif"],
-        body: ["DM Sans", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "Fira Code", "monospace"],
+        display: ["Fraunces", "Iowan Old Style", "Georgia", "serif"],
+        body: ["IBM Plex Sans", "system-ui", "sans-serif"],
+        mono: ["IBM Plex Mono", "Fira Code", "monospace"],
       },
       fontSize: {
         hero: [
-          "clamp(3rem, 9vw, 7.5rem)",
-          { lineHeight: "0.95", letterSpacing: "-0.02em" },
+          "clamp(3rem, 10vw, 8rem)",
+          { lineHeight: "0.94", letterSpacing: "-0.015em" },
         ],
       },
       animation: {

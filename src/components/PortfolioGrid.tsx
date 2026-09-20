@@ -1,74 +1,70 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { TopBar } from "./TopBar";
 import { HeroCard } from "./HeroCard";
-import { ExperienceCard, type ExperienceEntry } from "./ExperienceCard";
-import { SocialsCarousel, type SocialEntry } from "./SocialsCarousel";
-import { CurrentJobChip } from "./CurrentJobChip";
-import { WorkingOnCard, type WorkingOnRepo } from "./WorkingOnCard";
-import { ContactChip } from "./ContactChip";
+import { NowBuilding, type ExperienceEntry } from "./NowBuilding";
+import { RecentActivity, type RecentRepo } from "./RecentActivity";
+import { LatestPostChip, type LatestPost } from "./LatestPostChip";
+import { ContactCTA } from "./ContactCTA";
+import { SocialsRow, type SocialEntry } from "./SocialsRow";
 import { translations, type Locale } from "../i18n/translations";
 
 interface PortfolioGridProps {
   avatarUrl: string;
   experiences: ExperienceEntry[];
   socials: SocialEntry[];
-  workingOnRepos: WorkingOnRepo[];
+  recentRepos: RecentRepo[];
+  latestPost: LatestPost | null;
 }
 
 export function PortfolioGrid({
   avatarUrl,
   experiences,
   socials,
-  workingOnRepos,
+  recentRepos,
+  latestPost,
 }: PortfolioGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
   const t = translations[locale];
+  const fullName = `${t.hero.name_line1} ${t.hero.name_line2}`;
 
   const toggleLocale = () => setLocale((l) => (l === "en" ? "es" : "en"));
 
   return (
-    <div className="relative w-full min-h-dvh overflow-x-hidden">
-      {/* Language toggle */}
-      <motion.button
-        onClick={toggleLocale}
-        className="fixed bottom-3 left-3 z-50 flex items-center gap-2 px-3 py-2 bg-white border border-border rounded-xl shadow-sm text-xs font-semibold text-ink hover:border-accent/40 transition-all select-none"
-        whileHover={{ scale: 1.04, y: -1 }}
-        whileTap={{ scale: 0.96 }}
-        aria-label="Toggle language"
-      >
-        <span className="text-ink-muted font-mono">
-          {locale === "en" ? "EN" : "ES"}
-        </span>
-        <span className="w-px h-3 bg-border" />
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={t.lang_toggle}
-            className="text-accent"
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 5 }}
-            transition={{ duration: 0.15 }}
-          >
-            {t.lang_toggle}
-          </motion.span>
-        </AnimatePresence>
-      </motion.button>
+    <div id="top" className="relative w-full min-h-dvh">
+      <TopBar
+        locale={locale}
+        langToggleLabel={t.lang_toggle}
+        onToggleLocale={toggleLocale}
+      />
 
-      <CurrentJobChip t={t.current_job} experiences={experiences} />
-      <WorkingOnCard t={t.working_on} repos={workingOnRepos} />
-      <ContactChip t={t.contact} />
-
-      <div className="portfolio-container">
-        <div className="portfolio-hero">
+      <main className="section-gutter">
+        <div className="pt-10 sm:pt-14 lg:pt-20 pb-4">
           <HeroCard t={t.hero} avatarUrl={avatarUrl} />
         </div>
-        <div className="portfolio-experience">
-          <ExperienceCard t={t.experience} experiences={experiences} />
-        </div>
-        <div className="portfolio-social">
-          <SocialsCarousel t={t.social} socials={socials} />
-        </div>
-      </div>
+
+        <hr className="border-border" />
+
+        <NowBuilding t={t.now_building} experiences={experiences} />
+
+        <hr className="border-border" />
+
+        <RecentActivity t={t.recent_activity} repos={recentRepos} />
+      </main>
+
+      <LatestPostChip t={t.latest_post} post={latestPost} />
+
+      <ContactCTA
+        t={t.contact}
+        signatureT={t.signature}
+        name={fullName}
+        experiences={experiences}
+      />
+
+      <SocialsRow t={t.social} name={fullName} socials={socials} />
+
+      <footer className="section-gutter py-6 font-mono text-xs text-ink-faint">
+        © {new Date().getFullYear()} {fullName}
+      </footer>
     </div>
   );
 }

@@ -12,16 +12,16 @@
   }
 
   html {
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
-    background-color: #f8f7f4;
-    color: #1a1a1a;
-    font-family: "DM Sans", system-ui, sans-serif;
+    background-color: #f6f4ee;
+    color: #14161a;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Grain overlay */
@@ -31,29 +31,14 @@
     inset: 0;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.04;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-size: 128px 128px;
   }
 }
 
 @layer utilities {
-  .font-display {
-    font-family: "DM Serif Display", Georgia, serif;
-  }
-
-  .font-mono {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
-  }
-
-  .card-base {
-    @apply bg-card border border-border rounded-2xl overflow-hidden;
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:border-accent/20 hover:-translate-y-0.5;
-  }
-
   .scrollbar-none {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -64,20 +49,15 @@
   }
 }
 
-/* ── Minimal portfolio layout ─────────────────────────── */
-.portfolio-container {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px 20px 120px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* ── Full-bleed editorial layout ─────────────────────────── */
+.measure {
+  max-width: 640px;
 }
 
-@media (min-width: 1024px) {
-  .portfolio-container {
-    padding: 48px 24px 140px;
-    gap: 20px;
-  }
+.section-gutter {
+  padding-inline: clamp(20px, 6vw, 64px);
+}
+
+.section-rhythm {
+  padding-block: clamp(44px, 8vw, 76px);
 }
