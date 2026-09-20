@@ -41,8 +41,8 @@ function RowHeader({ label }: { label: string }) {
 function ShimmerLines() {
   return (
     <div className="flex flex-col gap-2" aria-hidden="true">
-      <div className="h-3 w-3/4 rounded-full bg-[linear-gradient(90deg,#3C3C3C_25%,#2D2D30_37%,#3C3C3C_63%)] bg-[length:200%_100%] animate-shimmer" />
-      <div className="h-3 w-1/2 rounded-full bg-[linear-gradient(90deg,#3C3C3C_25%,#2D2D30_37%,#3C3C3C_63%)] bg-[length:200%_100%] animate-shimmer" />
+      <div className="h-3 w-3/4 rounded-full bg-[linear-gradient(90deg,var(--shimmer-a)_25%,var(--shimmer-b)_37%,var(--shimmer-a)_63%)] bg-[length:200%_100%] animate-shimmer" />
+      <div className="h-3 w-1/2 rounded-full bg-[linear-gradient(90deg,var(--shimmer-a)_25%,var(--shimmer-b)_37%,var(--shimmer-a)_63%)] bg-[length:200%_100%] animate-shimmer" />
     </div>
   );
 }
@@ -65,7 +65,7 @@ export function ActivityStack({
   return (
     <>
       <motion.div
-        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-white/[0.03] backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[65dvh]"
+        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-[var(--color-glass)] backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[65dvh]"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10%" }}
@@ -102,7 +102,7 @@ export function ActivityStack({
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="p-5 text-left hover:bg-white/[0.03] transition-colors"
+            className="p-5 text-left hover:bg-[var(--color-glass)] transition-colors"
           >
             <RowHeader label={t.current.label} />
             <p className="font-display text-lg text-ink leading-snug">

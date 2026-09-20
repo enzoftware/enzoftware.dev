@@ -56,7 +56,7 @@ export function ContactCTA({ t, name }: ContactCTAProps) {
 
         <motion.a
           href="mailto:hi@enzoftware.dev?subject=Let%27s%20build%20something"
-          className="group flex-shrink-0 self-start sm:self-auto inline-flex items-center gap-4 bg-accent hover:bg-accent-light text-surface font-mono text-base rounded-full pl-6 pr-2.5 py-2.5 sm:py-3 transition-colors"
+          className="group flex-shrink-0 self-start sm:self-auto inline-flex items-center gap-4 bg-accent hover:bg-accent-light text-white font-mono text-base rounded-full pl-6 pr-2.5 py-2.5 sm:py-3 transition-colors"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -66,7 +66,7 @@ export function ContactCTA({ t, name }: ContactCTAProps) {
           data-mixpanel="contact_email_click"
         >
           hi@enzoftware.dev
-          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-surface/20 group-hover:rotate-45 transition-transform duration-300">
+          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 group-hover:rotate-45 transition-transform duration-300">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
               <path
                 d="M5 19 19 5M19 5H8M19 5v11"

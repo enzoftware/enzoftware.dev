@@ -2,6 +2,51 @@
 
 @config "../../tailwind.config.mjs";
 
+/* ── VS Code "Modern" theme tokens ───────────────────────── */
+:root {
+  /* Dark Modern (default) */
+  --color-surface: #1e1e1e;
+  --color-surface-elevated: #252526;
+  --color-surface-raised: #2d2d30;
+  --color-ink: #d4d4d4;
+  --color-ink-muted: #9d9d9d;
+  --color-ink-faint: #6b6b6b;
+  --color-accent: #569cd6;
+  --color-accent-light: #7ab6e8;
+  --color-accent-subtle: #1b2b3a;
+  --color-signal: #4ec9b0;
+  --color-flair: #c586c0;
+  --color-border: #3c3c3c;
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.06);
+  --shimmer-a: #3c3c3c;
+  --shimmer-b: #2d2d30;
+  --ambient-1: rgba(86, 156, 214, 0.14);
+  --ambient-2: rgba(197, 134, 192, 0.08);
+}
+
+:root[data-theme="light"] {
+  /* Light Modern */
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f3f3f3;
+  --color-surface-raised: #ececec;
+  --color-ink: #3b3b3b;
+  --color-ink-muted: #6b6b6b;
+  --color-ink-faint: #8a8a8a;
+  --color-accent: #0078d4;
+  --color-accent-light: #2b88d8;
+  --color-accent-subtle: #e8f1fb;
+  --color-signal: #267f99;
+  --color-flair: #af00db;
+  --color-border: #e5e5e5;
+  --color-glass: rgba(0, 0, 0, 0.02);
+  --color-glass-border: rgba(0, 0, 0, 0.07);
+  --shimmer-a: #ececec;
+  --shimmer-b: #ffffff;
+  --ambient-1: rgba(0, 120, 212, 0.08);
+  --ambient-2: rgba(175, 0, 219, 0.05);
+}
+
 @layer base {
   *,
   *::before,
@@ -16,17 +61,20 @@
   }
 
   body {
-    background-color: #1e1e1e;
-    color: #d4d4d4;
+    background-color: var(--color-surface);
+    color: var(--color-ink);
     font-family: "IBM Plex Sans", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
   }
 
   ::selection {
-    background-color: #569cd6;
-    color: #1e1e1e;
+    background-color: var(--color-accent);
+    color: #ffffff;
   }
 
   /* Grain overlay */

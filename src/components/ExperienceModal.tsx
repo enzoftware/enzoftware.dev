@@ -54,7 +54,7 @@ export function ExperienceModal({
                 type="button"
                 onClick={onClose}
                 aria-label={t.close}
-                className="flex items-center justify-center w-8 h-8 rounded-full text-ink-muted hover:text-ink hover:bg-white/5 transition-colors"
+                className="flex items-center justify-center w-8 h-8 rounded-full text-ink-muted hover:text-ink hover:bg-[var(--color-glass)] transition-colors"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path

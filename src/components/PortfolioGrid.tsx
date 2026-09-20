@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { TopBar } from "./TopBar";
 import { HeroCard } from "./HeroCard";
 import { ActivityStack } from "./ActivityStack";
@@ -6,6 +6,12 @@ import { ContactCTA } from "./ContactCTA";
 import type { ExperienceEntry } from "./ExperienceModal";
 import type { RecentRepo, LatestPost } from "./ActivityStack";
 import type { SocialEntry } from "./SocialsRow";
+import {
+  applyTheme,
+  getServerThemeSnapshot,
+  getThemeSnapshot,
+  subscribeTheme,
+} from "../lib/theme";
 import { translations, type Locale } from "../i18n/translations";
 
 interface PortfolioGridProps {
@@ -24,10 +30,16 @@ export function PortfolioGrid({
   latestPost,
 }: PortfolioGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
   const t = translations[locale];
   const fullName = `${t.hero.name_line1} ${t.hero.name_line2}`;
 
   const toggleLocale = () => setLocale((l) => (l === "en" ? "es" : "en"));
+  const toggleTheme = () => applyTheme(theme === "dark" ? "light" : "dark");
 
   return (
     <div id="top" className="relative w-full lg:h-dvh flex flex-col">
@@ -37,6 +49,8 @@ export function PortfolioGrid({
         locale={locale}
         langToggleLabel={t.lang_toggle}
         onToggleLocale={toggleLocale}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       <main className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
