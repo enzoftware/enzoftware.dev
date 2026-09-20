@@ -25,8 +25,8 @@ export default {
       },
       fontSize: {
         hero: [
-          "clamp(3rem, 10vw, 8rem)",
-          { lineHeight: "0.94", letterSpacing: "-0.015em" },
+          "clamp(3.25rem, 7vw + 4vh, 11rem)",
+          { lineHeight: "0.92", letterSpacing: "-0.015em" },
         ],
       },
       animation: {

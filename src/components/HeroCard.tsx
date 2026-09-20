@@ -24,7 +24,12 @@ interface HeroCardProps {
 
 export function HeroCard({ t, socialT, socials }: HeroCardProps) {
   return (
-    <motion.div variants={container} initial="hidden" animate="visible">
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      className="flex flex-col justify-center lg:h-full"
+    >
       <motion.h1 variants={item} className="font-display text-hero text-ink">
         {t.name_line1}
         <br />
@@ -33,19 +38,19 @@ export function HeroCard({ t, socialT, socials }: HeroCardProps) {
 
       <motion.p
         variants={item}
-        className="text-ink text-base lg:text-lg font-medium mt-6"
+        className="text-ink text-base lg:text-lg font-medium mt-5"
       >
         {t.subtitle}
       </motion.p>
 
       <motion.p
         variants={item}
-        className="text-ink-muted text-base lg:text-lg leading-relaxed measure mt-3"
+        className="text-ink-muted text-base lg:text-lg leading-relaxed measure mt-2"
       >
         {t.bio}
       </motion.p>
 
-      <motion.div variants={item} className="flex flex-wrap gap-2 mt-7">
+      <motion.div variants={item} className="flex flex-wrap gap-2 mt-5">
         <span className="text-xs font-mono text-ink-muted border border-border rounded-full px-3 py-1.5">
           {t.badge_kodeco}
         </span>
@@ -54,7 +59,7 @@ export function HeroCard({ t, socialT, socials }: HeroCardProps) {
         </span>
       </motion.div>
 
-      <motion.div variants={item} className="mt-8">
+      <motion.div variants={item} className="mt-6">
         <SocialsRow t={socialT} socials={socials} />
       </motion.div>
     </motion.div>

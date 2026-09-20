@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TopBar } from "./TopBar";
 import { HeroCard } from "./HeroCard";
+import { ActivityStack } from "./ActivityStack";
 import { ContactCTA } from "./ContactCTA";
 import type { ExperienceEntry } from "./ExperienceModal";
 import type { RecentRepo, LatestPost } from "./ActivityStack";
@@ -29,7 +30,7 @@ export function PortfolioGrid({
   const toggleLocale = () => setLocale((l) => (l === "en" ? "es" : "en"));
 
   return (
-    <div id="top" className="relative w-full min-h-dvh">
+    <div id="top" className="relative w-full lg:h-dvh flex flex-col">
       <TopBar
         avatarUrl={avatarUrl}
         name={fullName}
@@ -38,23 +39,18 @@ export function PortfolioGrid({
         onToggleLocale={toggleLocale}
       />
 
-      <main className="section-gutter">
-        <div className="pt-10 sm:pt-14 lg:pt-20 pb-16">
-          <HeroCard t={t.hero} socialT={t.social} socials={socials} />
-        </div>
+      <main className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
+        <HeroCard t={t.hero} socialT={t.social} socials={socials} />
+
+        <ActivityStack
+          t={t}
+          experiences={experiences}
+          repos={recentRepos}
+          post={latestPost}
+        />
       </main>
 
-      <ContactCTA
-        t={t.contact}
-        activityT={t}
-        experiences={experiences}
-        repos={recentRepos}
-        post={latestPost}
-      />
-
-      <footer className="section-gutter py-6 font-mono text-xs text-ink-faint">
-        © {new Date().getFullYear()} {fullName}
-      </footer>
+      <ContactCTA t={t.contact} name={fullName} />
     </div>
   );
 }

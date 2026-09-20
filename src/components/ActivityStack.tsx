@@ -65,7 +65,7 @@ export function ActivityStack({
   return (
     <>
       <motion.div
-        className="lg:sticky lg:top-24 flex flex-col divide-y divide-border rounded-2xl border border-border bg-white/[0.03] backdrop-blur-xl overflow-hidden"
+        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-white/[0.03] backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[65dvh]"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10%" }}
