@@ -1,5 +1,6 @@
 import { motion, type Variants } from "framer-motion";
 import type { Translations } from "../i18n/translations";
+import { SocialsRow, type SocialEntry } from "./SocialsRow";
 
 const container: Variants = {
   hidden: {},
@@ -17,25 +18,13 @@ const item: Variants = {
 
 interface HeroCardProps {
   t: Translations["hero"];
-  avatarUrl: string;
+  socialT: Translations["social"];
+  socials: SocialEntry[];
 }
 
-export function HeroCard({ t, avatarUrl }: HeroCardProps) {
+export function HeroCard({ t, socialT, socials }: HeroCardProps) {
   return (
     <motion.div variants={container} initial="hidden" animate="visible">
-      <motion.div variants={item} className="flex items-center gap-3 mb-6">
-        <img
-          src={avatarUrl}
-          alt={`${t.name_line1} ${t.name_line2}`}
-          width={36}
-          height={36}
-          className="w-9 h-9 rounded-full object-cover border border-border"
-        />
-        <span className="text-xs text-ink-muted font-mono">
-          {t.badge_location}
-        </span>
-      </motion.div>
-
       <motion.h1 variants={item} className="font-display text-hero text-ink">
         {t.name_line1}
         <br />
@@ -63,6 +52,10 @@ export function HeroCard({ t, avatarUrl }: HeroCardProps) {
         <span className="text-xs font-mono text-ink-muted border border-border rounded-full px-3 py-1.5">
           {t.badge_flutter}
         </span>
+      </motion.div>
+
+      <motion.div variants={item} className="mt-8">
+        <SocialsRow t={socialT} socials={socials} />
       </motion.div>
     </motion.div>
   );
