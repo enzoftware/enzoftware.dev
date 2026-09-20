@@ -1,7 +1,8 @@
 import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 
 const experience = defineCollection({
-  type: "data",
+  loader: glob({ pattern: "**/*.json", base: "./src/content/experience" }),
   schema: z.object({
     company: z.string(),
     role: z.string(),
@@ -13,7 +14,7 @@ const experience = defineCollection({
 });
 
 const socials = defineCollection({
-  type: "data",
+  loader: glob({ pattern: "**/*.json", base: "./src/content/socials" }),
   schema: z.object({
     label: z.string(),
     url: z.string().url(),
