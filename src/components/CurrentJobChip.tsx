@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
-import { experiences } from "../data/experience";
+import type { ExperienceEntry } from "./ExperienceCard";
 
 interface CurrentJobChipProps {
   t: Translations["current_job"];
+  experiences: ExperienceEntry[];
 }
 
-export function CurrentJobChip({ t }: CurrentJobChipProps) {
+export function CurrentJobChip({ t, experiences }: CurrentJobChipProps) {
   const currentJob = experiences.find((exp) => exp.current);
   if (!currentJob) return null;
 

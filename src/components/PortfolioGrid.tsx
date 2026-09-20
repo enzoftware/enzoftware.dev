@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeroCard } from "./HeroCard";
-import { ExperienceCard } from "./ExperienceCard";
-import { SocialsCarousel } from "./SocialsCarousel";
+import { ExperienceCard, type ExperienceEntry } from "./ExperienceCard";
+import { SocialsCarousel, type SocialEntry } from "./SocialsCarousel";
 import { CurrentJobChip } from "./CurrentJobChip";
 import { WorkingOnCard, type WorkingOnRepo } from "./WorkingOnCard";
 import { ContactChip } from "./ContactChip";
@@ -10,11 +10,15 @@ import { translations, type Locale } from "../i18n/translations";
 
 interface PortfolioGridProps {
   avatarUrl: string;
+  experiences: ExperienceEntry[];
+  socials: SocialEntry[];
   workingOnRepos: WorkingOnRepo[];
 }
 
 export function PortfolioGrid({
   avatarUrl,
+  experiences,
+  socials,
   workingOnRepos,
 }: PortfolioGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
@@ -50,7 +54,7 @@ export function PortfolioGrid({
         </AnimatePresence>
       </motion.button>
 
-      <CurrentJobChip t={t.current_job} />
+      <CurrentJobChip t={t.current_job} experiences={experiences} />
       <WorkingOnCard t={t.working_on} repos={workingOnRepos} />
       <ContactChip t={t.contact} />
 
@@ -59,10 +63,10 @@ export function PortfolioGrid({
           <HeroCard t={t.hero} avatarUrl={avatarUrl} />
         </div>
         <div className="portfolio-experience">
-          <ExperienceCard t={t.experience} />
+          <ExperienceCard t={t.experience} experiences={experiences} />
         </div>
         <div className="portfolio-social">
-          <SocialsCarousel t={t.social} />
+          <SocialsCarousel t={t.social} socials={socials} />
         </div>
       </div>
     </div>

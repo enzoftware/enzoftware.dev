@@ -1,12 +1,21 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import { PortfolioGrid } from "../components/PortfolioGrid";
 import { Analytics } from "../components/Analytics";
 import type { WorkingOnRepo } from "../components/WorkingOnCard";
 import excludedReposJson from "../data/excluded-repos.json";
+import "../styles/global.css";
 
 const excludedRepos = excludedReposJson as string[];
-import "../styles/global.css";
+
+const experiences = (await getCollection("experience"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data);
+
+const socials = (await getCollection("socials"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => ({ label: entry.data.label, url: entry.data.url }));
 
 // Fetch GitHub data at build time
 let avatarUrl = "https://avatars.githubusercontent.com/u/22333076?v=4";
@@ -54,6 +63,8 @@ const mixpanelToken = import.meta.env.PUBLIC_MIXPANEL_TOKEN ?? "";
     <PortfolioGrid
       client:load
       avatarUrl={avatarUrl}
+      experiences={experiences}
+      socials={socials}
       workingOnRepos={workingOnRepos}
     />
   </main>

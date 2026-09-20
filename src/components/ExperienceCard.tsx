@@ -1,12 +1,20 @@
 import { motion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
-import { experiences } from "../data/experience";
+
+export interface ExperienceEntry {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  current: boolean;
+}
 
 interface ExperienceCardProps {
   t: Translations["experience"];
+  experiences: ExperienceEntry[];
 }
 
-export function ExperienceCard({ t }: ExperienceCardProps) {
+export function ExperienceCard({ t, experiences }: ExperienceCardProps) {
   return (
     <motion.div
       className="card-base card-hover p-6 h-full flex flex-col"
