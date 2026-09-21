@@ -16,6 +16,9 @@ export function Analytics({ apiKey, apiHost }: AnalyticsProps) {
     posthog.init(apiKey, {
       api_host: apiHost,
       defaults: "2025-05-24",
+      // This site never calls posthog.identify() — anonymous visitors need
+      // full person profiles for GeoIP/source to show up in Persons/Trends.
+      person_profiles: "always",
     });
 
     posthog.register({
