@@ -4,6 +4,7 @@ const PORT = 4321;
 
 export default defineConfig({
   testDir: "./tests",
+  testMatch: /.*\.spec\.ts/,
   fullyParallel: true,
   retries: process.env.CI ? 1 : 0,
   reporter: "list",
