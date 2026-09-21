@@ -53,7 +53,7 @@ export function PortfolioGrid({
         onToggleTheme={toggleTheme}
       />
 
-      <main className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
+      <main className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
         <HeroCard t={t.hero} socialT={t.social} socials={socials} />
 
         <ActivityStack
