@@ -1,4 +1,8 @@
-# enzoftware.github.io
+# enzoftware.dev
+
+[![Checks](https://github.com/enzoftware/enzoftware.dev/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/enzoftware/enzoftware.dev/actions/workflows/ci.yml)
+[![Deploy to GitHub Pages](https://github.com/enzoftware/enzoftware.dev/actions/workflows/deploy.yml/badge.svg)](https://github.com/enzoftware/enzoftware.dev/actions/workflows/deploy.yml)
+[![Live site](https://img.shields.io/badge/live-enzoftware.dev-569cd6)](https://enzoftware.dev)
 
 Personal portfolio of **Enzo Lizama Paredes** — Senior Software Engineer.
 Live at [enzoftware.dev](https://enzoftware.dev).
@@ -7,6 +11,16 @@ A full-bleed, single-screen (on desktop) layout: no boxed cards, a big
 `hi@enzoftware.dev` contact CTA, and a glass activity panel (GitHub activity,
 current role, latest Substack post) sitting next to the name. Dark/light
 theme toggle in the VS Code "Modern" palettes.
+
+## Contents
+
+- [Stack](#stack)
+- [Getting started](#getting-started)
+- [Project structure](#project-structure)
+- [Architecture notes](#architecture-notes)
+- [Updating content](#updating-content)
+- [Analytics (PostHog)](#analytics-posthog)
+- [Deployment](#deployment)
 
 ## Stack
 
@@ -90,7 +104,11 @@ tests/
 
 - **Add/edit a job**: drop or edit a JSON file in `src/content/experience/`
   matching the shape in `content.config.ts` (`company`, `role`, `period`,
-  `location`, `current`, `order`). Only one entry should have `current: true`.
+  `location`, `current`, `order`, `color`). Only one entry should have
+  `current: true`. `color` is one of `dot-1`..`dot-5` (defined in
+  `src/styles/global.css` / `tailwind.config.mjs`) — it colors both the
+  entry's monogram avatar in the full-experience timeline and, for the three
+  fixed dots in `ActivityStack`, the section indicator.
 - **Add/edit a social link**: same idea in `src/content/socials/` (`label`,
   `url`, `order`). The label must match a key in the icon map in
   `SocialsRow.tsx` or it won't render an icon.
@@ -119,11 +137,12 @@ Deployed to **GitHub Pages** at the custom domain `enzoftware.dev`
 workflows:
 
 - `.github/workflows/ci.yml` ("**Checks**") — lint, format, type-check, build,
-  a11y tests.
+  a11y tests. Runs on every push/PR to `main`.
 - `.github/workflows/deploy.yml` ("**Deploy to GitHub Pages**") — builds and
-  deploys, but **only after Checks passes on `master`** (triggers on that
-  workflow's completion, not on push directly). Can also be run manually
-  from the Actions tab.
+  deploys, but **only after Checks passes on `main`** (triggers on that
+  workflow's completion, not on push directly — keep both files' branch
+  filters in sync if the default branch ever changes). Can also be run
+  manually from the Actions tab.
 
 **Required repo configuration** (Settings → Secrets and variables → Actions):
 
@@ -132,7 +151,14 @@ workflows:
 | `PUBLIC_POSTHOG_KEY`  | Secret   | PostHog analytics (optional)     |
 | `PUBLIC_POSTHOG_HOST` | Variable | PostHog ingestion region (US/EU) |
 
-**Recommended, not yet enforced**: branch protection on `master` requiring
-the "Lint, typecheck, build & a11y" check to pass before merge (Settings →
-Branches) — a manual GitHub UI
-setting, not something a workflow file can turn on.
+**⚠️ Not yet enforced — last call before this bites us**: `main` currently
+has no branch protection, so a push straight to `main` skips Checks entirely
+and can still trigger a deploy. Turn it on in Settings → Branches → Add
+branch protection rule for `main`:
+
+- Require status checks to pass before merging → select
+  "Lint, typecheck, build & a11y" (from `ci.yml`).
+- Require a pull request before merging (optional, but recommended solo-repo
+  hygiene: catches force-pushes and lets Checks actually gate the merge).
+
+This is a manual GitHub UI setting — no workflow file can turn it on.

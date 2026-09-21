@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { Translations } from "../i18n/translations";
 import { relativeTime } from "../lib/relativeTime";
 import { ExperienceModal, type ExperienceEntry } from "./ExperienceModal";
+import type { SocialEntry } from "./SocialsRow";
 
 export interface RecentRepo {
   name: string;
@@ -25,13 +26,30 @@ interface ActivityStackProps {
   experiences: ExperienceEntry[];
   repos: RecentRepo[];
   post: LatestPost | null;
+  socials: SocialEntry[];
 }
 
-function RowHeader({ label }: { label: string }) {
+// Written out as full class names (rather than built with template
+// interpolation) so Tailwind's content scanner can see and generate them.
+const DOT_COLOR_CLASSES = {
+  "dot-1": "bg-dot-1",
+  "dot-2": "bg-dot-2",
+  "dot-3": "bg-dot-3",
+} as const;
+
+function RowHeader({
+  label,
+  dotColor,
+}: {
+  label: string;
+  dotColor: keyof typeof DOT_COLOR_CLASSES;
+}) {
   return (
-    <div className="flex items-center gap-2 mb-3.5">
-      <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
-      <p className="text-xs text-ink-faint font-mono leading-none uppercase tracking-[0.06em]">
+    <div className="flex items-center gap-2 mb-3.5 lg:mb-4">
+      <span
+        className={`w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full ${DOT_COLOR_CLASSES[dotColor]} flex-shrink-0`}
+      />
+      <p className="text-xs lg:text-sm text-ink-faint font-mono leading-none uppercase tracking-[0.06em]">
         {label}
       </p>
     </div>
@@ -52,10 +70,12 @@ export function ActivityStack({
   experiences,
   repos,
   post,
+  socials,
 }: ActivityStackProps) {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const current = experiences.find((exp) => exp.current);
+  const linkedinUrl = socials.find((s) => s.label === "LinkedIn")?.url;
 
   useEffect(() => {
     const id = setTimeout(() => setLoading(false), 550);
@@ -65,7 +85,7 @@ export function ActivityStack({
   return (
     <>
       <motion.div
-        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-glass backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[65dvh]"
+        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-glass backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[75dvh] lg:min-h-[560px]"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10%" }}
@@ -75,39 +95,39 @@ export function ActivityStack({
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="p-6 lg:p-7 text-left hover:bg-glass transition-colors"
+            className="p-6 lg:p-8 text-left hover:bg-glass transition-colors"
           >
-            <RowHeader label={t.current.label} />
-            <p className="font-display text-xl lg:text-2xl text-ink leading-snug">
+            <RowHeader label={t.current.label} dotColor="dot-1" />
+            <p className="font-display text-xl lg:text-3xl text-ink leading-snug">
               {current.company}
             </p>
-            <p className="font-mono text-sm text-ink-muted mt-1">
+            <p className="font-mono text-sm lg:text-base text-ink-muted mt-1">
               {current.role} {t.signature.role_at} {current.company}
             </p>
-            <span className="inline-block mt-2.5 font-mono text-xs text-accent">
+            <span className="inline-block mt-2.5 lg:mt-3 font-mono text-xs lg:text-sm text-accent">
               {t.current.cta} ({experiences.length}) →
             </span>
           </button>
         )}
 
-        <div className="p-6 lg:p-7">
-          <RowHeader label={t.recent_activity.label} />
+        <div className="p-6 lg:p-8">
+          <RowHeader label={t.recent_activity.label} dotColor="dot-2" />
           {repos.length === 0 ? (
             <p className="text-sm text-ink-muted">{t.recent_activity.empty}</p>
           ) : (
-            <ul className="flex flex-col gap-2.5">
+            <ul className="flex flex-col gap-2.5 lg:gap-3.5">
               {repos.slice(0, 3).map((repo) => (
                 <li key={repo.name}>
                   <a
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-baseline justify-between gap-2 text-base text-ink hover:text-accent transition-colors"
+                    className="flex items-baseline justify-between gap-2 text-base lg:text-lg text-ink hover:text-accent transition-colors"
                     data-track="recent_activity_click"
                     data-repo={repo.name}
                   >
                     <span className="font-medium truncate">{repo.name}</span>
-                    <span className="font-mono text-xs text-ink-faint flex-shrink-0">
+                    <span className="font-mono text-xs lg:text-sm text-ink-faint flex-shrink-0">
                       {relativeTime(repo.pushed_at)}
                     </span>
                   </a>
@@ -117,8 +137,8 @@ export function ActivityStack({
           )}
         </div>
 
-        <div className="p-6 lg:p-7">
-          <RowHeader label={t.latest_post.label} />
+        <div className="p-6 lg:p-8">
+          <RowHeader label={t.latest_post.label} dotColor="dot-3" />
           <AnimatePresence mode="wait">
             <motion.div
               key={loading ? "skeleton" : "content"}
@@ -138,10 +158,10 @@ export function ActivityStack({
                   data-track="latest_post_click"
                   data-source={post.source}
                 >
-                  <span className="text-base font-semibold text-ink leading-snug group-hover:text-accent transition-colors">
+                  <span className="text-base lg:text-lg font-semibold text-ink leading-snug group-hover:text-accent transition-colors">
                     {post.title}
                   </span>
-                  <span className="font-mono text-xs text-ink-faint">
+                  <span className="font-mono text-xs lg:text-sm text-ink-faint">
                     {post.source} · {relativeTime(post.publishedAt)}
                   </span>
                 </a>
@@ -158,6 +178,7 @@ export function ActivityStack({
         experiences={experiences}
         open={modalOpen}
         onClose={() => setModalOpen(false)}
+        linkedinUrl={linkedinUrl}
       />
     </>
   );

@@ -6,12 +6,74 @@ import type { Translations } from "../i18n/translations";
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+export type ExperienceDotColor =
+  "dot-1" | "dot-2" | "dot-3" | "dot-4" | "dot-5";
+
 export interface ExperienceEntry {
   company: string;
   role: string;
   period: string;
   location: string;
   current: boolean;
+  color: ExperienceDotColor;
+}
+
+// Written out as full class names (rather than built with template
+// interpolation) so Tailwind's content scanner can see and generate them.
+// dot-1 (--color-accent) uses the --color-accent-solid variant instead here
+// — --color-accent + white text sits right at the 4.5:1 edge (see the
+// comment on --color-accent-solid in global.css) and these avatars carry
+// text, unlike the plain decorative dots in ActivityStack.
+const AVATAR_BG_CLASSES: Record<ExperienceDotColor, string> = {
+  "dot-1": "bg-accent-solid",
+  "dot-2": "bg-dot-2",
+  "dot-3": "bg-dot-3",
+  "dot-4": "bg-dot-4",
+  "dot-5": "bg-dot-5",
+};
+
+interface ExperienceRole {
+  role: string;
+  period: string;
+  location: string;
+}
+
+interface ExperienceGroup {
+  key: string;
+  company: string;
+  color: ExperienceDotColor;
+  roles: ExperienceRole[];
+}
+
+// Collapses consecutive entries at the same company (no other company in
+// between — e.g. an internal promotion or team change) into one group, so
+// the company only renders once with each role listed underneath it.
+// Entries for the same company that are NOT adjacent (left, came back later)
+// intentionally stay as separate groups/avatars, since that's a distinct
+// stint worth calling out on its own.
+function groupExperiences(experiences: ExperienceEntry[]): ExperienceGroup[] {
+  const groups: ExperienceGroup[] = [];
+
+  for (const exp of experiences) {
+    const lastGroup = groups[groups.length - 1];
+    if (lastGroup && lastGroup.company === exp.company) {
+      lastGroup.roles.push({
+        role: exp.role,
+        period: exp.period,
+        location: exp.location,
+      });
+      continue;
+    }
+
+    groups.push({
+      key: `${exp.company}-${groups.length}`,
+      company: exp.company,
+      color: exp.color,
+      roles: [{ role: exp.role, period: exp.period, location: exp.location }],
+    });
+  }
+
+  return groups;
 }
 
 interface ExperienceModalProps {
@@ -19,6 +81,7 @@ interface ExperienceModalProps {
   experiences: ExperienceEntry[];
   open: boolean;
   onClose: () => void;
+  linkedinUrl?: string | undefined;
 }
 
 export function ExperienceModal({
@@ -26,7 +89,9 @@ export function ExperienceModal({
   experiences,
   open,
   onClose,
+  linkedinUrl,
 }: ExperienceModalProps) {
+  const groups = groupExperiences(experiences);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
@@ -109,7 +174,7 @@ export function ExperienceModal({
             role="dialog"
             aria-modal="true"
             aria-label={t.title}
-            className="relative w-full sm:max-w-lg max-h-[85vh] overflow-y-auto bg-surface-elevated border border-border rounded-t-3xl sm:rounded-3xl p-6 sm:p-8"
+            className="relative w-full sm:max-w-xl max-h-[85vh] overflow-y-auto bg-surface-elevated border border-border rounded-t-3xl sm:rounded-3xl p-6 sm:p-9"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -118,14 +183,28 @@ export function ExperienceModal({
               ease: [0.22, 1, 0.36, 1],
             }}
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display text-2xl text-ink">{t.title}</h2>
+            <div className="flex items-start justify-between gap-4 mb-6">
+              <div>
+                <h2 className="font-display text-2xl text-ink">{t.title}</h2>
+                {linkedinUrl && (
+                  <a
+                    href={`${linkedinUrl.replace(/\/$/, "")}/details/experience/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-1.5 font-mono text-xs text-accent hover:text-accent-light transition-colors"
+                    data-track="linkedin_experience_click"
+                  >
+                    {t.linkedin_cta}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+              </div>
               <button
                 ref={closeButtonRef}
                 type="button"
                 onClick={onClose}
                 aria-label={t.close}
-                className="flex items-center justify-center w-8 h-8 rounded-full text-ink-muted hover:text-ink hover:bg-glass transition-colors"
+                className="flex items-center justify-center w-8 h-8 rounded-full text-ink-muted hover:text-ink hover:bg-glass transition-colors flex-shrink-0"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path
@@ -138,22 +217,51 @@ export function ExperienceModal({
               </button>
             </div>
 
-            <div className="flex flex-col">
-              {experiences.map((exp) => (
-                <div
-                  key={exp.company}
-                  className="flex items-baseline justify-between gap-4 flex-wrap py-4 border-t border-border first:border-t-0"
-                >
-                  <span>
-                    <span className="font-medium text-ink">{exp.role}</span>
-                    <span className="text-ink-muted"> — {exp.company}</span>
-                  </span>
-                  <span className="font-mono text-xs text-ink-faint whitespace-nowrap">
-                    {exp.period} · {exp.location}
-                  </span>
-                </div>
+            <ol className="flex flex-col">
+              {groups.map((group, index) => (
+                <li key={group.key} className="flex gap-4">
+                  {/* Timeline rail: monogram avatar + connecting line down to
+                      the next company (omitted after the last one). */}
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <span
+                      aria-hidden="true"
+                      className={`flex items-center justify-center w-10 h-10 rounded-xl font-display text-sm font-semibold text-on-accent ${AVATAR_BG_CLASSES[group.color]}`}
+                    >
+                      {group.company.charAt(0)}
+                    </span>
+                    {index < groups.length - 1 && (
+                      <span className="w-px flex-1 min-h-[1.5rem] bg-border mt-2" />
+                    )}
+                  </div>
+
+                  <div className="flex-1 pb-7 last:pb-0">
+                    <p className="font-semibold text-ink leading-snug">
+                      {group.company}
+                    </p>
+
+                    {group.roles.length === 1 && group.roles[0] ? (
+                      <>
+                        <p className="text-ink-muted">{group.roles[0].role}</p>
+                        <p className="font-mono text-xs text-ink-faint mt-1.5">
+                          {group.roles[0].period} · {group.roles[0].location}
+                        </p>
+                      </>
+                    ) : (
+                      <ul className="flex flex-col gap-3 mt-2 border-l border-border pl-3.5">
+                        {group.roles.map((role) => (
+                          <li key={role.role}>
+                            <p className="text-ink-muted">{role.role}</p>
+                            <p className="font-mono text-xs text-ink-faint mt-1">
+                              {role.period} · {role.location}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </motion.div>
         </motion.div>
       )}

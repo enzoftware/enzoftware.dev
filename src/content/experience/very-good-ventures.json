@@ -1,8 +1,9 @@
 {
   "company": "Very Good Ventures",
   "role": "Senior Flutter Developer",
-  "period": "Feb – Jun 2024",
+  "period": "Feb 2024 – Jun 2024",
   "location": "Remote, US",
   "current": false,
-  "order": 3
+  "order": 3,
+  "color": "dot-1"
 }

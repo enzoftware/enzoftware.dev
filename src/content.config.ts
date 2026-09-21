@@ -10,6 +10,7 @@ const experience = defineCollection({
     location: z.string(),
     current: z.boolean(),
     order: z.number(),
+    color: z.enum(["dot-1", "dot-2", "dot-3", "dot-4", "dot-5"]),
   }),
 });
 

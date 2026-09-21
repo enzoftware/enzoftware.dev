@@ -10,7 +10,7 @@ export interface Translations {
     badge_flutter: string;
   };
   current: { label: string; cta: string };
-  modal: { title: string; close: string };
+  modal: { title: string; close: string; linkedin_cta: string };
   signature: { role_at: string };
   latest_post: { label: string; empty: string };
   recent_activity: { label: string; empty: string };
@@ -35,7 +35,11 @@ export const translations: Record<Locale, Translations> = {
       badge_flutter: "FlutterConf LATAM Speaker",
     },
     current: { label: "Currently at", cta: "View full experience" },
-    modal: { title: "Full experience", close: "Close" },
+    modal: {
+      title: "Full experience",
+      close: "Close",
+      linkedin_cta: "See full experience on LinkedIn",
+    },
     signature: { role_at: "at" },
     latest_post: { label: "Latest post", empty: "Nothing published yet" },
     recent_activity: {
@@ -61,7 +65,11 @@ export const translations: Record<Locale, Translations> = {
       badge_flutter: "Speaker FlutterConf LATAM",
     },
     current: { label: "Actualmente en", cta: "Ver experiencia completa" },
-    modal: { title: "Experiencia completa", close: "Cerrar" },
+    modal: {
+      title: "Experiencia completa",
+      close: "Cerrar",
+      linkedin_cta: "Ver experiencia completa en LinkedIn",
+    },
     signature: { role_at: "en" },
     latest_post: { label: "Último artículo", empty: "Nada publicado aún" },
     recent_activity: {

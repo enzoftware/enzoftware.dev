@@ -27,6 +27,11 @@
   --color-accent-solid-hover: #7ab6e8;
   --color-signal: #4ec9b0;
   --color-flair: #c586c0;
+  /* Extra syntax-inspired hues (string orange / literal yellow) so the
+     timeline dots can carry 5 distinct colors instead of reusing --accent
+     everywhere. */
+  --color-dot-4: #ce9178;
+  --color-dot-5: #dcdcaa;
   --color-border: #3c3c3c;
   --color-glass: rgba(255, 255, 255, 0.03);
   --color-glass-border: rgba(255, 255, 255, 0.06);
@@ -55,6 +60,11 @@
   --color-accent-solid-hover: #005a9e;
   --color-signal: #267f99;
   --color-flair: #af00db;
+  --color-dot-4: #a31515;
+  /* Darker than the raw VS Code "string" yellow (#dcdcaa scaled down) so
+     white text on this background (the experience-timeline avatars) clears
+     4.5:1 — the same contrast concern noted above for --color-accent. */
+  --color-dot-5: #8f6a00;
   --color-border: #e5e5e5;
   --color-glass: rgba(0, 0, 0, 0.02);
   --color-glass-border: rgba(0, 0, 0, 0.07);
