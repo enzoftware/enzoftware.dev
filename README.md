@@ -14,7 +14,7 @@ current role, latest Substack post) sitting next to the name.
 - [TypeScript ~6.0](https://www.typescriptlang.org) — strict mode (pinned below 7 for now, an `astro-check` compatibility issue)
 - [Tailwind CSS v4](https://tailwindcss.com) via `@tailwindcss/vite` — styling
 - [Framer Motion](https://www.framer.com/motion/) — animations (entrance staggers, scroll reveals, the experience modal)
-- [Mixpanel](https://mixpanel.com) — analytics (optional)
+- [PostHog](https://posthog.com) — analytics (optional)
 - [ESLint ~9](https://eslint.org) / [Prettier](https://prettier.io) — linting & formatting (ESLint pinned below 10, `eslint-plugin-react` doesn't support it yet)
 
 ## Getting started
@@ -62,21 +62,45 @@ shimmer-skeleton reveal). The contact section is a flat, compact bar — headlin
 the left, the email button on the right — with the footer folded into the same
 background so there's no color seam at the bottom of the page.
 
-## Analytics (Mixpanel)
+## Analytics (PostHog)
 
-1. Copy the example env file:
+1. Create a free project at [posthog.com](https://posthog.com) (US or EU
+   cloud) and copy its API key.
+
+2. Copy the example env file and fill it in:
 
    ```bash
    cp .env.example .env
    ```
 
-2. Fill in your Mixpanel project token:
-
    ```
-   PUBLIC_MIXPANEL_TOKEN=your_token_here
+   PUBLIC_POSTHOG_KEY=phc_your_project_api_key
+   PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
    ```
 
-   If the token is missing or set to the placeholder value, analytics are silently skipped.
+   If the key is missing or left as the placeholder, analytics are silently
+   skipped. To go live in production, add `PUBLIC_POSTHOG_KEY` as a GitHub
+   Actions **repository secret** and `PUBLIC_POSTHOG_HOST` as a repository
+   **variable** (Settings → Secrets and variables → Actions) — the deploy
+   workflow (`.github/workflows/deploy.yml`) reads both into the build.
+
+3. What gets tracked, all on PostHog's free tier:
+   - **Country** — GeoIP-derived from the visitor's IP, automatic.
+   - **Source** — `document.referrer` and `utm_source` are classified into a
+     friendly label (LinkedIn, X, Medium, Substack, GitHub, Search, Direct,
+     Other) by `src/lib/analyticsSource.ts` and attached to every event.
+   - **Every click** — PostHog's autocapture tracks all clicks automatically
+     (feeds the **Heatmaps** tab with no setup); a handful of meaningful
+     actions are also sent as named events via a `data-track="..."`
+     attribute (e.g. `contact_email_click`, `social_click`) so they're easy
+     to build funnels/insights on.
+
+4. To see who reached out via email, and where they came from: in PostHog,
+   open **Persons** and filter "performed event `contact_email_click`" to
+   see each visitor's country and source, or build a **Trends** insight on
+   that event broken down by `source` (or `$geoip_country_name`). Use
+   **Session Replay** to watch what a visitor did before converting (enable
+   it under Project Settings → Session replay if it isn't already on).
 
 ## GitHub API & Substack feed
 

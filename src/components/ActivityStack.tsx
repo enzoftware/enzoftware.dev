@@ -103,7 +103,7 @@ export function ActivityStack({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-baseline justify-between gap-2 text-base text-ink hover:text-accent transition-colors"
-                    data-mixpanel="recent_activity_click"
+                    data-track="recent_activity_click"
                     data-repo={repo.name}
                   >
                     <span className="font-medium truncate">{repo.name}</span>
@@ -135,7 +135,7 @@ export function ActivityStack({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex flex-col gap-1"
-                  data-mixpanel="latest_post_click"
+                  data-track="latest_post_click"
                   data-source={post.source}
                 >
                   <span className="text-base font-semibold text-ink leading-snug group-hover:text-accent transition-colors">
