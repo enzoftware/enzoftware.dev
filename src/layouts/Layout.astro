@@ -11,7 +11,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="lg:h-dvh lg:overflow-y-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,23 +27,46 @@ const {
     <meta name="twitter:creator" content="@enzoftware" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="theme-color" content="#1e1e1e" />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Fonts loaded here to avoid FOUC -->
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem("theme");
+          const theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark";
+          document.documentElement.dataset.theme = theme;
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta)
+            meta.setAttribute(
+              "content",
+              theme === "light" ? "#ffffff" : "#1e1e1e",
+            );
+        } catch (_e) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
   </head>
-  <body>
+  <body class="lg:h-dvh lg:overflow-y-hidden">
     <!-- Subtle radial ambient light -->
     <div
       aria-hidden="true"
       style="position:fixed;inset:0;pointer-events:none;z-index:0;
-             background: radial-gradient(ellipse 80% 50% at 20% 10%, rgba(43,92,138,0.07) 0%, transparent 60%),
-                         radial-gradient(ellipse 60% 40% at 80% 90%, rgba(43,92,138,0.05) 0%, transparent 55%);"
+             background: radial-gradient(ellipse 80% 50% at 15% 0%, var(--ambient-1) 0%, transparent 60%),
+                         radial-gradient(ellipse 60% 40% at 85% 100%, var(--ambient-2) 0%, transparent 55%);"
     ></div>
     <slot />
   </body>

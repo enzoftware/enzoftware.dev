@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import { PortfolioGrid } from "../components/PortfolioGrid";
 import { Analytics } from "../components/Analytics";
-import type { WorkingOnRepo } from "../components/WorkingOnCard";
+import type { RecentRepo, LatestPost } from "../components/ActivityStack";
 import excludedReposJson from "../data/excluded-repos.json";
 import "../styles/global.css";
 
@@ -19,7 +19,7 @@ const socials = (await getCollection("socials"))
 
 // Fetch GitHub data at build time
 let avatarUrl = "https://avatars.githubusercontent.com/u/22333076?v=4";
-let workingOnRepos: WorkingOnRepo[] = [];
+let recentRepos: RecentRepo[] = [];
 
 try {
   const [profileRes, reposRes] = await Promise.all([
@@ -39,7 +39,7 @@ try {
 
   if (reposRes.ok) {
     const repos = await reposRes.json();
-    workingOnRepos = repos
+    recentRepos = repos
       .filter(
         (r: Record<string, unknown>) =>
           !r.fork && !excludedRepos.includes(r.name as string),
@@ -55,17 +55,47 @@ try {
   // Use defaults on fetch failure
 }
 
+// Fetch the latest Substack post at build time (falls back to null on failure)
+let latestPost: LatestPost | null = null;
+
+try {
+  const feedRes = await fetch("https://enzoftware.substack.com/feed");
+  if (feedRes.ok) {
+    const xml = await feedRes.text();
+    const firstItem = xml.match(/<item>([\s\S]*?)<\/item>/)?.[1];
+    const title = firstItem
+      ?.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/)?.[1]
+      ?.trim();
+    const link = firstItem?.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim();
+    const pubDate = firstItem
+      ?.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]
+      ?.trim();
+
+    if (title && link && pubDate) {
+      latestPost = {
+        title,
+        url: link,
+        publishedAt: new Date(pubDate).toISOString(),
+        source: "Substack",
+      };
+    }
+  }
+} catch (_e) {
+  // Use null on fetch failure
+}
+
 const mixpanelToken = import.meta.env.PUBLIC_MIXPANEL_TOKEN ?? "";
 ---
 
 <Layout>
-  <main class="w-full min-h-dvh bg-surface">
+  <main class="w-full min-h-dvh lg:h-dvh bg-surface">
     <PortfolioGrid
       client:load
       avatarUrl={avatarUrl}
       experiences={experiences}
       socials={socials}
-      workingOnRepos={workingOnRepos}
+      recentRepos={recentRepos}
+      latestPost={latestPost}
     />
   </main>
   <Analytics client:load token={mixpanelToken} />

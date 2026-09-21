@@ -1,74 +1,70 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useSyncExternalStore } from "react";
+import { TopBar } from "./TopBar";
 import { HeroCard } from "./HeroCard";
-import { ExperienceCard, type ExperienceEntry } from "./ExperienceCard";
-import { SocialsCarousel, type SocialEntry } from "./SocialsCarousel";
-import { CurrentJobChip } from "./CurrentJobChip";
-import { WorkingOnCard, type WorkingOnRepo } from "./WorkingOnCard";
-import { ContactChip } from "./ContactChip";
+import { ActivityStack } from "./ActivityStack";
+import { ContactCTA } from "./ContactCTA";
+import type { ExperienceEntry } from "./ExperienceModal";
+import type { RecentRepo, LatestPost } from "./ActivityStack";
+import type { SocialEntry } from "./SocialsRow";
+import {
+  applyTheme,
+  getServerThemeSnapshot,
+  getThemeSnapshot,
+  subscribeTheme,
+} from "../lib/theme";
 import { translations, type Locale } from "../i18n/translations";
 
 interface PortfolioGridProps {
   avatarUrl: string;
   experiences: ExperienceEntry[];
   socials: SocialEntry[];
-  workingOnRepos: WorkingOnRepo[];
+  recentRepos: RecentRepo[];
+  latestPost: LatestPost | null;
 }
 
 export function PortfolioGrid({
   avatarUrl,
   experiences,
   socials,
-  workingOnRepos,
+  recentRepos,
+  latestPost,
 }: PortfolioGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
   const t = translations[locale];
+  const fullName = `${t.hero.name_line1} ${t.hero.name_line2}`;
 
   const toggleLocale = () => setLocale((l) => (l === "en" ? "es" : "en"));
+  const toggleTheme = () => applyTheme(theme === "dark" ? "light" : "dark");
 
   return (
-    <div className="relative w-full min-h-dvh overflow-x-hidden">
-      {/* Language toggle */}
-      <motion.button
-        onClick={toggleLocale}
-        className="fixed bottom-3 left-3 z-50 flex items-center gap-2 px-3 py-2 bg-white border border-border rounded-xl shadow-sm text-xs font-semibold text-ink hover:border-accent/40 transition-all select-none"
-        whileHover={{ scale: 1.04, y: -1 }}
-        whileTap={{ scale: 0.96 }}
-        aria-label="Toggle language"
-      >
-        <span className="text-ink-muted font-mono">
-          {locale === "en" ? "EN" : "ES"}
-        </span>
-        <span className="w-px h-3 bg-border" />
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={t.lang_toggle}
-            className="text-accent"
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 5 }}
-            transition={{ duration: 0.15 }}
-          >
-            {t.lang_toggle}
-          </motion.span>
-        </AnimatePresence>
-      </motion.button>
+    <div id="top" className="relative w-full lg:h-dvh flex flex-col">
+      <TopBar
+        avatarUrl={avatarUrl}
+        name={fullName}
+        locale={locale}
+        langToggleLabel={t.lang_toggle}
+        onToggleLocale={toggleLocale}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
-      <CurrentJobChip t={t.current_job} experiences={experiences} />
-      <WorkingOnCard t={t.working_on} repos={workingOnRepos} />
-      <ContactChip t={t.contact} />
+      <main className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
+        <HeroCard t={t.hero} socialT={t.social} socials={socials} />
 
-      <div className="portfolio-container">
-        <div className="portfolio-hero">
-          <HeroCard t={t.hero} avatarUrl={avatarUrl} />
-        </div>
-        <div className="portfolio-experience">
-          <ExperienceCard t={t.experience} experiences={experiences} />
-        </div>
-        <div className="portfolio-social">
-          <SocialsCarousel t={t.social} socials={socials} />
-        </div>
-      </div>
+        <ActivityStack
+          t={t}
+          experiences={experiences}
+          repos={recentRepos}
+          post={latestPost}
+        />
+      </main>
+
+      <ContactCTA t={t.contact} name={fullName} />
     </div>
   );
 }

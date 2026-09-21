@@ -2,6 +2,51 @@
 
 @config "../../tailwind.config.mjs";
 
+/* ── VS Code "Modern" theme tokens ───────────────────────── */
+:root {
+  /* Dark Modern (default) */
+  --color-surface: #1e1e1e;
+  --color-surface-elevated: #252526;
+  --color-surface-raised: #2d2d30;
+  --color-ink: #d4d4d4;
+  --color-ink-muted: #9d9d9d;
+  --color-ink-faint: #6b6b6b;
+  --color-accent: #569cd6;
+  --color-accent-light: #7ab6e8;
+  --color-accent-subtle: #1b2b3a;
+  --color-signal: #4ec9b0;
+  --color-flair: #c586c0;
+  --color-border: #3c3c3c;
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.06);
+  --shimmer-a: #3c3c3c;
+  --shimmer-b: #2d2d30;
+  --ambient-1: rgba(86, 156, 214, 0.14);
+  --ambient-2: rgba(197, 134, 192, 0.08);
+}
+
+:root[data-theme="light"] {
+  /* Light Modern */
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f3f3f3;
+  --color-surface-raised: #ececec;
+  --color-ink: #3b3b3b;
+  --color-ink-muted: #6b6b6b;
+  --color-ink-faint: #8a8a8a;
+  --color-accent: #0078d4;
+  --color-accent-light: #2b88d8;
+  --color-accent-subtle: #e8f1fb;
+  --color-signal: #267f99;
+  --color-flair: #af00db;
+  --color-border: #e5e5e5;
+  --color-glass: rgba(0, 0, 0, 0.02);
+  --color-glass-border: rgba(0, 0, 0, 0.07);
+  --shimmer-a: #ececec;
+  --shimmer-b: #ffffff;
+  --ambient-1: rgba(0, 120, 212, 0.08);
+  --ambient-2: rgba(175, 0, 219, 0.05);
+}
+
 @layer base {
   *,
   *::before,
@@ -12,16 +57,24 @@
   }
 
   html {
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
-    background-color: #f8f7f4;
-    color: #1a1a1a;
-    font-family: "DM Sans", system-ui, sans-serif;
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: #ffffff;
   }
 
   /* Grain overlay */
@@ -31,29 +84,14 @@
     inset: 0;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.04;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-size: 128px 128px;
   }
 }
 
 @layer utilities {
-  .font-display {
-    font-family: "DM Serif Display", Georgia, serif;
-  }
-
-  .font-mono {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
-  }
-
-  .card-base {
-    @apply bg-card border border-border rounded-2xl overflow-hidden;
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:border-accent/20 hover:-translate-y-0.5;
-  }
-
   .scrollbar-none {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -64,20 +102,15 @@
   }
 }
 
-/* ── Minimal portfolio layout ─────────────────────────── */
-.portfolio-container {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px 20px 120px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* ── Full-bleed editorial layout ─────────────────────────── */
+.measure {
+  max-width: 640px;
 }
 
-@media (min-width: 1024px) {
-  .portfolio-container {
-    padding: 48px 24px 140px;
-    gap: 20px;
-  }
+.section-gutter {
+  padding-inline: clamp(20px, 6vw, 64px);
+}
+
+.section-rhythm {
+  padding-block: clamp(44px, 8vw, 76px);
 }

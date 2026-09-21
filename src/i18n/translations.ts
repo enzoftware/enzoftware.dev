@@ -8,13 +8,19 @@ export interface Translations {
     bio: string;
     badge_kodeco: string;
     badge_flutter: string;
-    badge_location: string;
   };
-  experience: { title: string; years: string; current: string };
-  current_job: { label: string };
-  working_on: { label: string; empty: string };
+  current: { label: string; cta: string };
+  modal: { title: string; close: string };
+  signature: { role_at: string };
+  latest_post: { label: string; empty: string };
+  recent_activity: { label: string; empty: string };
   social: { title: string };
-  contact: { label: string };
+  contact: {
+    eyebrow: string;
+    headline_1: string;
+    headline_2: string;
+    note: string;
+  };
   lang_toggle: string;
 }
 
@@ -27,13 +33,19 @@ export const translations: Record<Locale, Translations> = {
       bio: "7+ years turning product goals into polished, maintainable apps across iOS and Android.",
       badge_kodeco: "Kodeco Author",
       badge_flutter: "FlutterConf LATAM Speaker",
-      badge_location: "Lima, Peru",
     },
-    experience: { title: "Experience", years: "7+ yrs", current: "current" },
-    current_job: { label: "Currently at" },
-    working_on: { label: "Working on", empty: "Nothing public right now" },
+    current: { label: "Currently at", cta: "View full experience" },
+    modal: { title: "Full experience", close: "Close" },
+    signature: { role_at: "at" },
+    latest_post: { label: "Latest post", empty: "Nothing published yet" },
+    recent_activity: { label: "Working on", empty: "Nothing public right now" },
     social: { title: "Find me on" },
-    contact: { label: "Contact me" },
+    contact: {
+      eyebrow: "Got a mobile app to ship?",
+      headline_1: "Let's build something",
+      headline_2: "worth shipping.",
+      note: "Usually replies within a day · Lima, Peru (GMT-5)",
+    },
     lang_toggle: "ES",
   },
   es: {
@@ -44,13 +56,22 @@ export const translations: Record<Locale, Translations> = {
       bio: "7+ años convirtiendo metas de producto en apps pulidas y mantenibles para iOS y Android.",
       badge_kodeco: "Autor en Kodeco",
       badge_flutter: "Speaker FlutterConf LATAM",
-      badge_location: "Lima, Perú",
     },
-    experience: { title: "Experiencia", years: "7+ años", current: "actual" },
-    current_job: { label: "Actualmente en" },
-    working_on: { label: "Trabajando en", empty: "Nada público por ahora" },
+    current: { label: "Actualmente en", cta: "Ver experiencia completa" },
+    modal: { title: "Experiencia completa", close: "Cerrar" },
+    signature: { role_at: "en" },
+    latest_post: { label: "Último artículo", empty: "Nada publicado aún" },
+    recent_activity: {
+      label: "Trabajando en",
+      empty: "Nada público por ahora",
+    },
     social: { title: "Encuéntrame en" },
-    contact: { label: "Contáctame" },
+    contact: {
+      eyebrow: "¿Tienes una app móvil por lanzar?",
+      headline_1: "Construyamos algo",
+      headline_2: "que valga la pena.",
+      note: "Normalmente respondo en un día · Lima, Perú (GMT-5)",
+    },
     lang_toggle: "EN",
   },
 };
