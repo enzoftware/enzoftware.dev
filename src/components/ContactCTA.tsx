@@ -42,7 +42,7 @@ export function ContactCTA({
         className="absolute -top-1/2 -right-1/4 w-[50%] h-[200%] rounded-full bg-accent/10 blur-[120px] pointer-events-none"
       />
 
-      <div className="relative section-gutter py-8 lg:py-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+      <div className="relative section-gutter py-6 lg:py-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <div>
           <motion.p
             className="inline-flex items-center gap-2 font-mono text-xs text-ink rounded-full border border-border bg-surface-raised px-3 py-1.5"
@@ -151,7 +151,7 @@ export function ContactCTA({
         </div>
       </div>
 
-      <div className="relative section-gutter py-4 border-t border-border/60 font-mono text-xs text-ink-muted flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <div className="relative section-gutter py-3 border-t border-border/60 font-mono text-xs text-ink-muted flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <span>
           © {new Date().getFullYear()} {name}
         </span>

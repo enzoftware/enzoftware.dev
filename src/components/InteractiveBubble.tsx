@@ -53,7 +53,7 @@ export function InteractiveBubble({
       whileHover={{ y: -2, scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      className={`group relative inline-flex items-center gap-1 px-2 py-1 rounded-full border border-border bg-glass backdrop-blur-md text-xs font-mono text-ink cursor-pointer select-none transition-all duration-200 ${styles.borderHover} ${styles.glow} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent`}
+      className={`group relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-glass backdrop-blur-md text-xs font-mono text-ink cursor-pointer select-none transition-all duration-200 ${styles.borderHover} ${styles.glow} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent`}
     >
       {/* Indicator dot or custom icon */}
       <span className="flex items-center justify-center flex-shrink-0">
@@ -75,7 +75,7 @@ export function InteractiveBubble({
       {/* Count pill if present */}
       {count !== undefined && count > 0 && (
         <span
-          className="text-[10px] font-mono font-semibold px-1 py-0.2 rounded-full bg-border/80 text-ink-faint group-hover:text-ink transition-colors"
+          className="text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded-full bg-border/80 text-ink-faint group-hover:text-ink transition-colors"
           aria-hidden="true"
         >
           {count}

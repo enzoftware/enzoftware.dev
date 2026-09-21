@@ -62,7 +62,7 @@ export function HeroCard({
       variants={container}
       initial="hidden"
       animate="visible"
-      className="flex flex-col justify-center lg:h-full lg:justify-start"
+      className="flex flex-col justify-center lg:justify-start"
     >
       <motion.h1 variants={item} className="font-display text-hero text-ink">
         {t.name_line1}
@@ -72,7 +72,7 @@ export function HeroCard({
 
       <motion.div
         variants={item}
-        className="mt-3 h-7 lg:h-8 overflow-hidden"
+        className="mt-2 h-6 lg:h-7 overflow-hidden"
         aria-live="polite"
       >
         <AnimatePresence mode="wait">
@@ -91,7 +91,7 @@ export function HeroCard({
 
       <motion.p
         variants={item}
-        className="text-ink-muted text-base lg:text-lg leading-snug measure mt-1.5"
+        className="text-ink-muted text-base lg:text-base leading-snug measure mt-1"
       >
         {t.bio}
       </motion.p>
@@ -99,7 +99,7 @@ export function HeroCard({
       {/* Interactive Bubbles inviting the visitor to explore expertise */}
       <motion.div
         variants={item}
-        className="flex flex-wrap items-center gap-1.5 mt-2.5"
+        className="flex flex-wrap items-center gap-2 mt-2"
         role="group"
         aria-label="Interactive expertise topics"
       >
@@ -133,11 +133,11 @@ export function HeroCard({
 
       <motion.div
         variants={item}
-        className="flex flex-wrap items-center gap-4 mt-3"
+        className="flex flex-wrap items-center gap-3 mt-2"
       >
         <a
           href="mailto:hi@enzoftware.dev?subject=Let%27s%20build%20something"
-          className="inline-flex items-center justify-center rounded-full bg-accent-solid hover:bg-accent-solid-hover text-on-accent font-mono text-sm font-semibold px-5 py-2.5 transition-colors"
+          className="inline-flex items-center justify-center rounded-full bg-accent-solid hover:bg-accent-solid-hover text-on-accent font-mono text-base px-6 py-2.5 transition-colors"
           data-track="hero_contact_click"
         >
           {t.contact_cta}
@@ -146,7 +146,7 @@ export function HeroCard({
           href="/resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 font-mono text-sm text-ink-muted hover:text-accent transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-full border border-border text-ink-muted hover:text-accent hover:border-accent/50 font-mono text-base px-6 py-2.5 transition-colors"
           data-track="hero_resume_click"
         >
           {t.resume_cta}
@@ -160,7 +160,9 @@ export function HeroCard({
             />
           </svg>
         </a>
+      </motion.div>
 
+      <motion.div variants={item} className="mt-2">
         <SocialsRow t={socialT} socials={socials} />
       </motion.div>
     </motion.div>
