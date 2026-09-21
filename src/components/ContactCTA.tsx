@@ -3,10 +3,17 @@ import type { Translations } from "../i18n/translations";
 
 interface ContactCTAProps {
   t: Translations["contact"];
+  cookieT: Translations["cookie_consent"];
   name: string;
+  onOpenCookiePolicy: () => void;
 }
 
-export function ContactCTA({ t, name }: ContactCTAProps) {
+export function ContactCTA({
+  t,
+  cookieT,
+  name,
+  onOpenCookiePolicy,
+}: ContactCTAProps) {
   return (
     <motion.footer
       className="relative bg-surface-elevated border-t border-border overflow-hidden lg:flex-shrink-0"
@@ -80,8 +87,17 @@ export function ContactCTA({ t, name }: ContactCTAProps) {
         </motion.a>
       </div>
 
-      <div className="relative section-gutter py-4 border-t border-border/60 font-mono text-xs text-ink-faint">
-        © {new Date().getFullYear()} {name}
+      <div className="relative section-gutter py-4 border-t border-border/60 font-mono text-xs text-ink-muted flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <span>
+          © {new Date().getFullYear()} {name}
+        </span>
+        <button
+          type="button"
+          onClick={onOpenCookiePolicy}
+          className="text-ink underline underline-offset-2 hover:text-accent transition-colors cursor-pointer text-left sm:text-right"
+        >
+          {cookieT.manage_cookies}
+        </button>
       </div>
     </motion.footer>
   );
