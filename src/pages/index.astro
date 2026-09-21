@@ -5,6 +5,7 @@ import { PortfolioGrid } from "../components/PortfolioGrid";
 import { Analytics } from "../components/Analytics";
 import type { RecentRepo, LatestPost } from "../components/ActivityStack";
 import excludedReposJson from "../data/excluded-repos.json";
+import { isValidHttpsUrl } from "../lib/validation";
 import "../styles/global.css";
 
 const excludedRepos = excludedReposJson as string[];
@@ -34,7 +35,9 @@ try {
 
   if (profileRes.ok) {
     const profile = await profileRes.json();
-    avatarUrl = profile.avatar_url ?? avatarUrl;
+    if (isValidHttpsUrl(profile.avatar_url)) {
+      avatarUrl = profile.avatar_url;
+    }
   }
 
   if (reposRes.ok) {
@@ -42,7 +45,9 @@ try {
     recentRepos = repos
       .filter(
         (r: Record<string, unknown>) =>
-          !r.fork && !excludedRepos.includes(r.name as string),
+          !r.fork &&
+          !excludedRepos.includes(r.name as string) &&
+          isValidHttpsUrl(r.html_url),
       )
       .slice(0, 3)
       .map((r: Record<string, unknown>) => ({
@@ -66,12 +71,14 @@ try {
     const title = firstItem
       ?.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/)?.[1]
       ?.trim();
-    const link = firstItem?.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim();
+    const link = firstItem
+      ?.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/)?.[1]
+      ?.trim();
     const pubDate = firstItem
       ?.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]
       ?.trim();
 
-    if (title && link && pubDate) {
+    if (title && link && pubDate && isValidHttpsUrl(link)) {
       latestPost = {
         title,
         url: link,

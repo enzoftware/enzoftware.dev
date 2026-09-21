@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "audit": "bun audit",
     "test:unit": "bun test tests/unit",
     "test:a11y": "playwright test",
     "test": "bun run test:unit && bun run test:a11y"
