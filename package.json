@@ -10,7 +10,8 @@
     "check": "astro sync && astro-check",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:a11y": "playwright test"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.6",
@@ -24,7 +25,10 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19",
     "astro-eslint-parser": "^3.1.0",
@@ -35,6 +39,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "prettier": "^3.9.8",
     "prettier-plugin-astro": "^1.0.1",
+    "serve": "^14.2.6",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.0"
   }

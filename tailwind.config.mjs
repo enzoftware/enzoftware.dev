@@ -13,6 +13,7 @@ export default {
         accent: "var(--color-accent)",
         "accent-light": "var(--color-accent-light)",
         "accent-subtle": "var(--color-accent-subtle)",
+        "on-accent": "var(--color-on-accent)",
         signal: "var(--color-signal)",
         flair: "var(--color-flair)",
         card: "var(--color-surface-elevated)",
