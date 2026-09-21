@@ -20,6 +20,7 @@ theme toggle in the VS Code "Modern" palettes.
 - [Architecture notes](#architecture-notes)
 - [Updating content](#updating-content)
 - [Analytics (PostHog)](#analytics-posthog)
+- [AI Agent Guidelines](#ai-agent-guidelines)
 - [Deployment](#deployment)
 
 ## Stack
@@ -129,6 +130,20 @@ property; a few named events (`contact_email_click`, `social_click`, ...) via
 `data-track="..."` attributes make funnels easy to build. To see who reached
 out and where from: PostHog → **Persons**, filter "performed event
 `contact_email_click`".
+
+For full details on the event delegation model, the catalog of tracked events,
+and how to create new events, see [`docs/analytics.md`](./docs/analytics.md).
+
+## AI Agent Guidelines
+
+This repository includes configuration, rules, and skills for autonomous AI
+assistants:
+
+- [`AGENTS.md`](./AGENTS.md) — Main instructions, architectural invariants (no-scroll desktop layout, i18n copy isolation, theme system), and verification workflows.
+- [`.agents/rules/typescript.md`](./.agents/rules/typescript.md) — TypeScript implementation and type-safety rules.
+- [`.agents/skills/add-analytic-event/SKILL.md`](./.agents/skills/add-analytic-event/SKILL.md) — Agent skill for creating, testing, and documenting PostHog analytic events.
+- [`.agents/skills/create-pr/SKILL.md`](./.agents/skills/create-pr/SKILL.md) — Agent skill for creating standardized PRs following the PR template.
+- [`.github/pull_request_template.md`](./.github/pull_request_template.md) — Pull request template with invariant and verification checklists.
 
 ## Deployment
 
