@@ -9,6 +9,9 @@ concurrency:
   group: checks-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   checks:
     name: Lint, typecheck, build & a11y
@@ -24,6 +27,9 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Security audit
+        run: bun run audit
 
       - name: Format check
         run: bun run format:check

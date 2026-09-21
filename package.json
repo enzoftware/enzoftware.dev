@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "audit": "bun audit",
     "test:a11y": "playwright test"
   },
   "dependencies": {

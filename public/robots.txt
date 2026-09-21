@@ -1,0 +1,5 @@
+# robots.txt for https://enzoftware.dev
+User-agent: *
+Allow: /
+
+Host: https://enzoftware.dev

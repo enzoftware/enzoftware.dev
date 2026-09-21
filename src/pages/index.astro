@@ -17,6 +17,16 @@ const socials = (await getCollection("socials"))
   .sort((a, b) => a.data.order - b.data.order)
   .map((entry) => ({ label: entry.data.label, url: entry.data.url }));
 
+function isValidHttpsUrl(urlStr: unknown): boolean {
+  if (typeof urlStr !== "string") return false;
+  try {
+    const parsed = new URL(urlStr);
+    return parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 // Fetch GitHub data at build time
 let avatarUrl = "https://avatars.githubusercontent.com/u/22333076?v=4";
 let recentRepos: RecentRepo[] = [];
@@ -34,7 +44,9 @@ try {
 
   if (profileRes.ok) {
     const profile = await profileRes.json();
-    avatarUrl = profile.avatar_url ?? avatarUrl;
+    if (isValidHttpsUrl(profile.avatar_url)) {
+      avatarUrl = profile.avatar_url;
+    }
   }
 
   if (reposRes.ok) {
@@ -42,7 +54,9 @@ try {
     recentRepos = repos
       .filter(
         (r: Record<string, unknown>) =>
-          !r.fork && !excludedRepos.includes(r.name as string),
+          !r.fork &&
+          !excludedRepos.includes(r.name as string) &&
+          isValidHttpsUrl(r.html_url),
       )
       .slice(0, 3)
       .map((r: Record<string, unknown>) => ({
@@ -71,7 +85,7 @@ try {
       ?.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]
       ?.trim();
 
-    if (title && link && pubDate) {
+    if (title && link && pubDate && isValidHttpsUrl(link)) {
       latestPost = {
         title,
         url: link,

@@ -1,0 +1,6 @@
+# RFC 9116 Security Disclosure File for enzoftware.dev
+Contact: mailto:hi@enzoftware.dev
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, es
+Canonical: https://enzoftware.dev/.well-known/security.txt
+Policy: https://github.com/enzoftware/enzoftware.dev
