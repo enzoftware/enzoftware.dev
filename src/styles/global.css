@@ -10,10 +10,21 @@
   --color-surface-raised: #2d2d30;
   --color-ink: #d4d4d4;
   --color-ink-muted: #9d9d9d;
-  --color-ink-faint: #6b6b6b;
+  /* #949494 keeps ink-faint's "tertiary" hierarchy while clearing WCAG AA
+     (4.5:1) for the small mono labels it's used on against every surface
+     tone it appears on (surface, surface-elevated, surface-raised). */
+  --color-ink-faint: #949494;
   --color-accent: #569cd6;
   --color-accent-light: #7ab6e8;
   --color-accent-subtle: #1b2b3a;
+  /* Text color for content rendered on top of --color-accent (e.g. solid
+     buttons). White on #569cd6 fails contrast, so dark text is used instead. */
+  --color-on-accent: #1e1e1e;
+  /* Dedicated (darker) background for solid buttons carrying --color-on-accent
+     text — --color-accent itself is tuned for links/icons against a page
+     surface, not for white text at exactly-AA-minimum contrast. */
+  --color-accent-solid: #569cd6;
+  --color-accent-solid-hover: #7ab6e8;
   --color-signal: #4ec9b0;
   --color-flair: #c586c0;
   --color-border: #3c3c3c;
@@ -32,10 +43,16 @@
   --color-surface-raised: #ececec;
   --color-ink: #3b3b3b;
   --color-ink-muted: #6b6b6b;
-  --color-ink-faint: #8a8a8a;
+  --color-ink-faint: #6b6b6b;
   --color-accent: #0078d4;
   --color-accent-light: #2b88d8;
   --color-accent-subtle: #e8f1fb;
+  --color-on-accent: #ffffff;
+  /* #0078d4 + white text is only ~4.5:1 (right at the WCAG AA edge), and the
+     body grain overlay's blend pushes it under threshold in practice —
+     darker so solid buttons keep real margin above 4.5:1. */
+  --color-accent-solid: #0067b8;
+  --color-accent-solid-hover: #005a9e;
   --color-signal: #267f99;
   --color-flair: #af00db;
   --color-border: #e5e5e5;
@@ -75,6 +92,21 @@
   ::selection {
     background-color: var(--color-accent);
     color: #ffffff;
+  }
+
+  /* Visible keyboard focus ring, consistent across both themes. Only shows
+     for keyboard/programmatic focus (:focus-visible), not mouse clicks. */
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  a.rounded-full:focus-visible,
+  button.rounded-full:focus-visible {
+    border-radius: 999px;
   }
 
   /* Grain overlay */

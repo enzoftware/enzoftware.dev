@@ -22,7 +22,7 @@ export function TopBar({
   onToggleTheme,
 }: TopBarProps) {
   return (
-    <motion.div
+    <motion.header
       className="sticky top-0 z-50 flex items-center justify-between section-gutter py-3 bg-surface/70 backdrop-blur-xl backdrop-saturate-150 border-b border-[var(--color-glass-border)]"
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
@@ -92,7 +92,6 @@ export function TopBar({
           type="button"
           onClick={onToggleLocale}
           className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/70 bg-glass backdrop-blur-sm text-xs font-semibold text-ink hover:border-accent/40 transition-colors select-none"
-          aria-label="Toggle language"
         >
           <span className="text-ink-muted font-mono">
             {locale === "en" ? "EN" : "ES"}
@@ -112,6 +111,6 @@ export function TopBar({
           </AnimatePresence>
         </button>
       </div>
-    </motion.div>
+    </motion.header>
   );
 }

@@ -1,0 +1,130 @@
+import { test, expect, type Page } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+
+async function runAxe(page: Page) {
+  return new AxeBuilder({ page })
+    .exclude("#posthog-container") // third-party analytics widget, not our markup
+    .analyze();
+}
+
+test.describe("accessibility", () => {
+  test.beforeEach(async ({ page }) => {
+    // The site respects `prefers-reduced-motion` (via framer-motion's
+    // MotionConfig), so scanning with it set to "reduce" makes framer-motion
+    // animations resolve instantly — avoiding false-positive contrast
+    // failures from axe sampling a mid-fade/mid-transition frame, and
+    // doubling as a check that the reduced-motion opt-out itself works.
+    // Pin the OS color-scheme preference so the site's inline theme-detector
+    // script deterministically boots into dark mode (its default) instead of
+    // following the test runner's own system preference.
+    await page.emulateMedia({ reducedMotion: "reduce", colorScheme: "dark" });
+  });
+
+  test("homepage has zero automated a11y violations (dark theme)", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+    const results = await runAxe(page);
+    expect(
+      results.violations,
+      JSON.stringify(results.violations, null, 2),
+    ).toEqual([]);
+  });
+
+  test("theme toggle switches themes and both pass the scan", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const html = page.locator("html");
+    await expect(html).toHaveAttribute("data-theme", "dark");
+
+    let darkResults = await runAxe(page);
+    expect(darkResults.violations).toEqual([]);
+
+    const themeToggle = page.getByRole("button", {
+      name: /switch to light theme/i,
+    });
+    await themeToggle.click();
+    await expect(html).toHaveAttribute("data-theme", "light");
+
+    const lightResults = await runAxe(page);
+    expect(lightResults.violations).toEqual([]);
+
+    // Toggle back to dark and confirm it still passes.
+    await page.getByRole("button", { name: /switch to dark theme/i }).click();
+    await expect(html).toHaveAttribute("data-theme", "dark");
+
+    darkResults = await runAxe(page);
+    expect(darkResults.violations).toEqual([]);
+  });
+
+  test("experience modal opens, traps focus, and passes the scan", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const trigger = page.getByRole("button", {
+      name: /view full experience/i,
+    });
+    await trigger.click();
+
+    const dialog = page.getByRole("dialog", { name: /full experience/i });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAttribute("aria-modal", "true");
+
+    const closeButton = page.getByRole("button", { name: /^close$/i });
+    await expect(closeButton).toBeFocused();
+
+    const results = await runAxe(page);
+    expect(results.violations).toEqual([]);
+
+    // Shift+Tab from the first focusable element should wrap to the last
+    // focusable element inside the dialog, proving the focus trap works.
+    await page.keyboard.press("Shift+Tab");
+    const activeIsInsideDialog = await page.evaluate(() => {
+      const dialogEl = document.querySelector('[role="dialog"]');
+      return dialogEl?.contains(document.activeElement) ?? false;
+    });
+    expect(activeIsInsideDialog).toBe(true);
+
+    // Escape closes the dialog and returns focus to the trigger.
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("keyboard navigation (Tab) reaches all interactive elements", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const seen: string[] = [];
+    for (let i = 0; i < 15; i++) {
+      await page.keyboard.press("Tab");
+      const label = await page.evaluate(() => {
+        const el = document.activeElement as HTMLElement | null;
+        if (!el) return null;
+        return (
+          el.getAttribute("aria-label") || el.textContent?.trim() || el.tagName
+        );
+      });
+      if (label) seen.push(label);
+    }
+
+    // Key interactive controls should all be keyboard-reachable via Tab,
+    // in document order: avatar/back-to-top link, theme toggle, language
+    // toggle, social links, and the "view full experience" trigger.
+    expect(seen).toEqual(
+      expect.arrayContaining([
+        "Back to top",
+        expect.stringMatching(/switch to (light|dark) theme/i),
+        expect.stringMatching(/en|es/i),
+        "LinkedIn",
+        "GitHub",
+      ]),
+    );
+  });
+});

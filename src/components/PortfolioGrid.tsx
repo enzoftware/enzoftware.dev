@@ -1,4 +1,5 @@
 import { useState, useSyncExternalStore } from "react";
+import { MotionConfig } from "framer-motion";
 import { TopBar } from "./TopBar";
 import { HeroCard } from "./HeroCard";
 import { ActivityStack } from "./ActivityStack";
@@ -42,29 +43,31 @@ export function PortfolioGrid({
   const toggleTheme = () => applyTheme(theme === "dark" ? "light" : "dark");
 
   return (
-    <div id="top" className="relative w-full lg:h-dvh flex flex-col">
-      <TopBar
-        avatarUrl={avatarUrl}
-        name={fullName}
-        locale={locale}
-        langToggleLabel={t.lang_toggle}
-        onToggleLocale={toggleLocale}
-        theme={theme}
-        onToggleTheme={toggleTheme}
-      />
-
-      <main className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
-        <HeroCard t={t.hero} socialT={t.social} socials={socials} />
-
-        <ActivityStack
-          t={t}
-          experiences={experiences}
-          repos={recentRepos}
-          post={latestPost}
+    <MotionConfig reducedMotion="user">
+      <div id="top" className="relative w-full lg:h-dvh flex flex-col">
+        <TopBar
+          avatarUrl={avatarUrl}
+          name={fullName}
+          locale={locale}
+          langToggleLabel={t.lang_toggle}
+          onToggleLocale={toggleLocale}
+          theme={theme}
+          onToggleTheme={toggleTheme}
         />
-      </main>
 
-      <ContactCTA t={t.contact} name={fullName} />
-    </div>
+        <div className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
+          <HeroCard t={t.hero} socialT={t.social} socials={socials} />
+
+          <ActivityStack
+            t={t}
+            experiences={experiences}
+            repos={recentRepos}
+            post={latestPost}
+          />
+        </div>
+
+        <ContactCTA t={t.contact} name={fullName} />
+      </div>
+    </MotionConfig>
   );
 }
