@@ -29,9 +29,9 @@ interface ActivityStackProps {
 
 function RowHeader({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-2 mb-3">
-      <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-      <p className="text-[11px] text-ink-faint font-mono leading-none uppercase tracking-[0.06em]">
+    <div className="flex items-center gap-2 mb-3.5">
+      <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
+      <p className="text-xs text-ink-faint font-mono leading-none uppercase tracking-[0.06em]">
         {label}
       </p>
     </div>
@@ -71,24 +71,43 @@ export function ActivityStack({
         viewport={{ once: true, margin: "-10%" }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="p-5">
+        {current && (
+          <button
+            type="button"
+            onClick={() => setModalOpen(true)}
+            className="p-6 lg:p-7 text-left hover:bg-glass transition-colors"
+          >
+            <RowHeader label={t.current.label} />
+            <p className="font-display text-xl lg:text-2xl text-ink leading-snug">
+              {current.company}
+            </p>
+            <p className="font-mono text-sm text-ink-muted mt-1">
+              {current.role} {t.signature.role_at} {current.company}
+            </p>
+            <span className="inline-block mt-2.5 font-mono text-xs text-accent">
+              {t.current.cta} ({experiences.length}) →
+            </span>
+          </button>
+        )}
+
+        <div className="p-6 lg:p-7">
           <RowHeader label={t.recent_activity.label} />
           {repos.length === 0 ? (
-            <p className="text-xs text-ink-muted">{t.recent_activity.empty}</p>
+            <p className="text-sm text-ink-muted">{t.recent_activity.empty}</p>
           ) : (
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2.5">
               {repos.slice(0, 3).map((repo) => (
                 <li key={repo.name}>
                   <a
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-baseline justify-between gap-2 text-sm text-ink hover:text-accent transition-colors"
+                    className="flex items-baseline justify-between gap-2 text-base text-ink hover:text-accent transition-colors"
                     data-mixpanel="recent_activity_click"
                     data-repo={repo.name}
                   >
                     <span className="font-medium truncate">{repo.name}</span>
-                    <span className="font-mono text-[11px] text-ink-faint flex-shrink-0">
+                    <span className="font-mono text-xs text-ink-faint flex-shrink-0">
                       {relativeTime(repo.pushed_at)}
                     </span>
                   </a>
@@ -98,26 +117,7 @@ export function ActivityStack({
           )}
         </div>
 
-        {current && (
-          <button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="p-5 text-left hover:bg-glass transition-colors"
-          >
-            <RowHeader label={t.current.label} />
-            <p className="font-display text-lg text-ink leading-snug">
-              {current.company}
-            </p>
-            <p className="font-mono text-xs text-ink-muted mt-0.5">
-              {current.role} {t.signature.role_at} {current.company}
-            </p>
-            <span className="inline-block mt-2 font-mono text-[11px] text-accent">
-              {t.current.cta} ({experiences.length}) →
-            </span>
-          </button>
-        )}
-
-        <div className="p-5">
+        <div className="p-6 lg:p-7">
           <RowHeader label={t.latest_post.label} />
           <AnimatePresence mode="wait">
             <motion.div
@@ -138,15 +138,15 @@ export function ActivityStack({
                   data-mixpanel="latest_post_click"
                   data-source={post.source}
                 >
-                  <span className="text-sm font-semibold text-ink leading-snug group-hover:text-accent transition-colors">
+                  <span className="text-base font-semibold text-ink leading-snug group-hover:text-accent transition-colors">
                     {post.title}
                   </span>
-                  <span className="font-mono text-[11px] text-ink-faint">
+                  <span className="font-mono text-xs text-ink-faint">
                     {post.source} · {relativeTime(post.publishedAt)}
                   </span>
                 </a>
               ) : (
-                <p className="text-xs text-ink-muted">{t.latest_post.empty}</p>
+                <p className="text-sm text-ink-muted">{t.latest_post.empty}</p>
               )}
             </motion.div>
           </AnimatePresence>

@@ -29,8 +29,8 @@ export const translations: Record<Locale, Translations> = {
     hero: {
       name_line1: "Enzo Lizama",
       name_line2: "Paredes",
-      subtitle: "Senior Mobile Engineer · Flutter & Android",
-      bio: "7+ years turning product goals into polished, maintainable apps across iOS and Android.",
+      subtitle: "Senior Software Engineer",
+      bio: "7+ years building reliable, well-crafted software products end to end.",
       badge_kodeco: "Kodeco Author",
       badge_flutter: "FlutterConf LATAM Speaker",
     },
@@ -38,7 +38,10 @@ export const translations: Record<Locale, Translations> = {
     modal: { title: "Full experience", close: "Close" },
     signature: { role_at: "at" },
     latest_post: { label: "Latest post", empty: "Nothing published yet" },
-    recent_activity: { label: "Working on", empty: "Nothing public right now" },
+    recent_activity: {
+      label: "Latest commits",
+      empty: "No public commits recently",
+    },
     social: { title: "Find me on" },
     contact: {
       eyebrow: "Got a mobile app to ship?",
@@ -52,8 +55,8 @@ export const translations: Record<Locale, Translations> = {
     hero: {
       name_line1: "Enzo Lizama",
       name_line2: "Paredes",
-      subtitle: "Senior Mobile Engineer · Flutter & Android",
-      bio: "7+ años convirtiendo metas de producto en apps pulidas y mantenibles para iOS y Android.",
+      subtitle: "Ingeniero de Software Senior",
+      bio: "7+ años construyendo productos de software confiables y bien hechos, de punta a punta.",
       badge_kodeco: "Autor en Kodeco",
       badge_flutter: "Speaker FlutterConf LATAM",
     },
@@ -62,8 +65,8 @@ export const translations: Record<Locale, Translations> = {
     signature: { role_at: "en" },
     latest_post: { label: "Último artículo", empty: "Nada publicado aún" },
     recent_activity: {
-      label: "Trabajando en",
-      empty: "Nada público por ahora",
+      label: "Últimos commits",
+      empty: "Sin commits públicos recientes",
     },
     social: { title: "Encuéntrame en" },
     contact: {
