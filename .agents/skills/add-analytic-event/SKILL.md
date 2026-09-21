@@ -35,7 +35,7 @@ Used for non-click interactions (e.g., modal opens, timer triggers, form submiss
 ```tsx
 import posthog from "posthog-js";
 
-posthog.capture("experience_modal_opened", {
+posthog.capture("experience_modal_open", {
   role: item.role,
   company: item.company,
 });
@@ -84,17 +84,23 @@ Every event must be recorded in [`docs/analytics.md`](../../../docs/analytics.md
 
 ### Step 4: Verify and Validate
 
-Run the validation suite to ensure no TypeScript or linting regressions:
+Run the validation suite to ensure no TypeScript, linting, or build regressions:
 
 ```bash
-# 1. Typecheck
+# 1. Typecheck (Astro sync + diagnostics)
 bun run check
 
 # 2. Lint check
 bun run lint
 
-# 3. Format
+# 3. Formatting check
 bun run format:check
+
+# 4. Production build check
+bun run build
+
+# 5. Accessibility tests (run when modifying UI components or templates)
+bun run test:a11y
 ```
 
 ---

@@ -74,7 +74,7 @@ git push -u origin <branch_name>
 Fill out all sections from [`.github/pull_request_template.md`](../../../.github/pull_request_template.md):
 
 1. **Summary**: Concise bullet points explaining what was added or modified and why.
-2. **Type of Change**: Mark the appropriate checkbox (`feat`, `fix`, `docs`, `chore`, `refactor`).
+2. **Type of Change**: Mark the appropriate checkbox (`feat`, `fix`, `docs`, `chore`, `refactor`, `test`).
 3. **Architectural Invariants Check**:
    - Confirm single-screen desktop layout (`100dvh` on `lg:`, no vertical scroll) is preserved.
    - Confirm all visible text is translated in `src/i18n/translations.ts`.
@@ -83,13 +83,38 @@ Fill out all sections from [`.github/pull_request_template.md`](../../../.github
 
 #### Command Example via GitHub CLI:
 
+Generate a filled-out body (removing instructional comments and checking applicable boxes) and provide it via `--body "..."` or a temporary file via `--body-file`:
+
 ```bash
+# Option A: Inline formatted body
 gh pr create \
   --title "chore: setup AI agent guidelines, rules, and skills" \
-  --body-file .github/pull_request_template.md
-```
+  --body "## Summary
 
-_(Or specify `--body "..."` populated with the completed template text)._
+- Concise description of changes.
+
+## Type of Change
+
+- [x] \`chore\`: Tooling, dependencies, or maintenance
+
+## Architectural Invariants Check
+
+- [x] **Single-Screen Desktop Layout**: Still fits within \`100dvh\` on \`lg:\`+ (or N/A).
+- [x] **Strict i18n**: All visible UI copy defined in \`translations.ts\` (or N/A).
+- [x] **Theme System**: Uses CSS variables / Tailwind tokens (or N/A).
+
+## Verification Checklist
+
+- [x] \`bun run check\`
+- [x] \`bun run lint\`
+- [x] \`bun run format:check\`
+- [x] \`bun run build\`"
+
+# Option B: Pass a completed temporary markdown file (do not submit the raw template directly)
+gh pr create \
+  --title "chore: setup AI agent guidelines, rules, and skills" \
+  --body-file /tmp/completed_pr_body.md
+```
 
 ### Step 5: Post-Creation Verification
 

@@ -106,14 +106,21 @@ Always update the **Event Catalog** table in this file when creating or updating
    cp .env.example .env
    ```
 2. Set your test PostHog credentials:
+
    ```env
-   PUBLIC_POSTHOG_KEY=phc_your_actual_key
+   PUBLIC_POSTHOG_KEY=phc_test_1234567890
    PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
    ```
+
+   > [!NOTE]
+   > `src/components/Analytics.tsx` guards against unconfigured environments with `apiKey.startsWith("phc_your_")`. Ensure your test key does not begin with `phc_your_` so that `posthog.init` executes.
+
 3. Start the dev server with `bun dev` and inspect browser network traffic:
    - Filter for `posthog` or `batch` requests.
    - Click tracked elements and verify the payload contains the expected event name and data attributes.
-4. Run project checks:
+
+4. Run project validation checks:
+
    ```bash
-   bun run check && bun run lint && bun run format:check
+   bun run check && bun run lint && bun run format:check && bun run build
    ```

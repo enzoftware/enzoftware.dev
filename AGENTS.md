@@ -99,10 +99,10 @@ Evidence before assertions: Always run the commands, observe the output, and fix
 ## 5. Agent Customizations Catalog
 
 - **Rules**:
-  - [`.agents/rules/typescript.md`](file:///.agents/rules/typescript.md) — TypeScript implementation and validation rules.
+  - [`.agents/rules/typescript.md`](./.agents/rules/typescript.md) — TypeScript implementation and validation rules.
 - **Skills**:
-  - [`.agents/skills/add-analytic-event/SKILL.md`](file:///.agents/skills/add-analytic-event/SKILL.md) — How to add, implement, test, and document PostHog analytic events.
-  - [`.agents/skills/create-pr/SKILL.md`](file:///.agents/skills/create-pr/SKILL.md) — Workflow for opening pull requests following the project PR template.
+  - [`.agents/skills/add-analytic-event/SKILL.md`](./.agents/skills/add-analytic-event/SKILL.md) — How to add, implement, test, and document PostHog analytic events.
+  - [`.agents/skills/create-pr/SKILL.md`](./.agents/skills/create-pr/SKILL.md) — Workflow for opening pull requests following the project PR template.
 - **Templates & References**:
-  - [`.github/pull_request_template.md`](file:///.github/pull_request_template.md) — Standard PR template with invariant and verification checklists.
-  - [`docs/analytics.md`](file:///docs/analytics.md) — Analytics events reference and tracking architecture.
+  - [`.github/pull_request_template.md`](./.github/pull_request_template.md) — Standard PR template with invariant and verification checklists.
+  - [`docs/analytics.md`](./docs/analytics.md) — Analytics events reference and tracking architecture.

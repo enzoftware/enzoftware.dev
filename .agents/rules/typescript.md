@@ -141,7 +141,9 @@ Every code modification touching `.ts`, `.tsx`, or `.astro` files must be verifi
    Format with `bun run format` if any discrepancies exist.
 
 4. **Production Build**:
+
    ```bash
    bun run build
    ```
-   Ensures the TypeScript compiler (`tsc`) and Vite bundling finish cleanly with zero build errors.
+
+   Ensures `astro build` static asset generation and Vite bundling finish cleanly with zero build errors.

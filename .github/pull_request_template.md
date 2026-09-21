@@ -9,6 +9,7 @@
 - [ ] `docs`: Documentation updates or additions
 - [ ] `chore`: Tooling, dependencies, or maintenance
 - [ ] `refactor`: Code refactoring without behavior change
+- [ ] `test`: Adding or modifying tests
 
 ## Architectural Invariants Check
 
