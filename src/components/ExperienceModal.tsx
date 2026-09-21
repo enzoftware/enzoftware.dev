@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
 
 const FOCUSABLE_SELECTOR =
@@ -29,11 +30,23 @@ export function ExperienceModal({
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+  // MotionConfig(reducedMotion="user") only suppresses transform/layout
+  // animations, not opacity — without this, the modal's fade-in still runs
+  // its full duration for reduced-motion users (and races a11y scans that
+  // run right after the dialog is deemed "visible").
+  const shouldReduceMotion = useReducedMotion();
 
   // Focus management: move focus into the dialog on open, trap Tab within
   // it, close on Escape, and restore focus to the trigger element on close.
   useEffect(() => {
     if (!open) return;
+
+    // Hide the rest of the app from assistive tech and accessibility
+    // scanners while the dialog is open — otherwise background content
+    // sitting behind the semi-transparent backdrop is still in the a11y
+    // tree (and can read as low-contrast through the backdrop blend).
+    const appRoot = document.getElementById("top");
+    appRoot?.setAttribute("inert", "");
 
     previouslyFocusedRef.current = document.activeElement as HTMLElement;
     closeButtonRef.current?.focus();
@@ -69,12 +82,13 @@ export function ExperienceModal({
 
     document.addEventListener("keydown", handleKeyDown);
     return () => {
+      appRoot?.removeAttribute("inert");
       document.removeEventListener("keydown", handleKeyDown);
       previouslyFocusedRef.current?.focus();
     };
   }, [open, onClose]);
 
-  return (
+  const content = (
     <AnimatePresence>
       {open && (
         <motion.div
@@ -82,7 +96,7 @@ export function ExperienceModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.25 }}
         >
           <motion.div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -99,7 +113,10 @@ export function ExperienceModal({
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.35,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-2xl text-ink">{t.title}</h2>
@@ -142,4 +159,13 @@ export function ExperienceModal({
       )}
     </AnimatePresence>
   );
+
+  // Portal to <body> so the dialog is a true sibling of the app root — lets
+  // us `inert` the rest of the app above without inerting the dialog itself,
+  // and avoids `fixed` positioning being constrained by an ancestor's
+  // framer-motion transform. SSR has no `document`; the modal starts closed
+  // client-side too, so rendering nothing until mount is never a visible
+  // mismatch.
+  if (typeof document === "undefined") return null;
+  return createPortal(content, document.body);
 }
