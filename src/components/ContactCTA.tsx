@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
+import {
+  getCookieConsentSnapshot,
+  getServerCookieConsentSnapshot,
+  subscribeCookieConsent,
+} from "../lib/cookieConsent";
 
 interface ContactCTAProps {
   t: Translations["contact"];
@@ -18,6 +23,11 @@ export function ContactCTA({
   onOpenCookiePolicy,
 }: ContactCTAProps) {
   const [copied, setCopied] = useState(false);
+  const consent = useSyncExternalStore(
+    subscribeCookieConsent,
+    getCookieConsentSnapshot,
+    getServerCookieConsentSnapshot,
+  );
 
   const handleCopyEmail = async () => {
     try {
@@ -155,13 +165,15 @@ export function ContactCTA({
         <span>
           © {new Date().getFullYear()} {name}
         </span>
-        <button
-          type="button"
-          onClick={onOpenCookiePolicy}
-          className="text-ink underline underline-offset-2 hover:text-accent transition-colors cursor-pointer text-left sm:text-right"
-        >
-          {cookieT.manage_cookies}
-        </button>
+        {consent !== "accepted" && (
+          <button
+            type="button"
+            onClick={onOpenCookiePolicy}
+            className="text-ink underline underline-offset-2 hover:text-accent transition-colors cursor-pointer text-left sm:text-right"
+          >
+            {cookieT.manage_cookies}
+          </button>
+        )}
       </div>
     </motion.footer>
   );

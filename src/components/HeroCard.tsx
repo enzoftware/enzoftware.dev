@@ -1,24 +1,15 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import type { Translations } from "../i18n/translations";
 import { SocialsRow, type SocialEntry } from "./SocialsRow";
 import { InteractiveBubble } from "./InteractiveBubble";
 
 const HEADLINE_ROTATION_MS = 8000;
-
-const container: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
-};
 
 interface HeroCardProps {
   t: Translations["hero"];
@@ -45,6 +36,32 @@ export function HeroCard({
 }: HeroCardProps) {
   const headlines = t.headlines?.length ? t.headlines : [t.subtitle];
   const [headlineIndex, setHeadlineIndex] = useState(0);
+  // MotionConfig(reducedMotion="user") only suppresses transform/layout
+  // animations, not opacity — without this, the stagger fade-in still runs
+  // its full duration for reduced-motion users (and races a11y scans that
+  // run right after the H1 is deemed "visible").
+  const shouldReduceMotion = useReducedMotion();
+
+  const container: Variants = {
+    hidden: {},
+    visible: {
+      transition: shouldReduceMotion
+        ? { staggerChildren: 0, delayChildren: 0 }
+        : { staggerChildren: 0.08, delayChildren: 0.1 },
+    },
+  };
+
+  const item: Variants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.55,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
 
   useEffect(() => {
     if (headlines.length <= 1) return;
@@ -62,7 +79,7 @@ export function HeroCard({
       variants={container}
       initial="hidden"
       animate="visible"
-      className="flex flex-col justify-center lg:justify-start"
+      className="flex flex-col justify-center"
     >
       <motion.h1 variants={item} className="font-display text-hero text-ink">
         {t.name_line1}

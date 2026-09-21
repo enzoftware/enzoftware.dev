@@ -71,7 +71,7 @@ export function PortfolioGrid({
           onToggleTheme={toggleTheme}
         />
 
-        <div className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_440px] gap-x-10 gap-y-10 lg:items-start py-8 lg:py-0">
+        <div className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_440px] gap-x-10 gap-y-10 lg:[align-items:safe_center] py-8 lg:py-0">
           <HeroCard
             t={t.hero}
             socialT={t.social}
