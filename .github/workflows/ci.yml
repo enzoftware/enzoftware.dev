@@ -1,4 +1,4 @@
-name: CI
+name: Checks
 
 on:
   pull_request:
@@ -6,12 +6,12 @@ on:
     branches: ["main", "master"]
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: checks-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  ci:
-    name: Lint, typecheck & build
+  checks:
+    name: Lint, typecheck, build & a11y
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
