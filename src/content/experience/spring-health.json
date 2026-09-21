@@ -5,5 +5,17 @@
   "location": "Remote, NY",
   "current": true,
   "order": 0,
-  "color": "dot-2"
+  "color": "dot-2",
+  "highlights": [
+    "Architecting and scaling member-facing mobile health workflows with strict HIPAA compliance.",
+    "Advancing cross-platform engineering standards, accessibility (WCAG AA), and test automation.",
+    "Collaborating across clinical and product teams to deliver high-reliability patient experiences."
+  ],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "GraphQL",
+    "Mobile Architecture",
+    "Accessibility"
+  ]
 }

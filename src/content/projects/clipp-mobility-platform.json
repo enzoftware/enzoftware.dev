@@ -1,0 +1,27 @@
+{
+  "title": "Clipp Urban Mobility Platform",
+  "tagline": "Multi-modal urban transportation app connecting commuters with on-demand transit, routing, and digital payments.",
+  "role": "Senior Software Engineer",
+  "period": "2025 – 2026",
+  "description": "Engineered real-time routing, geolocation tracking, and payment processing for high-volume urban commuters.",
+  "architecture": "Event-driven mobile architecture with WebSocket streaming for live vehicle telemetry, background location services, and payment gateway integrations.",
+  "highlights": [
+    "Maintained sub-second map rendering and real-time vehicle dispatch updates",
+    "Engineered fault-tolerant offline ticketing and digital wallet checkout flows",
+    "Reduced cold start latency and improved battery consumption during active routes"
+  ],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "WebSockets",
+    "Mapbox",
+    "Geolocation",
+    "Payment SDKs"
+  ],
+  "links": {
+    "web": "https://clipp.app"
+  },
+  "featured": true,
+  "order": 3,
+  "color": "dot-3"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Lazy Layouts in Jetpack Compose",
+  "publisher": "Kodeco",
+  "type": "tutorial",
+  "url": "https://www.kodeco.com/u/enzoftware",
+  "publishedAt": "2023",
+  "description": "Deep dive into building smooth, memory-efficient lists and grids with LazyColumn and LazyRow, custom scroll positions, and state preservation.",
+  "tags": ["Android", "Jetpack Compose", "UI", "Performance"],
+  "order": 2
+}

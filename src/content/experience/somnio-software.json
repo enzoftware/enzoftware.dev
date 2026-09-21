@@ -5,5 +5,18 @@
   "location": "Remote, UY",
   "current": false,
   "order": 2,
-  "color": "dot-4"
+  "color": "dot-4",
+  "highlights": [
+    "Delivered full lifecycle cross-platform mobile solutions for international fintech and healthcare clients.",
+    "Presented on Accessibility in Flutter at FlutterConf LATAM 2024, mentoring internal teams on WCAG standards.",
+    "Introduced widget isolation workflows and automated test patterns to accelerate release velocity."
+  ],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "BLoC",
+    "Riverpod",
+    "Accessibility",
+    "Design Systems"
+  ]
 }

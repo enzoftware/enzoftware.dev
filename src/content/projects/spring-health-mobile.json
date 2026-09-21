@@ -1,0 +1,27 @@
+{
+  "title": "Spring Health Mobile Platform",
+  "tagline": "Scalable behavioral healthcare platform delivering mental health support to millions.",
+  "role": "Senior Software Engineer",
+  "period": "2026 – Present",
+  "description": "Architecting and maintaining patient-facing mobile application workflows with HIPAA compliance, high accessibility standards, and rock-solid state management.",
+  "architecture": "Modular cross-platform architecture with strict domain boundaries, automated CI/CD pipelines, offline resiliency, and WCAG AA accessibility compliance.",
+  "highlights": [
+    "Delivered core clinical workflow features with 99.9% crash-free sessions",
+    "Championed mobile accessibility standards and automated UI semantics testing",
+    "Optimized app initialization and screen transition latency"
+  ],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "BLoC",
+    "GraphQL",
+    "Accessibility",
+    "CI/CD"
+  ],
+  "links": {
+    "web": "https://www.springhealth.com"
+  },
+  "featured": true,
+  "order": 1,
+  "color": "dot-2"
+}

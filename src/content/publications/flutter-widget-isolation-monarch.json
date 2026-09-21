@@ -1,0 +1,10 @@
+{
+  "title": "Widget Isolation in Flutter with Monarch",
+  "publisher": "Substack",
+  "type": "article",
+  "url": "https://enzoftware.substack.com",
+  "publishedAt": "2024",
+  "description": "Accelerating mobile UI velocity and design system fidelity by isolating Flutter widgets using Monarch stories without running the full emulator.",
+  "tags": ["Flutter", "Design Systems", "Tooling", "Developer Velocity"],
+  "order": 4
+}
