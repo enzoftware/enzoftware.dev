@@ -1,8 +1,9 @@
 {
   "company": "Clipp",
-  "role": "Senior Mobile Engineer",
+  "role": "Senior Software Engineer",
   "period": "Oct 2025 – Feb 2026",
   "location": "Remote, NY",
-  "current": true,
-  "order": 1
+  "current": false,
+  "order": 1,
+  "color": "dot-3"
 }

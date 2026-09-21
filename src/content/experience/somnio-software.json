@@ -1,8 +1,9 @@
 {
   "company": "Somnio Software",
-  "role": "Senior Flutter Developer",
-  "period": "Nov 2024 – Jun 2025",
+  "role": "Senior Mobile Software Engineer",
+  "period": "Dec 2024 – Jun 2025",
   "location": "Remote, UY",
   "current": false,
-  "order": 2
+  "order": 2,
+  "color": "dot-4"
 }
