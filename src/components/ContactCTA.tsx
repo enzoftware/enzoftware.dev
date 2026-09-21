@@ -56,7 +56,7 @@ export function ContactCTA({ t, name }: ContactCTAProps) {
 
         <motion.a
           href="mailto:hi@enzoftware.dev?subject=Let%27s%20build%20something"
-          className="group flex-shrink-0 self-start sm:self-auto inline-flex items-center gap-4 bg-accent hover:bg-accent-light text-on-accent font-mono text-base rounded-full pl-6 pr-2.5 py-2.5 sm:py-3 transition-colors"
+          className="group flex-shrink-0 self-start sm:self-auto inline-flex items-center gap-4 bg-accent-solid hover:bg-accent-solid-hover text-on-accent font-mono text-base rounded-full pl-6 pr-2.5 py-2.5 sm:py-3 transition-colors"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

@@ -20,6 +20,11 @@
   /* Text color for content rendered on top of --color-accent (e.g. solid
      buttons). White on #569cd6 fails contrast, so dark text is used instead. */
   --color-on-accent: #1e1e1e;
+  /* Dedicated (darker) background for solid buttons carrying --color-on-accent
+     text — --color-accent itself is tuned for links/icons against a page
+     surface, not for white text at exactly-AA-minimum contrast. */
+  --color-accent-solid: #569cd6;
+  --color-accent-solid-hover: #7ab6e8;
   --color-signal: #4ec9b0;
   --color-flair: #c586c0;
   --color-border: #3c3c3c;
@@ -43,6 +48,11 @@
   --color-accent-light: #2b88d8;
   --color-accent-subtle: #e8f1fb;
   --color-on-accent: #ffffff;
+  /* #0078d4 + white text is only ~4.5:1 (right at the WCAG AA edge), and the
+     body grain overlay's blend pushes it under threshold in practice —
+     darker so solid buttons keep real margin above 4.5:1. */
+  --color-accent-solid: #0067b8;
+  --color-accent-solid-hover: #005a9e;
   --color-signal: #267f99;
   --color-flair: #af00db;
   --color-border: #e5e5e5;
