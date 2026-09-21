@@ -63,7 +63,7 @@ export function ContactCTA({ t, name }: ContactCTAProps) {
           transition={{ delay: 0.15, duration: 0.45 }}
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          data-mixpanel="contact_email_click"
+          data-track="contact_email_click"
         >
           hi@enzoftware.dev
           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 group-hover:rotate-45 transition-transform duration-300">

@@ -47,6 +47,9 @@ jobs:
       - name: Build with Astro
         run: bun run build
         working-directory: ${{ env.BUILD_PATH }}
+        env:
+          PUBLIC_POSTHOG_KEY: ${{ secrets.PUBLIC_POSTHOG_KEY }}
+          PUBLIC_POSTHOG_HOST: ${{ vars.PUBLIC_POSTHOG_HOST }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

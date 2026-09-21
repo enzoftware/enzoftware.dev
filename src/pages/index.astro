@@ -84,7 +84,9 @@ try {
   // Use null on fetch failure
 }
 
-const mixpanelToken = import.meta.env.PUBLIC_MIXPANEL_TOKEN ?? "";
+const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY ?? "";
+const posthogHost =
+  import.meta.env.PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
 ---
 
 <Layout>
@@ -98,5 +100,5 @@ const mixpanelToken = import.meta.env.PUBLIC_MIXPANEL_TOKEN ?? "";
       latestPost={latestPost}
     />
   </main>
-  <Analytics client:load token={mixpanelToken} />
+  <Analytics client:load apiKey={posthogKey} apiHost={posthogHost} />
 </Layout>

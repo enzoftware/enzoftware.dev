@@ -1,47 +1,52 @@
 "use client";
 
 import { useEffect } from "react";
-import mixpanel from "mixpanel-browser";
+import posthog from "posthog-js";
+import { classifySource } from "../lib/analyticsSource";
 
 interface AnalyticsProps {
-  token: string;
+  apiKey: string;
+  apiHost: string;
 }
 
-export function Analytics({ token }: AnalyticsProps) {
+export function Analytics({ apiKey, apiHost }: AnalyticsProps) {
   useEffect(() => {
-    if (!token || token === "YOUR_MIXPANEL_TOKEN") return;
+    if (!apiKey || apiKey.startsWith("phc_your_")) return;
 
-    mixpanel.init(token, {
-      track_pageview: true,
-      persistence: "localStorage",
+    posthog.init(apiKey, {
+      api_host: apiHost,
+      defaults: "2025-05-24",
+      // This site never calls posthog.identify() — anonymous visitors need
+      // full person profiles for GeoIP/source to show up in Persons/Trends.
+      person_profiles: "always",
     });
 
-    mixpanel.track("portfolio_view", {
-      referrer: document.referrer,
-      path: window.location.pathname,
+    posthog.register({
+      source: classifySource(document.referrer, window.location.search),
     });
 
-    // Delegate click tracking via data attributes
+    // Delegate click tracking for named conversion events via data-track;
+    // autocapture (enabled by `defaults` above) covers every other click.
     const handleClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest("[data-mixpanel]");
+      const target = (e.target as HTMLElement).closest("[data-track]");
       if (!target) return;
 
-      const eventName = target.getAttribute("data-mixpanel");
+      const eventName = target.getAttribute("data-track");
       if (!eventName) return;
 
       const attrs: Record<string, string> = {};
       for (const attr of Array.from(target.attributes)) {
-        if (attr.name.startsWith("data-") && attr.name !== "data-mixpanel") {
+        if (attr.name.startsWith("data-") && attr.name !== "data-track") {
           attrs[attr.name.replace("data-", "")] = attr.value;
         }
       }
 
-      mixpanel.track(eventName, attrs);
+      posthog.capture(eventName, attrs);
     };
 
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
-  }, [token]);
+  }, [apiKey, apiHost]);
 
   return null;
 }

@@ -55,7 +55,7 @@ export function SocialsRow({ t, socials }: SocialsRowProps) {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 * i, duration: 0.35 }}
-          data-mixpanel="social_click"
+          data-track="social_click"
           data-platform={social.label}
         >
           {icons[social.label]}
