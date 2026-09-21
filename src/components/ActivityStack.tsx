@@ -65,7 +65,7 @@ export function ActivityStack({
   return (
     <>
       <motion.div
-        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-[var(--color-glass)] backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[65dvh]"
+        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-glass backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[65dvh]"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10%" }}
@@ -102,7 +102,7 @@ export function ActivityStack({
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="p-5 text-left hover:bg-[var(--color-glass)] transition-colors"
+            className="p-5 text-left hover:bg-glass transition-colors"
           >
             <RowHeader label={t.current.label} />
             <p className="font-display text-lg text-ink leading-snug">

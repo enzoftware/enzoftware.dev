@@ -49,7 +49,7 @@ export function TopBar({
           aria-label={
             theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
           }
-          className="flex items-center justify-center w-8 h-8 rounded-full border border-border/70 bg-[var(--color-glass)] text-ink-muted hover:text-accent hover:border-accent/40 transition-colors"
+          className="flex items-center justify-center w-8 h-8 rounded-full border border-border/70 bg-glass text-ink-muted hover:text-accent hover:border-accent/40 transition-colors"
         >
           <AnimatePresence mode="wait" initial={false}>
             {theme === "dark" ? (
@@ -91,7 +91,7 @@ export function TopBar({
         <button
           type="button"
           onClick={onToggleLocale}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/70 bg-[var(--color-glass)] backdrop-blur-sm text-xs font-semibold text-ink hover:border-accent/40 transition-colors select-none"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/70 bg-glass backdrop-blur-sm text-xs font-semibold text-ink hover:border-accent/40 transition-colors select-none"
           aria-label="Toggle language"
         >
           <span className="text-ink-muted font-mono">
