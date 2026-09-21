@@ -14,6 +14,8 @@ import {
   subscribeTheme,
 } from "../lib/theme";
 import { translations, type Locale } from "../i18n/translations";
+import { CookieBanner } from "./CookieBanner";
+import { CookiePolicyModal } from "./CookiePolicyModal";
 
 interface PortfolioGridProps {
   avatarUrl: string;
@@ -31,6 +33,7 @@ export function PortfolioGrid({
   latestPost,
 }: PortfolioGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
+  const [cookiePolicyOpen, setCookiePolicyOpen] = useState(false);
   const theme = useSyncExternalStore(
     subscribeTheme,
     getThemeSnapshot,
@@ -67,7 +70,23 @@ export function PortfolioGrid({
           />
         </div>
 
-        <ContactCTA t={t.contact} name={fullName} />
+        <ContactCTA
+          t={t.contact}
+          cookieT={t.cookie_consent}
+          name={fullName}
+          onOpenCookiePolicy={() => setCookiePolicyOpen(true)}
+        />
+
+        <CookieBanner
+          t={t.cookie_consent}
+          onOpenPolicy={() => setCookiePolicyOpen(true)}
+        />
+
+        <CookiePolicyModal
+          t={t.cookie_consent}
+          open={cookiePolicyOpen}
+          onClose={() => setCookiePolicyOpen(false)}
+        />
       </div>
     </MotionConfig>
   );
