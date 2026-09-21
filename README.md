@@ -146,4 +146,25 @@ public/
 
 ## Deployment
 
-The site outputs static files to `dist/` and can be deployed to any static host. `.github/workflows/deploy.yml` builds and deploys to GitHub Pages automatically on every push to `master`.
+The site outputs static files to `dist/` and can be deployed to any static host.
+It's currently deployed to **GitHub Pages** via two workflows:
+
+- `.github/workflows/ci.yml` runs `format:check`, `lint`, `check`, and `build`
+  on every push and pull request.
+- `.github/workflows/deploy.yml` builds and deploys to GitHub Pages, but
+  **only after `ci.yml` has completed successfully on `master`** (it triggers
+  on that workflow's completion, not on the push directly) — a commit that
+  fails CI never reaches production. It can also be run manually from the
+  Actions tab (`workflow_dispatch`).
+
+**Required repo configuration** (Settings → Secrets and variables → Actions):
+
+| Name                  | Kind     | Used for                         |
+| --------------------- | -------- | -------------------------------- |
+| `PUBLIC_POSTHOG_KEY`  | Secret   | PostHog analytics (see below)    |
+| `PUBLIC_POSTHOG_HOST` | Variable | PostHog ingestion region (US/EU) |
+
+**Recommended branch protection** (Settings → Branches → add rule for
+`master`): require the `CI` status check to pass before merging. This repo
+doesn't currently enforce that automatically — it's a one-time manual setting
+in the GitHub UI, not something a workflow file can turn on for you.
