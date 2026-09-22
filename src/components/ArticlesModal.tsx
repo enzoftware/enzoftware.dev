@@ -27,6 +27,8 @@ const KodecoIcon = () => (
   </svg>
 );
 
+import type { Translations, Locale } from "../i18n/translations";
+
 export interface Article {
   title: string;
   url: string;
@@ -35,6 +37,8 @@ export interface Article {
 }
 
 interface ArticlesModalProps {
+  t: Translations["articles_modal"];
+  locale: Locale;
   articles: Article[];
   open: boolean;
   onClose: () => void;
@@ -43,7 +47,13 @@ interface ArticlesModalProps {
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export function ArticlesModal({ articles, open, onClose }: ArticlesModalProps) {
+export function ArticlesModal({
+  t,
+  locale,
+  articles,
+  open,
+  onClose,
+}: ArticlesModalProps) {
   const [filter, setFilter] = useState<
     "All" | "Medium" | "Substack" | "Kodeco"
   >("All");
@@ -127,7 +137,7 @@ export function ArticlesModal({ articles, open, onClose }: ArticlesModalProps) {
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-label="Latest Articles"
+            aria-label={t.title}
             className="relative w-full sm:max-w-2xl max-h-[85vh] flex flex-col bg-surface-elevated border border-border rounded-t-3xl sm:rounded-3xl p-6 sm:p-9"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -139,18 +149,17 @@ export function ArticlesModal({ articles, open, onClose }: ArticlesModalProps) {
           >
             <div className="flex items-start justify-between gap-4 mb-6">
               <div>
-                <h2 className="font-display text-2xl text-ink">
-                  Latest Articles
-                </h2>
+                <h2 className="font-display text-2xl text-ink">{t.title}</h2>
                 <div className="flex gap-2 mt-3">
                   {(["All", "Medium", "Substack", "Kodeco"] as const).map(
                     (src) => (
                       <button
                         key={src}
                         onClick={() => setFilter(src)}
+                        aria-pressed={filter === src}
                         className={`px-3 py-1 text-xs font-mono rounded-full border transition-colors ${filter === src ? "bg-accent-solid text-on-accent border-accent-solid" : "bg-transparent text-ink-muted border-border hover:border-ink-muted"}`}
                       >
-                        {src}
+                        {src === "All" ? t.filter_all : src}
                       </button>
                     ),
                   )}
@@ -160,7 +169,7 @@ export function ArticlesModal({ articles, open, onClose }: ArticlesModalProps) {
                 ref={closeButtonRef}
                 type="button"
                 onClick={onClose}
-                aria-label="Close"
+                aria-label={t.close}
                 className="flex items-center justify-center w-8 h-8 rounded-full text-ink-muted hover:text-ink hover:bg-glass transition-colors flex-shrink-0"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -207,7 +216,7 @@ export function ArticlesModal({ articles, open, onClose }: ArticlesModalProps) {
                     <div className="flex justify-between items-start gap-2 relative z-10">
                       <span className="text-xs font-mono text-ink-muted bg-surface-elevated px-2 py-1 rounded-md border border-border/50 group-hover:border-accent/20 transition-colors">
                         {new Date(article.publishedAt).toLocaleDateString(
-                          undefined,
+                          locale,
                           { year: "numeric", month: "short", day: "numeric" },
                         )}
                       </span>
@@ -242,8 +251,11 @@ export function ArticlesModal({ articles, open, onClose }: ArticlesModalProps) {
                   </motion.a>
                 ))}
                 {filteredArticles.length === 0 && (
-                  <p className="text-sm text-ink-muted col-span-full py-12 text-center bg-surface-elevated/50 rounded-2xl border border-dashed border-border">
-                    No articles found for this source.
+                  <p
+                    className="text-sm text-ink-muted col-span-full py-12 text-center bg-surface-elevated/50 rounded-2xl border border-dashed border-border"
+                    role="status"
+                  >
+                    {t.empty_state}
                   </p>
                 )}
               </motion.div>

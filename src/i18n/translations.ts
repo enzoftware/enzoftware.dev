@@ -39,6 +39,12 @@ export interface Translations {
     read: string;
     close: string;
   };
+  articles_modal: {
+    title: string;
+    filter_all: string;
+    empty_state: string;
+    close: string;
+  };
   projects_modal: {
     eyebrow: string;
     title: string;
@@ -134,6 +140,12 @@ export const translations: Record<Locale, Translations> = {
       subtitle:
         "Technical tutorials, architecture guides, and articles on mobile engineering.",
       read: "Read Article",
+      close: "Close",
+    },
+    articles_modal: {
+      title: "Latest Articles",
+      filter_all: "All",
+      empty_state: "No articles found for this source.",
       close: "Close",
     },
     projects_modal: {
@@ -238,6 +250,12 @@ export const translations: Record<Locale, Translations> = {
       subtitle:
         "Tutoriales técnicos, guías de arquitectura y artículos sobre desarrollo móvil.",
       read: "Leer Artículo",
+      close: "Cerrar",
+    },
+    articles_modal: {
+      title: "Últimos Artículos",
+      filter_all: "Todos",
+      empty_state: "No se encontraron artículos para esta fuente.",
       close: "Cerrar",
     },
     projects_modal: {

@@ -1,3 +1,4 @@
+cat << 'INNER_EOF' > src/lib/fetchArticles.ts
 import { isValidHttpsUrl } from "./validation";
 import type { Article } from "../components/ArticlesModal";
 
@@ -26,7 +27,7 @@ export async function fetchAllArticles(): Promise<Article[]> {
         const pubDate = item
           .match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]
           ?.trim();
-
+          
         if (title && link && pubDate && isValidHttpsUrl(link)) {
           const timestamp = new Date(pubDate).getTime();
           if (Number.isFinite(timestamp)) {
@@ -61,7 +62,7 @@ export async function fetchAllArticles(): Promise<Article[]> {
         const pubDate = item
           .match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]
           ?.trim();
-
+          
         if (title && link && pubDate && isValidHttpsUrl(link)) {
           const timestamp = new Date(pubDate).getTime();
           if (Number.isFinite(timestamp)) {
@@ -109,3 +110,4 @@ export async function fetchAllArticles(): Promise<Article[]> {
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
+INNER_EOF

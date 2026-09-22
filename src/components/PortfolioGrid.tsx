@@ -117,6 +117,8 @@ export function PortfolioGrid({
         />
 
         <ArticlesModal
+          t={t.articles_modal}
+          locale={locale}
           articles={articles}
           open={articlesModalOpen}
           onClose={() => setArticlesModalOpen(false)}
