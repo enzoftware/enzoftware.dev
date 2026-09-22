@@ -16,7 +16,6 @@ theme toggle in the VS Code "Modern" palettes.
 
 - [Stack](#stack)
 - [Getting started](#getting-started)
-- [Project structure](#project-structure)
 - [Architecture notes](#architecture-notes)
 - [Updating content](#updating-content)
 - [Analytics (PostHog)](#analytics-posthog)
@@ -51,40 +50,6 @@ bun run test:a11y    # playwright + axe-core accessibility scan
 
 The **Checks** workflow (`.github/workflows/ci.yml`) runs all of the above
 (except `dev`/`preview`) on every push and pull request.
-
-## Project structure
-
-```
-src/
-├── components/
-│   ├── PortfolioGrid.tsx       # Top-level layout: TopBar + HeroCard + ActivityStack + ContactCTA
-│   ├── TopBar.tsx              # Sticky glass bar: avatar mark, theme toggle, language toggle
-│   ├── HeroCard.tsx            # Name, bio, badges, socials
-│   ├── SocialsRow.tsx          # Icon-only social links
-│   ├── ActivityStack.tsx       # Glass panel: current role, GitHub activity, latest post
-│   ├── ExperienceModal.tsx     # Full experience history, opened from ActivityStack
-│   ├── ContactCTA.tsx          # Flat contact bar + email CTA + footer
-│   └── Analytics.tsx           # PostHog integration
-├── content/
-│   ├── experience/             # One JSON file per job — see "Updating content" below
-│   └── socials/                # One JSON file per social link
-├── content.config.ts           # Astro content collection schemas (source of truth for the JSON shape)
-├── data/excluded-repos.json    # Repo names hidden from the activity panel
-├── i18n/translations.ts        # UI copy strings (en/es) — every visible string lives here
-├── lib/
-│   ├── theme.ts                 # Dark/light theme store (useSyncExternalStore, see below)
-│   ├── analyticsSource.ts       # referrer/UTM → friendly source label (LinkedIn, X, etc.)
-│   └── relativeTime.ts          # "2 days ago"-style formatting
-├── layouts/Layout.astro        # Base HTML, fonts, OG tags, no-scroll shell
-├── pages/index.astro           # Entry point: loads content collections + GitHub/Substack fetch
-└── styles/global.css           # Tailwind import + theme CSS custom properties
-public/
-├── CNAME                       # Custom domain for GitHub Pages
-├── favicon.svg
-└── og-image.png                # Social preview image
-tests/
-└── a11y.spec.ts                # Playwright + axe-core accessibility scan
-```
 
 ## Architecture notes
 
@@ -165,15 +130,3 @@ workflows:
 | --------------------- | -------- | -------------------------------- |
 | `PUBLIC_POSTHOG_KEY`  | Secret   | PostHog analytics (optional)     |
 | `PUBLIC_POSTHOG_HOST` | Variable | PostHog ingestion region (US/EU) |
-
-**⚠️ Not yet enforced — last call before this bites us**: `main` currently
-has no branch protection, so a push straight to `main` skips Checks entirely
-and can still trigger a deploy. Turn it on in Settings → Branches → Add
-branch protection rule for `main`:
-
-- Require status checks to pass before merging → select
-  "Lint, typecheck, build & a11y" (from `ci.yml`).
-- Require a pull request before merging (optional, but recommended solo-repo
-  hygiene: catches force-pushes and lets Checks actually gate the merge).
-
-This is a manual GitHub UI setting — no workflow file can turn it on.

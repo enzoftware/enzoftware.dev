@@ -102,7 +102,7 @@ export function ActivityStack({
               {current.company}
             </p>
             <p className="font-mono text-sm lg:text-base text-ink-muted mt-1">
-              {current.role} {t.signature.role_at} {current.company}
+              {current.role}
             </p>
             <span className="inline-block mt-2 font-mono text-xs lg:text-sm text-accent">
               {t.current.cta} ({experiences.length}) →
