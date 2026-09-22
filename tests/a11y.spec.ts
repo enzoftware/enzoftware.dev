@@ -121,8 +121,6 @@ test.describe("accessibility", () => {
     await expect(trigger).toBeFocused();
   });
 
-
-
   test("projects modal opens, traps focus, and passes the scan", async ({
     page,
   }) => {

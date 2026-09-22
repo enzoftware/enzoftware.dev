@@ -160,7 +160,16 @@ export function ContactCTA({
           onClick={onOpenCookiePolicy}
           className="inline-flex items-center gap-1.5 text-ink hover:text-accent transition-colors cursor-pointer text-left sm:text-right"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
           </svg>
           {cookieT.manage_cookies}
