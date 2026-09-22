@@ -128,7 +128,7 @@ export function ProjectsModal({
                     aria-hidden="true"
                   />
                   <span className="text-xs font-mono text-ink-faint uppercase tracking-wider">
-                    Engineering Case Studies
+                    {t.eyebrow}
                   </span>
                 </div>
                 <h2 className="font-display text-2xl text-ink">{t.title}</h2>

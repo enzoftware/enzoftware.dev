@@ -93,7 +93,7 @@ test.describe("cookie consent & policy", () => {
     await expect(modal).toBeHidden();
   });
 
-  test("footer cookie settings link is hidden once consent is accepted", async ({
+  test("footer cookie settings link remains available once consent is accepted to allow changing preferences", async ({
     page,
   }) => {
     await page.goto("/");
@@ -107,8 +107,28 @@ test.describe("cookie consent & policy", () => {
     await banner.getByRole("button", { name: /^accept$/i }).click();
     await expect(banner).toBeHidden();
 
-    // Permission granted: the footer link is no longer offered.
-    await expect(settingsBtn).toBeHidden();
+    // Permission granted: the footer link remains available to change preference or withdraw consent.
+    await expect(settingsBtn).toBeVisible();
+    await settingsBtn.click();
+
+    const modal = page.getByRole("dialog", {
+      name: /cookie & privacy policy/i,
+    });
+    await expect(modal).toBeVisible();
+    await expect(modal).toContainText(/accepted/i);
+
+    // Can withdraw consent inside modal
+    await modal.getByRole("button", { name: /disable analytics/i }).click();
+    await expect(modal).toContainText(/declined/i);
+
+    const consent = await page.evaluate(() =>
+      localStorage.getItem("cookie_consent"),
+    );
+    expect(consent).toBe("declined");
+
+    await page.keyboard.press("Escape");
+    await expect(modal).toBeHidden();
+    await expect(settingsBtn).toBeVisible();
   });
 
   test("footer cookie settings link stays available after declining, and re-opens the modal to manage preference", async ({
@@ -142,8 +162,8 @@ test.describe("cookie consent & policy", () => {
     await page.keyboard.press("Escape");
     await expect(modal).toBeHidden();
 
-    // Permission now granted: the footer link is gone.
-    await expect(settingsBtn).toBeHidden();
+    // Footer link remains available to manage preferences
+    await expect(settingsBtn).toBeVisible();
   });
 
   test("translates cookie banner and modal when language is toggled to Spanish", async ({

@@ -119,7 +119,7 @@ export function PublicationsModal({
                     aria-hidden="true"
                   />
                   <span className="text-xs font-mono text-ink-faint uppercase tracking-wider">
-                    Technical Author & Educator
+                    {t.eyebrow}
                   </span>
                 </div>
                 <h2 className="font-display text-2xl text-ink">{t.title}</h2>

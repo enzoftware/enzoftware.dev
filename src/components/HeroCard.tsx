@@ -96,10 +96,20 @@ export function HeroCard({
           <motion.p
             key={headlineIndex}
             className="text-ink text-base lg:text-lg font-medium"
-            initial={{ opacity: 0, y: 10 }}
+            initial={{
+              opacity: shouldReduceMotion ? 1 : 0,
+              y: shouldReduceMotion ? 0 : 10,
+            }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            exit={{
+              opacity: shouldReduceMotion ? 1 : 0,
+              y: shouldReduceMotion ? 0 : -10,
+            }}
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+            }
           >
             {headlines[headlineIndex]}
           </motion.p>
@@ -118,7 +128,7 @@ export function HeroCard({
         variants={item}
         className="flex flex-wrap items-center gap-2 mt-2"
         role="group"
-        aria-label="Interactive expertise topics"
+        aria-label={t.expertise_topics_label}
       >
         <InteractiveBubble
           label={t.badge_flutter}

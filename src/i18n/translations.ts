@@ -13,6 +13,7 @@ export interface Translations {
     bubble_hint: string;
     resume_cta: string;
     contact_cta: string;
+    expertise_topics_label: string;
   };
   current: { label: string; cta: string };
   modal: {
@@ -23,6 +24,7 @@ export interface Translations {
     tech_label: string;
   };
   speaking_modal: {
+    eyebrow: string;
     title: string;
     subtitle: string;
     watch: string;
@@ -30,12 +32,14 @@ export interface Translations {
     close: string;
   };
   publications_modal: {
+    eyebrow: string;
     title: string;
     subtitle: string;
     read: string;
     close: string;
   };
   projects_modal: {
+    eyebrow: string;
     title: string;
     subtitle: string;
     architecture_label: string;
@@ -103,6 +107,7 @@ export const translations: Record<Locale, Translations> = {
       bubble_hint: "Click to explore",
       resume_cta: "View Resume",
       contact_cta: "Get in touch",
+      expertise_topics_label: "Interactive expertise topics",
     },
     current: { label: "Currently at", cta: "View full experience" },
     modal: {
@@ -113,6 +118,7 @@ export const translations: Record<Locale, Translations> = {
       tech_label: "Technologies",
     },
     speaking_modal: {
+      eyebrow: "Community & Leadership",
       title: "Speaking & Talks",
       subtitle:
         "Conference talks and deep dives on Flutter, architecture, and accessibility.",
@@ -121,6 +127,7 @@ export const translations: Record<Locale, Translations> = {
       close: "Close",
     },
     publications_modal: {
+      eyebrow: "Technical Author & Educator",
       title: "Publications & Writing",
       subtitle:
         "Technical tutorials, architecture guides, and articles on mobile engineering.",
@@ -128,6 +135,7 @@ export const translations: Record<Locale, Translations> = {
       close: "Close",
     },
     projects_modal: {
+      eyebrow: "Engineering Case Studies",
       title: "Featured Projects",
       subtitle:
         "Architectural case studies and production applications built and scaled.",
@@ -191,7 +199,7 @@ export const translations: Record<Locale, Translations> = {
         "Ingeniero de Software Senior — Flutter, Dart y TypeScript",
         "Ingeniero mobile y full-stack, de iOS/Android a APIs en la nube",
         "Liderando equipos de ingeniería de 0→1 hasta producción a escala",
-        "Ownership end-to-end — arquitectura, entrega y mentoría",
+        "Responsabilidad de punta a punta — arquitectura, entrega y mentoría",
         "Speaker en FlutterConf LATAM",
         "Autor técnico publicado en Kodeco",
       ],
@@ -202,6 +210,7 @@ export const translations: Record<Locale, Translations> = {
       bubble_hint: "Haz clic para explorar",
       resume_cta: "Ver Currículum",
       contact_cta: "Contáctame",
+      expertise_topics_label: "Temas de experiencia interactivos",
     },
     current: { label: "Actualmente en", cta: "Ver experiencia completa" },
     modal: {
@@ -212,6 +221,7 @@ export const translations: Record<Locale, Translations> = {
       tech_label: "Tecnologías",
     },
     speaking_modal: {
+      eyebrow: "Comunidad y Liderazgo",
       title: "Conferencias y Charlas",
       subtitle:
         "Charlas y presentaciones sobre Flutter, arquitectura y accesibilidad.",
@@ -220,6 +230,7 @@ export const translations: Record<Locale, Translations> = {
       close: "Cerrar",
     },
     publications_modal: {
+      eyebrow: "Autor Técnico y Educador",
       title: "Publicaciones y Artículos",
       subtitle:
         "Tutoriales técnicos, guías de arquitectura y artículos sobre desarrollo móvil.",
@@ -227,6 +238,7 @@ export const translations: Record<Locale, Translations> = {
       close: "Cerrar",
     },
     projects_modal: {
+      eyebrow: "Casos de Estudio de Ingeniería",
       title: "Proyectos Destacados",
       subtitle:
         "Casos de estudio de arquitectura y aplicaciones en producción escaladas.",

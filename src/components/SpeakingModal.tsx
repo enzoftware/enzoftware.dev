@@ -115,7 +115,7 @@ export function SpeakingModal({ t, talks, open, onClose }: SpeakingModalProps) {
                     aria-hidden="true"
                   />
                   <span className="text-xs font-mono text-ink-faint uppercase tracking-wider">
-                    Community & Leadership
+                    {t.eyebrow}
                   </span>
                 </div>
                 <h2 className="font-display text-2xl text-ink">{t.title}</h2>
