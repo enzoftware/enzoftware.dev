@@ -5,5 +5,18 @@
   "location": "Remote, US",
   "current": false,
   "order": 3,
-  "color": "dot-1"
+  "color": "dot-1",
+  "highlights": [
+    "Developed enterprise-grade client applications utilizing Very Good Architecture best practices.",
+    "Built and maintained resilient design system component packages with 100% test coverage.",
+    "Authored comprehensive golden and unit test suites ensuring bulletproof regression prevention."
+  ],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "Very Good CLI",
+    "Design Systems",
+    "Golden Tests",
+    "CI/CD"
+  ]
 }

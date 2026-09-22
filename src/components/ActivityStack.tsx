@@ -45,7 +45,7 @@ function RowHeader({
   dotColor: keyof typeof DOT_COLOR_CLASSES;
 }) {
   return (
-    <div className="flex items-center gap-2 mb-3.5 lg:mb-4">
+    <div className="flex items-center gap-2 mb-2.5 lg:mb-3">
       <span
         className={`w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full ${DOT_COLOR_CLASSES[dotColor]} flex-shrink-0`}
       />
@@ -85,7 +85,7 @@ export function ActivityStack({
   return (
     <>
       <motion.div
-        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-glass backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[75dvh] lg:min-h-[560px]"
+        className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-glass backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[75dvh]"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10%" }}
@@ -95,7 +95,7 @@ export function ActivityStack({
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="p-6 lg:p-8 text-left hover:bg-glass transition-colors"
+            className="p-4 text-left hover:bg-glass transition-colors"
           >
             <RowHeader label={t.current.label} dotColor="dot-1" />
             <p className="font-display text-xl lg:text-3xl text-ink leading-snug">
@@ -104,18 +104,18 @@ export function ActivityStack({
             <p className="font-mono text-sm lg:text-base text-ink-muted mt-1">
               {current.role} {t.signature.role_at} {current.company}
             </p>
-            <span className="inline-block mt-2.5 lg:mt-3 font-mono text-xs lg:text-sm text-accent">
+            <span className="inline-block mt-2 font-mono text-xs lg:text-sm text-accent">
               {t.current.cta} ({experiences.length}) →
             </span>
           </button>
         )}
 
-        <div className="p-6 lg:p-8">
+        <div className="p-4">
           <RowHeader label={t.recent_activity.label} dotColor="dot-2" />
           {repos.length === 0 ? (
             <p className="text-sm text-ink-muted">{t.recent_activity.empty}</p>
           ) : (
-            <ul className="flex flex-col gap-2.5 lg:gap-3.5">
+            <ul className="flex flex-col gap-2 lg:gap-2.5">
               {repos.slice(0, 3).map((repo) => (
                 <li key={repo.name}>
                   <a
@@ -137,7 +137,7 @@ export function ActivityStack({
           )}
         </div>
 
-        <div className="p-6 lg:p-8">
+        <div className="p-4">
           <RowHeader label={t.latest_post.label} dotColor="dot-3" />
           <AnimatePresence mode="wait">
             <motion.div

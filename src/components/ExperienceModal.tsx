@@ -16,6 +16,8 @@ export interface ExperienceEntry {
   location: string;
   current: boolean;
   color: ExperienceDotColor;
+  highlights?: string[];
+  technologies?: string[];
 }
 
 // Written out as full class names (rather than built with template
@@ -36,6 +38,8 @@ interface ExperienceRole {
   role: string;
   period: string;
   location: string;
+  highlights: string[];
+  technologies: string[];
 }
 
 interface ExperienceGroup {
@@ -55,13 +59,17 @@ function groupExperiences(experiences: ExperienceEntry[]): ExperienceGroup[] {
   const groups: ExperienceGroup[] = [];
 
   for (const exp of experiences) {
+    const roleItem: ExperienceRole = {
+      role: exp.role,
+      period: exp.period,
+      location: exp.location,
+      highlights: exp.highlights ?? [],
+      technologies: exp.technologies ?? [],
+    };
+
     const lastGroup = groups[groups.length - 1];
     if (lastGroup && lastGroup.company === exp.company) {
-      lastGroup.roles.push({
-        role: exp.role,
-        period: exp.period,
-        location: exp.location,
-      });
+      lastGroup.roles.push(roleItem);
       continue;
     }
 
@@ -69,7 +77,7 @@ function groupExperiences(experiences: ExperienceEntry[]): ExperienceGroup[] {
       key: `${exp.company}-${groups.length}`,
       company: exp.company,
       color: exp.color,
-      roles: [{ role: exp.role, period: exp.period, location: exp.location }],
+      roles: [roleItem],
     });
   }
 
@@ -234,26 +242,80 @@ export function ExperienceModal({
                     )}
                   </div>
 
-                  <div className="flex-1 pb-7 last:pb-0">
+                  <div className="flex-1 pb-10 last:pb-0">
                     <p className="font-semibold text-ink leading-snug">
                       {group.company}
                     </p>
 
                     {group.roles.length === 1 && group.roles[0] ? (
-                      <>
-                        <p className="text-ink-muted">{group.roles[0].role}</p>
-                        <p className="font-mono text-xs text-ink-faint mt-1.5">
-                          {group.roles[0].period} · {group.roles[0].location}
-                        </p>
-                      </>
+                      <div className="mt-1 flex flex-col gap-2">
+                        <div>
+                          <p className="text-ink-muted">
+                            {group.roles[0].role}
+                          </p>
+                          <p className="font-mono text-xs text-ink-faint mt-0.5">
+                            {group.roles[0].period} · {group.roles[0].location}
+                          </p>
+                        </div>
+
+                        {group.roles[0].highlights.length > 0 && (
+                          <ul className="flex flex-col gap-1.5 text-xs text-ink-muted list-disc list-inside mt-0.5">
+                            {group.roles[0].highlights.map((h) => (
+                              <li key={h} className="leading-relaxed">
+                                <span>{h}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        {group.roles[0].technologies.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mt-1">
+                            {group.roles[0].technologies.map((tech) => (
+                              <span
+                                key={tech}
+                                className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-surface border border-border text-ink-faint"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     ) : (
-                      <ul className="flex flex-col gap-3 mt-2 border-l border-border pl-3.5">
+                      <ul className="flex flex-col gap-4 mt-2 border-l border-border pl-3.5">
                         {group.roles.map((role) => (
-                          <li key={role.role}>
-                            <p className="text-ink-muted">{role.role}</p>
-                            <p className="font-mono text-xs text-ink-faint mt-1">
-                              {role.period} · {role.location}
-                            </p>
+                          <li key={role.role} className="flex flex-col gap-2">
+                            <div>
+                              <p className="text-ink-muted font-medium">
+                                {role.role}
+                              </p>
+                              <p className="font-mono text-xs text-ink-faint mt-0.5">
+                                {role.period} · {role.location}
+                              </p>
+                            </div>
+
+                            {role.highlights.length > 0 && (
+                              <ul className="flex flex-col gap-1.5 text-xs text-ink-muted list-disc list-inside">
+                                {role.highlights.map((h) => (
+                                  <li key={h} className="leading-relaxed">
+                                    <span>{h}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+
+                            {role.technologies.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5 mt-0.5">
+                                {role.technologies.map((tech) => (
+                                  <span
+                                    key={tech}
+                                    className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-surface border border-border text-ink-faint"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
                           </li>
                         ))}
                       </ul>

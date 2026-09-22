@@ -5,5 +5,11 @@
   "location": "Remote, US",
   "current": false,
   "order": 5,
-  "color": "dot-5"
+  "color": "dot-5",
+  "highlights": [
+    "Engineered core modules and responsive UI layouts for high-profile client applications.",
+    "Streamlined API communication layers with resilient error handling and request caching.",
+    "Contributed to CI/CD automation pipelines for continuous deployment to Firebase App Distribution."
+  ],
+  "technologies": ["Flutter", "Dart", "TypeScript", "REST APIs", "CI/CD"]
 }

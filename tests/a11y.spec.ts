@@ -96,13 +96,90 @@ test.describe("accessibility", () => {
     await expect(trigger).toBeFocused();
   });
 
-  test("keyboard navigation (Tab) reaches all interactive elements", async ({
+  test("speaking modal opens, traps focus, and passes the scan", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const trigger = page.getByRole("button", {
+      name: /flutterconf latam speaker/i,
+    });
+    await trigger.click();
+
+    const dialog = page.getByRole("dialog", { name: /speaking & talks/i });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAttribute("aria-modal", "true");
+
+    const closeButton = dialog.getByRole("button", { name: /^close$/i });
+    await expect(closeButton).toBeFocused();
+
+    const results = await runAxe(page);
+    expect(results.violations).toEqual([]);
+
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("publications modal opens, traps focus, and passes the scan", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const trigger = page.getByRole("button", {
+      name: /kodeco author/i,
+    });
+    await trigger.click();
+
+    const dialog = page.getByRole("dialog", {
+      name: /publications & writing/i,
+    });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAttribute("aria-modal", "true");
+
+    const closeButton = dialog.getByRole("button", { name: /^close$/i });
+    await expect(closeButton).toBeFocused();
+
+    const results = await runAxe(page);
+    expect(results.violations).toEqual([]);
+
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("projects modal opens, traps focus, and passes the scan", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const trigger = page.getByRole("button", {
+      name: /featured projects/i,
+    });
+    await trigger.click();
+
+    const dialog = page.getByRole("dialog", { name: /featured projects/i });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAttribute("aria-modal", "true");
+
+    const closeButton = dialog.getByRole("button", { name: /^close$/i });
+    await expect(closeButton).toBeFocused();
+
+    const results = await runAxe(page);
+    expect(results.violations).toEqual([]);
+
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("keyboard navigation (Tab) reaches all interactive elements including bubbles", async ({
     page,
   }) => {
     await page.goto("/");
 
     const seen: string[] = [];
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 20; i++) {
       await page.keyboard.press("Tab");
       const label = await page.evaluate(() => {
         const el = document.activeElement as HTMLElement | null;
@@ -116,12 +193,15 @@ test.describe("accessibility", () => {
 
     // Key interactive controls should all be keyboard-reachable via Tab,
     // in document order: avatar/back-to-top link, theme toggle, language
-    // toggle, social links, and the "view full experience" trigger.
+    // toggle, interactive bubbles, social links, and the "view full experience" trigger.
     expect(seen).toEqual(
       expect.arrayContaining([
         "Back to top",
         expect.stringMatching(/switch to (light|dark) theme/i),
         expect.stringMatching(/en|es/i),
+        expect.stringMatching(/flutterconf/i),
+        expect.stringMatching(/kodeco/i),
+        expect.stringMatching(/featured projects/i),
         "LinkedIn",
         "GitHub",
       ]),

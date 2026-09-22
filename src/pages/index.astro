@@ -18,6 +18,18 @@ const socials = (await getCollection("socials"))
   .sort((a, b) => a.data.order - b.data.order)
   .map((entry) => ({ label: entry.data.label, url: entry.data.url }));
 
+const talks = (await getCollection("speaking"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data);
+
+const publications = (await getCollection("publications"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data);
+
+const projects = (await getCollection("projects"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data);
+
 // Fetch GitHub data at build time
 let avatarUrl = "https://avatars.githubusercontent.com/u/22333076?v=4";
 let recentRepos: RecentRepo[] = [];
@@ -105,6 +117,9 @@ const posthogHost =
       socials={socials}
       recentRepos={recentRepos}
       latestPost={latestPost}
+      talks={talks}
+      publications={publications}
+      projects={projects}
     />
   </main>
   <Analytics client:load apiKey={posthogKey} apiHost={posthogHost} />

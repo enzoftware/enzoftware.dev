@@ -4,6 +4,9 @@ import { TopBar } from "./TopBar";
 import { HeroCard } from "./HeroCard";
 import { ActivityStack } from "./ActivityStack";
 import { ContactCTA } from "./ContactCTA";
+import { SpeakingModal, type SpeakingEntry } from "./SpeakingModal";
+import { PublicationsModal, type PublicationEntry } from "./PublicationsModal";
+import { ProjectsModal, type ProjectEntry } from "./ProjectsModal";
 import type { ExperienceEntry } from "./ExperienceModal";
 import type { RecentRepo, LatestPost } from "./ActivityStack";
 import type { SocialEntry } from "./SocialsRow";
@@ -23,6 +26,9 @@ interface PortfolioGridProps {
   socials: SocialEntry[];
   recentRepos: RecentRepo[];
   latestPost: LatestPost | null;
+  talks?: SpeakingEntry[] | undefined;
+  publications?: PublicationEntry[] | undefined;
+  projects?: ProjectEntry[] | undefined;
 }
 
 export function PortfolioGrid({
@@ -31,9 +37,16 @@ export function PortfolioGrid({
   socials,
   recentRepos,
   latestPost,
+  talks = [],
+  publications = [],
+  projects = [],
 }: PortfolioGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
   const [cookiePolicyOpen, setCookiePolicyOpen] = useState(false);
+  const [speakingOpen, setSpeakingOpen] = useState(false);
+  const [publicationsOpen, setPublicationsOpen] = useState(false);
+  const [projectsOpen, setProjectsOpen] = useState(false);
+
   const theme = useSyncExternalStore(
     subscribeTheme,
     getThemeSnapshot,
@@ -58,8 +71,18 @@ export function PortfolioGrid({
           onToggleTheme={toggleTheme}
         />
 
-        <div className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
-          <HeroCard t={t.hero} socialT={t.social} socials={socials} />
+        <div className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_440px] gap-x-10 gap-y-10 lg:[align-items:safe_center] py-8 lg:py-0">
+          <HeroCard
+            t={t.hero}
+            socialT={t.social}
+            socials={socials}
+            onOpenSpeaking={() => setSpeakingOpen(true)}
+            onOpenPublications={() => setPublicationsOpen(true)}
+            onOpenProjects={() => setProjectsOpen(true)}
+            talksCount={talks.length}
+            publicationsCount={publications.length}
+            projectsCount={projects.length}
+          />
 
           <ActivityStack
             t={t}
@@ -88,6 +111,27 @@ export function PortfolioGrid({
           onClose={() => setCookiePolicyOpen(false)}
         />
       </div>
+
+      <SpeakingModal
+        t={t.speaking_modal}
+        talks={talks}
+        open={speakingOpen}
+        onClose={() => setSpeakingOpen(false)}
+      />
+
+      <PublicationsModal
+        t={t.publications_modal}
+        publications={publications}
+        open={publicationsOpen}
+        onClose={() => setPublicationsOpen(false)}
+      />
+
+      <ProjectsModal
+        t={t.projects_modal}
+        projects={projects}
+        open={projectsOpen}
+        onClose={() => setProjectsOpen(false)}
+      />
     </MotionConfig>
   );
 }
