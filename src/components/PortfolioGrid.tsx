@@ -7,6 +7,7 @@ import { ContactCTA } from "./ContactCTA";
 import type { ExperienceEntry } from "./ExperienceModal";
 import type { RecentRepo, LatestPost } from "./ActivityStack";
 import type { SocialEntry } from "./SocialsRow";
+import { ArticlesModal, type Article } from "./ArticlesModal";
 import {
   applyTheme,
   getServerThemeSnapshot,
@@ -23,6 +24,7 @@ interface PortfolioGridProps {
   socials: SocialEntry[];
   recentRepos: RecentRepo[];
   latestPost: LatestPost | null;
+  articles: Article[];
 }
 
 export function PortfolioGrid({
@@ -31,9 +33,11 @@ export function PortfolioGrid({
   socials,
   recentRepos,
   latestPost,
+  articles,
 }: PortfolioGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
   const [cookiePolicyOpen, setCookiePolicyOpen] = useState(false);
+  const [articlesModalOpen, setArticlesModalOpen] = useState(false);
   const theme = useSyncExternalStore(
     subscribeTheme,
     getThemeSnapshot,
@@ -59,7 +63,12 @@ export function PortfolioGrid({
         />
 
         <div className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-x-16 gap-y-10 lg:items-center py-8 lg:py-0">
-          <HeroCard t={t.hero} socialT={t.social} socials={socials} />
+          <HeroCard
+            t={t.hero}
+            socialT={t.social}
+            socials={socials}
+            onOpenArticles={() => setArticlesModalOpen(true)}
+          />
 
           <ActivityStack
             t={t}
@@ -86,6 +95,12 @@ export function PortfolioGrid({
           t={t.cookie_consent}
           open={cookiePolicyOpen}
           onClose={() => setCookiePolicyOpen(false)}
+        />
+
+        <ArticlesModal
+          articles={articles}
+          open={articlesModalOpen}
+          onClose={() => setArticlesModalOpen(false)}
         />
       </div>
     </MotionConfig>

@@ -6,7 +6,7 @@ export interface Translations {
     name_line2: string;
     subtitle: string;
     bio: string;
-    badge_kodeco: string;
+    badge_article_author: string;
     badge_flutter: string;
   };
   current: { label: string; cta: string };
@@ -53,7 +53,7 @@ export const translations: Record<Locale, Translations> = {
       name_line2: "Paredes",
       subtitle: "Senior Software Engineer",
       bio: "7+ years building reliable, well-crafted software products end to end.",
-      badge_kodeco: "Kodeco Author",
+      badge_article_author: "Article Author",
       badge_flutter: "FlutterConf LATAM Speaker",
     },
     current: { label: "Currently at", cta: "View full experience" },
@@ -110,7 +110,7 @@ export const translations: Record<Locale, Translations> = {
       name_line2: "Paredes",
       subtitle: "Ingeniero de Software Senior",
       bio: "7+ años construyendo productos de software confiables y bien hechos, de punta a punta.",
-      badge_kodeco: "Autor en Kodeco",
+      badge_article_author: "Autor de Artículos",
       badge_flutter: "Speaker FlutterConf LATAM",
     },
     current: { label: "Actualmente en", cta: "Ver experiencia completa" },

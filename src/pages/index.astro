@@ -60,35 +60,22 @@ try {
   // Use defaults on fetch failure
 }
 
+import { fetchAllArticles } from "../lib/fetchArticles";
+
 // Fetch the latest Substack post at build time (falls back to null on failure)
 let latestPost: LatestPost | null = null;
+let articles = await fetchAllArticles();
 
-try {
-  const feedRes = await fetch("https://enzoftware.substack.com/feed");
-  if (feedRes.ok) {
-    const xml = await feedRes.text();
-    const firstItem = xml.match(/<item>([\s\S]*?)<\/item>/)?.[1];
-    const title = firstItem
-      ?.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/)?.[1]
-      ?.trim();
-    const link = firstItem
-      ?.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/)?.[1]
-      ?.trim();
-    const pubDate = firstItem
-      ?.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]
-      ?.trim();
-
-    if (title && link && pubDate && isValidHttpsUrl(link)) {
-      latestPost = {
-        title,
-        url: link,
-        publishedAt: new Date(pubDate).toISOString(),
-        source: "Substack",
-      };
-    }
+if (articles.length > 0) {
+  const latestSubstack = articles.find((a) => a.source === "Substack");
+  if (latestSubstack) {
+    latestPost = {
+      title: latestSubstack.title,
+      url: latestSubstack.url,
+      publishedAt: latestSubstack.publishedAt,
+      source: "Substack",
+    };
   }
-} catch (_e) {
-  // Use null on fetch failure
 }
 
 const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY ?? "";
@@ -105,6 +92,7 @@ const posthogHost =
       socials={socials}
       recentRepos={recentRepos}
       latestPost={latestPost}
+      articles={articles}
     />
   </main>
   <Analytics client:load apiKey={posthogKey} apiHost={posthogHost} />
