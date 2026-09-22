@@ -100,6 +100,7 @@ Evidence before assertions: Always run the commands, observe the output, and fix
 
 - **Rules**:
   - [`.agents/rules/typescript.md`](./.agents/rules/typescript.md) — TypeScript implementation and validation rules.
+  - [`.agents/rules/solid-fetching.md`](./.agents/rules/solid-fetching.md) — Clean architecture, SRP, and error telemetry for data fetching.
 - **Skills**:
   - [`.agents/skills/add-analytic-event/SKILL.md`](./.agents/skills/add-analytic-event/SKILL.md) — How to add, implement, test, and document PostHog analytic events.
   - [`.agents/skills/create-pr/SKILL.md`](./.agents/skills/create-pr/SKILL.md) — Workflow for opening pull requests following the project PR template.

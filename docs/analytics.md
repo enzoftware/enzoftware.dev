@@ -54,6 +54,7 @@ The table below catalogs all named conversion events currently tracked in the ap
 | `recent_activity_click`     | Visitor clicks on a recent GitHub repository in the activity stack            | `repo`: Repository name (e.g. `enzoftware.dev`)                                        | `src/components/ActivityStack.tsx`   |
 | `latest_post_click`         | Visitor clicks on the latest blog article link in the activity stack          | `source`: Publication source (e.g. `Substack`, `Medium`)                               | `src/components/ActivityStack.tsx`   |
 | `linkedin_experience_click` | Visitor clicks the external LinkedIn link inside the experience details modal | None                                                                                   | `src/components/ExperienceModal.tsx` |
+| `article_click`             | Visitor clicks an article in the latest articles modal                        | `source`: Publication source, `title`: Article title                                   | `src/components/ArticlesModal.tsx`   |
 
 ---
 

@@ -10,6 +10,7 @@ import { ProjectsModal, type ProjectEntry } from "./ProjectsModal";
 import type { ExperienceEntry } from "./ExperienceModal";
 import type { RecentRepo, LatestPost } from "./ActivityStack";
 import type { SocialEntry } from "./SocialsRow";
+import { ArticlesModal, type Article } from "./ArticlesModal";
 import {
   applyTheme,
   getServerThemeSnapshot,
@@ -26,6 +27,7 @@ interface PortfolioGridProps {
   socials: SocialEntry[];
   recentRepos: RecentRepo[];
   latestPost: LatestPost | null;
+  articles: Article[];
   talks?: SpeakingEntry[] | undefined;
   publications?: PublicationEntry[] | undefined;
   projects?: ProjectEntry[] | undefined;
@@ -37,12 +39,14 @@ export function PortfolioGrid({
   socials,
   recentRepos,
   latestPost,
+  articles,
   talks = [],
   publications = [],
   projects = [],
 }: PortfolioGridProps) {
   const [locale, setLocale] = useState<Locale>("en");
   const [cookiePolicyOpen, setCookiePolicyOpen] = useState(false);
+  const [articlesModalOpen, setArticlesModalOpen] = useState(false);
   const [speakingOpen, setSpeakingOpen] = useState(false);
   const [publicationsOpen, setPublicationsOpen] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
@@ -76,6 +80,7 @@ export function PortfolioGrid({
             t={t.hero}
             socialT={t.social}
             socials={socials}
+            onOpenArticles={() => setArticlesModalOpen(true)}
             onOpenSpeaking={() => setSpeakingOpen(true)}
             onOpenPublications={() => setPublicationsOpen(true)}
             onOpenProjects={() => setProjectsOpen(true)}
@@ -109,6 +114,14 @@ export function PortfolioGrid({
           t={t.cookie_consent}
           open={cookiePolicyOpen}
           onClose={() => setCookiePolicyOpen(false)}
+        />
+
+        <ArticlesModal
+          t={t.articles_modal}
+          locale={locale}
+          articles={articles}
+          open={articlesModalOpen}
+          onClose={() => setArticlesModalOpen(false)}
         />
       </div>
 

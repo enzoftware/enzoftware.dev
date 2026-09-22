@@ -15,6 +15,7 @@ interface HeroCardProps {
   t: Translations["hero"];
   socialT: Translations["social"];
   socials: SocialEntry[];
+  onOpenArticles: () => void;
   onOpenSpeaking: () => void;
   onOpenPublications: () => void;
   onOpenProjects: () => void;
@@ -27,6 +28,7 @@ export function HeroCard({
   t,
   socialT,
   socials,
+  onOpenArticles,
   onOpenSpeaking,
   onOpenPublications,
   onOpenProjects,
@@ -36,10 +38,6 @@ export function HeroCard({
 }: HeroCardProps) {
   const headlines = t.headlines?.length ? t.headlines : [t.subtitle];
   const [headlineIndex, setHeadlineIndex] = useState(0);
-  // MotionConfig(reducedMotion="user") only suppresses transform/layout
-  // animations, not opacity — without this, the stagger fade-in still runs
-  // its full duration for reduced-motion users (and races a11y scans that
-  // run right after the H1 is deemed "visible").
   const shouldReduceMotion = useReducedMotion();
 
   const container: Variants = {
@@ -76,21 +74,22 @@ export function HeroCard({
 
   return (
     <motion.div
-      variants={container}
+      className="flex flex-col gap-6"
       initial="hidden"
       animate="visible"
-      className="flex flex-col justify-center"
+      variants={container}
     >
-      <motion.h1 variants={item} className="font-display text-hero text-ink">
-        {t.name_line1}
-        <br />
-        {t.name_line2}
+      <motion.h1
+        variants={item}
+        className="font-display font-semibold text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] tracking-tight -ml-1 flex flex-col gap-1 sm:gap-2 text-ink select-none"
+      >
+        <span className="block">{t.name_line1}</span>
+        <span className="block">{t.name_line2}</span>
       </motion.h1>
 
       <motion.div
         variants={item}
-        className="mt-2 h-6 lg:h-7 overflow-hidden"
-        aria-live="polite"
+        className="font-mono text-sm sm:text-base text-accent font-medium relative h-[1.5em] overflow-hidden"
       >
         <AnimatePresence mode="wait">
           <motion.p
@@ -131,6 +130,15 @@ export function HeroCard({
         aria-label={t.expertise_topics_label}
       >
         <InteractiveBubble
+          label={t.badge_article_author}
+          count={3}
+          hint={t.bubble_hint}
+          colorVariant="accent"
+          onClick={onOpenArticles}
+          dataTrack="hero_bubble_articles"
+        />
+
+        <InteractiveBubble
           label={t.badge_flutter}
           count={talksCount}
           hint={t.bubble_hint}
@@ -160,36 +168,8 @@ export function HeroCard({
 
       <motion.div
         variants={item}
-        className="flex flex-wrap items-center gap-3 mt-2"
+        className="mt-4 sm:mt-6 border-t border-border/50 pt-4"
       >
-        <a
-          href="mailto:hi@enzoftware.dev?subject=Let%27s%20build%20something"
-          className="inline-flex items-center justify-center rounded-full bg-accent-solid hover:bg-accent-solid-hover text-on-accent font-mono text-base px-6 py-2.5 transition-colors"
-          data-track="hero_contact_click"
-        >
-          {t.contact_cta}
-        </a>
-        <a
-          href="/resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-full border border-border text-ink-muted hover:text-accent hover:border-accent/50 font-mono text-base px-6 py-2.5 transition-colors"
-          data-track="hero_resume_click"
-        >
-          {t.resume_cta}
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M5 19 19 5M19 5H8M19 5v11"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
-      </motion.div>
-
-      <motion.div variants={item} className="mt-2">
         <SocialsRow t={socialT} socials={socials} />
       </motion.div>
     </motion.div>

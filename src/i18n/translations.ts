@@ -8,6 +8,7 @@ export interface Translations {
     headlines: string[];
     bio: string;
     badge_kodeco: string;
+    badge_article_author: string;
     badge_flutter: string;
     badge_projects: string;
     bubble_hint: string;
@@ -36,6 +37,12 @@ export interface Translations {
     title: string;
     subtitle: string;
     read: string;
+    close: string;
+  };
+  articles_modal: {
+    title: string;
+    filter_all: string;
+    empty_state: string;
     close: string;
   };
   projects_modal: {
@@ -102,6 +109,7 @@ export const translations: Record<Locale, Translations> = {
       ],
       bio: "7+ years building reliable, well-crafted software products end to end — from 0-to-1 launches to leading engineering teams at scale.",
       badge_kodeco: "Kodeco Author",
+      badge_article_author: "Article Author",
       badge_flutter: "FlutterConf LATAM Speaker",
       badge_projects: "Featured Projects",
       bubble_hint: "Click to explore",
@@ -132,6 +140,12 @@ export const translations: Record<Locale, Translations> = {
       subtitle:
         "Technical tutorials, architecture guides, and articles on mobile engineering.",
       read: "Read Article",
+      close: "Close",
+    },
+    articles_modal: {
+      title: "Latest Articles",
+      filter_all: "All",
+      empty_state: "No articles found for this source.",
       close: "Close",
     },
     projects_modal: {
@@ -205,6 +219,7 @@ export const translations: Record<Locale, Translations> = {
       ],
       bio: "7+ años construyendo productos de software confiables y bien hechos, de punta a punta — desde lanzamientos 0-a-1 hasta liderar equipos de ingeniería a escala.",
       badge_kodeco: "Autor en Kodeco",
+      badge_article_author: "Autor de Artículos",
       badge_flutter: "Speaker FlutterConf LATAM",
       badge_projects: "Proyectos Destacados",
       bubble_hint: "Haz clic para explorar",
@@ -235,6 +250,12 @@ export const translations: Record<Locale, Translations> = {
       subtitle:
         "Tutoriales técnicos, guías de arquitectura y artículos sobre desarrollo móvil.",
       read: "Leer Artículo",
+      close: "Cerrar",
+    },
+    articles_modal: {
+      title: "Últimos Artículos",
+      filter_all: "Todos",
+      empty_state: "No se encontraron artículos para esta fuente.",
       close: "Cerrar",
     },
     projects_modal: {
