@@ -4,7 +4,7 @@
   "year": 2024,
   "location": "Medellín, Colombia",
   "abstract": "A deep dive into building truly inclusive Flutter applications. Explores the Semantics widget tree, assistive technologies (TalkBack & VoiceOver), automated accessibility audits, and WCAG compliance for production apps.",
-  "videoUrl": "https://www.youtube.com/@FlutterConfLATAM",
+  "videoUrl": "https://www.youtube.com/watch?v=Dc6nzs1TJuA&list=PLPAl92hxNMR_nlR1SvR5_ewz6SgPEg4-R&index=17&t=370s",
   "slidesUrl": "https://speakerdeck.com/enzoftware",
   "tags": ["Flutter", "Accessibility", "Semantics", "Mobile Architecture"],
   "order": 1

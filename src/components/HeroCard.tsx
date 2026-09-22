@@ -17,10 +17,8 @@ interface HeroCardProps {
   socials: SocialEntry[];
   onOpenArticles: () => void;
   onOpenSpeaking: () => void;
-  onOpenPublications: () => void;
   onOpenProjects: () => void;
   talksCount?: number;
-  publicationsCount?: number;
   projectsCount?: number;
 }
 
@@ -30,10 +28,8 @@ export function HeroCard({
   socials,
   onOpenArticles,
   onOpenSpeaking,
-  onOpenPublications,
   onOpenProjects,
   talksCount = 1,
-  publicationsCount = 4,
   projectsCount = 3,
 }: HeroCardProps) {
   const headlines = t.headlines?.length ? t.headlines : [t.subtitle];
@@ -145,15 +141,6 @@ export function HeroCard({
           colorVariant="signal"
           onClick={onOpenSpeaking}
           dataTrack="hero_bubble_speaking"
-        />
-
-        <InteractiveBubble
-          label={t.badge_kodeco}
-          count={publicationsCount}
-          hint={t.bubble_hint}
-          colorVariant="accent"
-          onClick={onOpenPublications}
-          dataTrack="hero_bubble_publications"
         />
 
         <InteractiveBubble

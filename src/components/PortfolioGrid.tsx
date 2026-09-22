@@ -82,10 +82,8 @@ export function PortfolioGrid({
             socials={socials}
             onOpenArticles={() => setArticlesModalOpen(true)}
             onOpenSpeaking={() => setSpeakingOpen(true)}
-            onOpenPublications={() => setPublicationsOpen(true)}
             onOpenProjects={() => setProjectsOpen(true)}
             talksCount={talks.length}
-            publicationsCount={publications.length}
             projectsCount={projects.length}
           />
 
