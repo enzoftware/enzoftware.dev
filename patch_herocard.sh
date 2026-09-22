@@ -1,3 +1,4 @@
+cat << 'INNER_EOF' > src/components/HeroCard.tsx
 import { useEffect, useState } from "react";
 import {
   AnimatePresence,
@@ -170,8 +171,12 @@ export function HeroCard({
         variants={item}
         className="mt-4 sm:mt-6 border-t border-border/50 pt-4"
       >
-        <SocialsRow t={socialT} socials={socials} />
+        <SocialsRow
+          t={socialT}
+          socials={socials}
+        />
       </motion.div>
     </motion.div>
   );
 }
+INNER_EOF

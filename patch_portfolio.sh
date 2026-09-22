@@ -1,3 +1,4 @@
+cat << 'INNER_EOF' > src/components/PortfolioGrid.tsx
 import { useState, useSyncExternalStore } from "react";
 import { MotionConfig } from "framer-motion";
 import { TopBar } from "./TopBar";
@@ -146,3 +147,4 @@ export function PortfolioGrid({
     </MotionConfig>
   );
 }
+INNER_EOF

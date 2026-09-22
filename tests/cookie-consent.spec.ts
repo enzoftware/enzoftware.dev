@@ -93,18 +93,22 @@ test.describe("cookie consent & policy", () => {
     await expect(modal).toBeHidden();
   });
 
-  test("footer cookie settings link re-opens modal to manage preference", async ({
+  test("footer cookie settings link remains available once consent is accepted to allow changing preferences", async ({
     page,
   }) => {
     await page.goto("/");
 
-    // Accept first
     const banner = page.getByRole("region", { name: /cookie consent/i });
+    const settingsBtn = page.getByRole("button", { name: /cookie settings/i });
+
+    // Not yet decided: the footer link is available as a fallback to the banner.
+    await expect(settingsBtn).toBeVisible();
+
     await banner.getByRole("button", { name: /^accept$/i }).click();
     await expect(banner).toBeHidden();
 
-    // Reopen from footer
-    const settingsBtn = page.getByRole("button", { name: /cookie settings/i });
+    // Permission granted: the footer link remains available to change preference or withdraw consent.
+    await expect(settingsBtn).toBeVisible();
     await settingsBtn.click();
 
     const modal = page.getByRole("dialog", {
@@ -113,7 +117,7 @@ test.describe("cookie consent & policy", () => {
     await expect(modal).toBeVisible();
     await expect(modal).toContainText(/accepted/i);
 
-    // Switch to decline inside modal
+    // Can withdraw consent inside modal
     await modal.getByRole("button", { name: /disable analytics/i }).click();
     await expect(modal).toContainText(/declined/i);
 
@@ -124,7 +128,42 @@ test.describe("cookie consent & policy", () => {
 
     await page.keyboard.press("Escape");
     await expect(modal).toBeHidden();
-    await expect(settingsBtn).toBeFocused();
+    await expect(settingsBtn).toBeVisible();
+  });
+
+  test("footer cookie settings link stays available after declining, and re-opens the modal to manage preference", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const banner = page.getByRole("region", { name: /cookie consent/i });
+    await banner.getByRole("button", { name: /^decline$/i }).click();
+    await expect(banner).toBeHidden();
+
+    const settingsBtn = page.getByRole("button", { name: /cookie settings/i });
+    await expect(settingsBtn).toBeVisible();
+    await settingsBtn.click();
+
+    const modal = page.getByRole("dialog", {
+      name: /cookie & privacy policy/i,
+    });
+    await expect(modal).toBeVisible();
+    await expect(modal).toContainText(/declined/i);
+
+    // Switch to accept inside modal
+    await modal.getByRole("button", { name: /enable analytics/i }).click();
+    await expect(modal).toContainText(/accepted/i);
+
+    const consent = await page.evaluate(() =>
+      localStorage.getItem("cookie_consent"),
+    );
+    expect(consent).toBe("accepted");
+
+    await page.keyboard.press("Escape");
+    await expect(modal).toBeHidden();
+
+    // Footer link remains available to manage preferences
+    await expect(settingsBtn).toBeVisible();
   });
 
   test("translates cookie banner and modal when language is toggled to Spanish", async ({

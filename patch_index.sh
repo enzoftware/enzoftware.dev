@@ -1,3 +1,4 @@
+cat << 'INNER_EOF' > src/pages/index.astro
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
@@ -112,3 +113,4 @@ const posthogHost =
   </main>
   <Analytics client:load apiKey={posthogKey} apiHost={posthogHost} />
 </Layout>
+INNER_EOF

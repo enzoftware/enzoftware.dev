@@ -1,0 +1,10 @@
+{
+  "title": "Ktor and GraphQL: Getting Started",
+  "publisher": "Kodeco / Android Weekly",
+  "type": "article",
+  "url": "https://www.kodeco.com/u/enzoftware",
+  "publishedAt": "2022",
+  "description": "Building scalable, type-safe GraphQL backend services using Ktor, Kotlin coroutines, and Apollo GraphQL integration.",
+  "tags": ["Kotlin", "Ktor", "GraphQL", "Backend"],
+  "order": 3
+}

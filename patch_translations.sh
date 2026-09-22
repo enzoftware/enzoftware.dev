@@ -1,3 +1,4 @@
+cat << 'INNER_EOF' > src/i18n/translations.ts
 export type Locale = "en" | "es";
 
 export interface Translations {
@@ -5,62 +6,61 @@ export interface Translations {
     name_line1: string;
     name_line2: string;
     subtitle: string;
-    headlines: string[];
+    headlines?: string[];
     bio: string;
-    badge_kodeco: string;
     badge_article_author: string;
+    badge_kodeco: string;
     badge_flutter: string;
     badge_projects: string;
     bubble_hint: string;
     resume_cta: string;
     contact_cta: string;
     expertise_topics_label: string;
+    badge_open_source: string;
   };
-  current: { label: string; cta: string };
+  social: {
+    github: string;
+    x: string;
+    linkedin: string;
+    label: string;
+  };
+  current: {
+    label: string;
+    badge: string;
+  };
   modal: {
-    title: string;
     close: string;
-    linkedin_cta: string;
-    highlights_label: string;
-    tech_label: string;
   };
   speaking_modal: {
-    eyebrow: string;
     title: string;
-    subtitle: string;
-    watch: string;
-    slides: string;
-    close: string;
   };
   publications_modal: {
-    eyebrow: string;
     title: string;
-    subtitle: string;
-    read: string;
-    close: string;
   };
   projects_modal: {
-    eyebrow: string;
     title: string;
-    subtitle: string;
-    architecture_label: string;
-    highlights_label: string;
-    tech_label: string;
-    view_web: string;
-    view_github: string;
-    close: string;
+    live_demo: string;
+    source_code: string;
+    private_repo: string;
   };
-  signature: { role_at: string };
-  latest_post: { label: string; empty: string };
-  recent_activity: { label: string; empty: string };
-  social: { title: string };
+  signature: {
+    role: string;
+  };
+  latest_post: {
+    label: string;
+    empty: string;
+  };
+  recent_activity: {
+    label: string;
+    more_repos: string;
+    commits: string;
+    fallback_date: string;
+  };
   contact: {
+    eyebrow: string;
     headline_1: string;
     headline_2: string;
     note: string;
-    availability_status: string;
-    copy_email: string;
-    copy_email_success: string;
   };
   cookie_consent: {
     banner_text: string;
@@ -102,66 +102,59 @@ export const translations: Record<Locale, Translations> = {
         "Published technical author at Kodeco",
       ],
       bio: "7+ years building reliable, well-crafted software products end to end — from 0-to-1 launches to leading engineering teams at scale.",
-      badge_kodeco: "Kodeco Author",
       badge_article_author: "Article Author",
-      badge_flutter: "FlutterConf LATAM Speaker",
+      badge_kodeco: "Kodeco Author",
+      badge_flutter: "FlutterConf LATAM",
       badge_projects: "Featured Projects",
+      badge_open_source: "Open Source",
       bubble_hint: "Click to explore",
       resume_cta: "View Resume",
       contact_cta: "Get in touch",
       expertise_topics_label: "Interactive expertise topics",
     },
-    current: { label: "Currently at", cta: "View full experience" },
+    social: {
+      github: "GitHub",
+      x: "X (Twitter)",
+      linkedin: "LinkedIn",
+      label: "Social links",
+    },
+    current: {
+      label: "Currently",
+      badge: "Present",
+    },
     modal: {
-      title: "Full experience",
-      close: "Close",
-      linkedin_cta: "See full experience on LinkedIn",
-      highlights_label: "Key Impact & Contributions",
-      tech_label: "Technologies",
+      close: "Close dialog",
     },
     speaking_modal: {
-      eyebrow: "Community & Leadership",
-      title: "Speaking & Talks",
-      subtitle:
-        "Conference talks and deep dives on Flutter, architecture, and accessibility.",
-      watch: "Watch Recording",
-      slides: "View Slides",
-      close: "Close",
+      title: "Conference Talks",
     },
     publications_modal: {
-      eyebrow: "Technical Author & Educator",
-      title: "Publications & Writing",
-      subtitle:
-        "Technical tutorials, architecture guides, and articles on mobile engineering.",
-      read: "Read Article",
-      close: "Close",
+      title: "Publications & Articles",
     },
     projects_modal: {
-      eyebrow: "Engineering Case Studies",
       title: "Featured Projects",
-      subtitle:
-        "Architectural case studies and production applications built and scaled.",
-      architecture_label: "Architecture & Decisions",
-      highlights_label: "Key Outcomes & Scale",
-      tech_label: "Stack & Tools",
-      view_web: "Visit Website",
-      view_github: "View GitHub",
-      close: "Close",
+      live_demo: "Live Demo",
+      source_code: "Source Code",
+      private_repo: "Private Repository",
     },
-    signature: { role_at: "at" },
-    latest_post: { label: "Latest post", empty: "Nothing published yet" },
+    signature: {
+      role: "Software Engineer",
+    },
+    latest_post: {
+      label: "Latest thought",
+      empty: "Cooking up the next post...",
+    },
     recent_activity: {
-      label: "Latest commits",
-      empty: "No public commits recently",
+      label: "Recent activity",
+      more_repos: "more repositories on GitHub",
+      commits: "commits",
+      fallback_date: "Recently",
     },
-    social: { title: "Find me on" },
     contact: {
-      headline_1: "Let's build something",
-      headline_2: "worth shipping.",
-      note: "Usually replies within a day · Lima, Peru (GMT-5)",
-      availability_status: "🟢 Available for select advisory & speaking",
-      copy_email: "Copy email",
-      copy_email_success: "Copied hi@enzoftware.dev to clipboard!",
+      eyebrow: "Let's connect",
+      headline_1: "Have a project in mind?",
+      headline_2: "Let's chat.",
+      note: "Currently open to new opportunities.",
     },
     cookie_consent: {
       banner_text:
@@ -176,7 +169,7 @@ export const translations: Record<Locale, Translations> = {
         "This portfolio uses cookies and client-side telemetry to understand how visitors interact with the site, helping me improve content and user experience.",
       section_tracking_title: "What is tracked",
       section_tracking_desc:
-        "When you accept, PostHog collects anonymous usage metrics, page views, referring sites, and device/browser metadata. No passwords, financial information, or advertising profiles are ever collected.",
+        "Only essential interaction data: page views, clicks on portfolio items, theme preferences, and broad geolocation (e.g., country level). All data is aggregated and anonymized via PostHog.",
       section_not_done_title: "What is never done",
       section_not_done_desc:
         "Your data is never sold, leased, or shared with third-party data brokers or advertisers. Tracking is strictly limited to site analytics.",
@@ -206,66 +199,59 @@ export const translations: Record<Locale, Translations> = {
         "Autor técnico publicado en Kodeco",
       ],
       bio: "7+ años construyendo productos de software confiables y bien hechos, de punta a punta — desde lanzamientos 0-a-1 hasta liderar equipos de ingeniería a escala.",
-      badge_kodeco: "Autor en Kodeco",
       badge_article_author: "Autor de Artículos",
+      badge_kodeco: "Autor en Kodeco",
       badge_flutter: "Speaker FlutterConf LATAM",
       badge_projects: "Proyectos Destacados",
+      badge_open_source: "Código Abierto",
       bubble_hint: "Haz clic para explorar",
       resume_cta: "Ver Currículum",
       contact_cta: "Contáctame",
       expertise_topics_label: "Temas de experiencia interactivos",
     },
-    current: { label: "Actualmente en", cta: "Ver experiencia completa" },
+    social: {
+      github: "GitHub",
+      x: "X (Twitter)",
+      linkedin: "LinkedIn",
+      label: "Redes sociales",
+    },
+    current: {
+      label: "Actualmente",
+      badge: "Presente",
+    },
     modal: {
-      title: "Experiencia completa",
-      close: "Cerrar",
-      linkedin_cta: "Ver experiencia completa en LinkedIn",
-      highlights_label: "Impacto y Contribuciones Clave",
-      tech_label: "Tecnologías",
+      close: "Cerrar diálogo",
     },
     speaking_modal: {
-      eyebrow: "Comunidad y Liderazgo",
-      title: "Conferencias y Charlas",
-      subtitle:
-        "Charlas y presentaciones sobre Flutter, arquitectura y accesibilidad.",
-      watch: "Ver Grabación",
-      slides: "Ver Diapositivas",
-      close: "Cerrar",
+      title: "Charlas y Conferencias",
     },
     publications_modal: {
-      eyebrow: "Autor Técnico y Educador",
       title: "Publicaciones y Artículos",
-      subtitle:
-        "Tutoriales técnicos, guías de arquitectura y artículos sobre desarrollo móvil.",
-      read: "Leer Artículo",
-      close: "Cerrar",
     },
     projects_modal: {
-      eyebrow: "Casos de Estudio de Ingeniería",
       title: "Proyectos Destacados",
-      subtitle:
-        "Casos de estudio de arquitectura y aplicaciones en producción escaladas.",
-      architecture_label: "Arquitectura y Decisiones",
-      highlights_label: "Resultados e Impacto Clave",
-      tech_label: "Stack y Herramientas",
-      view_web: "Visitar Sitio",
-      view_github: "Ver GitHub",
-      close: "Cerrar",
+      live_demo: "Demo en Vivo",
+      source_code: "Código Fuente",
+      private_repo: "Repositorio Privado",
     },
-    signature: { role_at: "en" },
-    latest_post: { label: "Último artículo", empty: "Nada publicado aún" },
+    signature: {
+      role: "Ingeniero de Software",
+    },
+    latest_post: {
+      label: "Última publicación",
+      empty: "Cocinando el próximo post...",
+    },
     recent_activity: {
-      label: "Últimos commits",
-      empty: "Sin commits públicos recientes",
+      label: "Actividad reciente",
+      more_repos: "más repositorios en GitHub",
+      commits: "commits",
+      fallback_date: "Recientemente",
     },
-    social: { title: "Encuéntrame en" },
     contact: {
-      headline_1: "Construyamos algo",
-      headline_2: "que valga la pena.",
-      note: "Normalmente respondo en un día · Lima, Perú (GMT-5)",
-      availability_status: "🟢 Disponible para asesorías y charlas selectas",
-      copy_email: "Copiar email",
-      copy_email_success: "¡Copiado hi@enzoftware.dev al portapapeles!",
+      eyebrow: "Conectemos",
+      headline_1: "¿Tienes un proyecto en mente?",
+      headline_2: "Hablemos.",
+      note: "Actualmente abierto a nuevas oportunidades.",
     },
     cookie_consent: {
       banner_text:
@@ -280,20 +266,21 @@ export const translations: Record<Locale, Translations> = {
         "Este portafolio utiliza cookies y telemetría en el navegador para entender cómo los visitantes interactúan con el sitio y mejorar la experiencia de usuario.",
       section_tracking_title: "Qué se recopila",
       section_tracking_desc:
-        "Si aceptas, PostHog registra métricas de uso anónimas, vistas de página, sitios de referencia y metadatos de navegador/dispositivo. Jamás se recopilan contraseñas ni información publicitaria.",
-      section_not_done_title: "Lo que nunca hacemos",
+        "Solo datos esenciales de interacción: vistas de página, clics en elementos del portafolio, preferencias de tema y ubicación geográfica amplia (a nivel de país). Todos los datos son agregados y anonimizados a través de PostHog.",
+      section_not_done_title: "Qué no se hace",
       section_not_done_desc:
-        "Tus datos nunca se venden, alquilan ni comparten con intermediarios publicitarios. El rastreo se limita exclusivamente a analítica del sitio.",
-      section_rights_title: "Tus derechos y preferencias",
+        "Tus datos nunca se venden, alquilan ni comparten con terceros ni anunciantes. El rastreo se limita estrictamente a analíticas del sitio.",
+      section_rights_title: "Tus opciones y derechos",
       section_rights_desc:
-        "De acuerdo con el RGPD y estándares de privacidad, las analíticas solo se activan con tu consentimiento explícito. Puedes cambiar o revocar tu elección en cualquier momento.",
+        "De acuerdo con el GDPR y estándares internacionales de privacidad, las analíticas solo se activan con tu consentimiento explícito. Puedes retirar o actualizar tu elección en cualquier momento a continuación.",
       status_label: "Preferencia actual:",
-      status_accepted: "Aceptado (analítica activa)",
-      status_declined: "Rechazado (analítica desactivada)",
-      status_not_set: "Aún sin seleccionar",
-      change_to_accept: "Activar analítica",
-      change_to_decline: "Desactivar analítica",
+      status_accepted: "Aceptado (analíticas activas)",
+      status_declined: "Rechazado (analíticas desactivadas)",
+      status_not_set: "No se ha elegido aún",
+      change_to_accept: "Activar analíticas",
+      change_to_decline: "Desactivar analíticas",
     },
     lang_toggle: "EN",
   },
 };
+INNER_EOF

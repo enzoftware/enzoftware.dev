@@ -1,0 +1,26 @@
+{
+  "title": "Enterprise Flutter & Design Systems",
+  "tagline": "High-scale cross-platform architecture and enterprise UI component libraries at Very Good Ventures.",
+  "role": "Senior Flutter Developer",
+  "period": "2024",
+  "description": "Engineered robust, multi-brand design systems and enterprise mobile solutions adhering to Very Good Architecture standards and high test coverage requirements.",
+  "architecture": "Layered feature-first architecture, custom design token engines, automated golden testing, and resilient CI/CD pipelines.",
+  "highlights": [
+    "Implemented reusable UI component libraries adopted across multi-platform client applications",
+    "Enforced rigorous testing standards with unit, widget, and golden test suites",
+    "Collaborated directly with client stakeholders on architectural scaling strategies"
+  ],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "Design Systems",
+    "Golden Tests",
+    "Very Good Architecture"
+  ],
+  "links": {
+    "web": "https://verygood.ventures"
+  },
+  "featured": true,
+  "order": 2,
+  "color": "dot-1"
+}

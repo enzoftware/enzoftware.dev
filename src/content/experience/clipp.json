@@ -5,5 +5,19 @@
   "location": "Remote, NY",
   "current": false,
   "order": 1,
-  "color": "dot-3"
+  "color": "dot-3",
+  "highlights": [
+    "Engineered core dispatch, live vehicle telemetry, and geolocation streaming features using WebSockets.",
+    "Integrated payment gateways and digital wallet checkout systems with high fault-tolerance.",
+    "Streamlined app startup time and optimized memory consumption across iOS and Android."
+  ],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "WebSockets",
+    "Mapbox",
+    "Payments",
+    "iOS",
+    "Android"
+  ]
 }

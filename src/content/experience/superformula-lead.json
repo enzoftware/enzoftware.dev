@@ -5,5 +5,18 @@
   "location": "Remote, US",
   "current": false,
   "order": 4,
-  "color": "dot-5"
+  "color": "dot-5",
+  "highlights": [
+    "Led engineering squad across sprint planning, technical design reviews, and cross-platform releases.",
+    "Architected multi-tier mobile client solutions with seamless backend service integrations.",
+    "Mentored mid-level and junior engineers on Dart clean architecture and state management patterns."
+  ],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "Technical Leadership",
+    "Architecture",
+    "GraphQL",
+    "Agile"
+  ]
 }

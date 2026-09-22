@@ -1,0 +1,10 @@
+{
+  "title": "Testing Android Architecture Components",
+  "publisher": "Kodeco",
+  "type": "tutorial",
+  "url": "https://www.kodeco.com/u/enzoftware",
+  "publishedAt": "2023",
+  "description": "Comprehensive guide to testing LiveData, ViewModel, Room, and repository patterns using JUnit, MockK, and Architecture Component testing rules.",
+  "tags": ["Android", "Architecture", "Testing", "JUnit"],
+  "order": 1
+}
