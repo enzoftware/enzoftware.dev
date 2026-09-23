@@ -1,0 +1,48 @@
+// Shared style for App Store / Google Play chips — used by ActivityStack,
+// ExperienceModal, and ProjectsModal so all three render the same badge
+// instead of drifting into slightly different one-off class strings.
+export const STORE_CHIP_CLASS =
+  "inline-flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-1.5 rounded-md border border-ink-faint/30 bg-surface hover:border-accent hover:bg-surface-elevated text-ink-faint hover:text-ink transition-colors";
+
+export function AppStoreIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M17.05 12.536c-.02-2.1 1.716-3.11 1.795-3.16-.978-1.43-2.5-1.628-3.04-1.65-1.294-.132-2.527.762-3.183.762-.657 0-1.671-.744-2.75-.723-1.415.02-2.72.822-3.448 2.09-1.47 2.548-.376 6.318 1.056 8.386.7 1.012 1.535 2.148 2.633 2.107 1.056-.042 1.457-.68 2.735-.68 1.277 0 1.636.68 2.752.657 1.14-.02 1.858-1.032 2.552-2.05.804-1.176 1.135-2.315 1.155-2.373-.025-.012-2.216-.85-2.238-3.366h-.019zM14.988 6.19c.58-.703.973-1.68.865-2.65-.837.033-1.85.558-2.451 1.26-.538.62-1.01 1.618-.883 2.567.928.072 1.878-.472 2.47-1.177z" />
+    </svg>
+  );
+}
+
+export function PlayStoreIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3.6 2.4c-.36.4-.55.98-.55 1.72v15.76c0 .74.19 1.32.55 1.72l.1.1L13.06 12v-.2L3.7 2.3l-.1.1z"
+        fill="#00d3ff"
+      />
+      <path
+        d="M16.28 15.24l-3.22-3.24v-.2l3.22-3.24.07.04 3.82 2.17c1.09.62 1.09 1.64 0 2.26l-3.82 2.17-.07.04z"
+        fill="#ffbc00"
+      />
+      <path
+        d="M16.35 15.2L13.06 12 3.7 21.32c.36.38.94.43 1.61.05l11.04-6.17"
+        fill="#ff3d57"
+      />
+      <path
+        d="M16.35 8.8L5.31 2.63c-.67-.38-1.25-.33-1.61.05L13.06 12l3.29-3.2z"
+        fill="#00f076"
+      />
+    </svg>
+  );
+}

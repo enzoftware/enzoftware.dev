@@ -105,15 +105,11 @@ bun run test:a11y
 
 ---
 
-## Existing Events Quick Reference
+## Existing Events
 
-| Event Name                  | Trigger Location                     | Custom Properties | Purpose                                           |
-| :-------------------------- | :----------------------------------- | :---------------- | :------------------------------------------------ |
-| `social_click`              | `src/components/SocialsRow.tsx`      | `platform`        | Tracks which social profiles visitors navigate to |
-| `contact_email_click`       | `src/components/ContactCTA.tsx`      | none              | Tracks email link clicks (key conversion goal)    |
-| `recent_activity_click`     | `src/components/ActivityStack.tsx`   | `repo`            | Tracks clicks on recent GitHub repositories       |
-| `latest_post_click`         | `src/components/ActivityStack.tsx`   | `source`          | Tracks clicks on blog posts (Substack, Medium)    |
-| `linkedin_experience_click` | `src/components/ExperienceModal.tsx` | none              | Tracks outbound LinkedIn link from the modal      |
+The full, current event catalog lives in [`docs/analytics.md`](../../../docs/analytics.md) (Section 2), organized by page section. It is intentionally not duplicated here — a second copy would drift out of date the moment an event is added, renamed, or removed. Check it before naming a new event, so you reuse an existing pattern instead of inventing a slightly different one (e.g. don't add `project_link_website` if `project_link_web` already exists).
+
+If you rename or remove an existing event, add a row to that file's "Renamed or removed events" table so historical PostHog data stays interpretable.
 
 ---
 

@@ -57,6 +57,8 @@ Every agent must respect the following core design invariants:
 
 - Analytics tracking is handled via declarative DOM attributes (`data-track="..."`) managed by global event delegation in `src/components/Analytics.tsx`.
 - Follow the workflow defined in the `add-analytic-event` skill and documented in `docs/analytics.md`.
+- **Every new interactive UI element must ship with a `data-track` event and a `docs/analytics.md` entry in the same change** — never as a follow-up PR. When adding or refactoring UI, start from the `ship-ui-feature` skill, which folds this requirement into the full pre-PR checklist.
+- For the precise trigger condition (which interactions need tracking, which are exempt) apply `.agents/rules/analytics-coverage.md` to every `.tsx` change under `src/components/`, `src/pages/`, and `src/layouts/`.
 
 ---
 
@@ -101,7 +103,9 @@ Evidence before assertions: Always run the commands, observe the output, and fix
 - **Rules**:
   - [`.agents/rules/typescript.md`](./.agents/rules/typescript.md) — TypeScript implementation and validation rules.
   - [`.agents/rules/solid-fetching.md`](./.agents/rules/solid-fetching.md) — Clean architecture, SRP, and error telemetry for data fetching.
+  - [`.agents/rules/analytics-coverage.md`](./.agents/rules/analytics-coverage.md) — When a user action in a `.tsx` component requires PostHog tracking, and the established exceptions (close/dismiss actions, focus-trap plumbing, delegated child elements).
 - **Skills**:
+  - [`.agents/skills/ship-ui-feature/SKILL.md`](./.agents/skills/ship-ui-feature/SKILL.md) — Definition of done for any new UI feature or refactor: analytics, i18n, theming, a11y, and tests, before opening a PR. Start here when building or refactoring UI.
   - [`.agents/skills/add-analytic-event/SKILL.md`](./.agents/skills/add-analytic-event/SKILL.md) — How to add, implement, test, and document PostHog analytic events.
   - [`.agents/skills/create-pr/SKILL.md`](./.agents/skills/create-pr/SKILL.md) — Workflow for opening pull requests following the project PR template.
 - **Templates & References**:

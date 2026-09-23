@@ -8,7 +8,7 @@ import { SpeakingModal, type SpeakingEntry } from "./SpeakingModal";
 import { PublicationsModal, type PublicationEntry } from "./PublicationsModal";
 import { ProjectsModal, type ProjectEntry } from "./ProjectsModal";
 import type { ExperienceEntry } from "./ExperienceModal";
-import type { RecentRepo, LatestPost } from "./ActivityStack";
+import type { RecentRepo } from "./ActivityStack";
 import type { SocialEntry } from "./SocialsRow";
 import { ArticlesModal, type Article } from "./ArticlesModal";
 import {
@@ -26,7 +26,7 @@ interface PortfolioGridProps {
   experiences: ExperienceEntry[];
   socials: SocialEntry[];
   recentRepos: RecentRepo[];
-  latestPost: LatestPost | null;
+  topRepos: RecentRepo[];
   articles: Article[];
   talks?: SpeakingEntry[] | undefined;
   publications?: PublicationEntry[] | undefined;
@@ -38,7 +38,7 @@ export function PortfolioGrid({
   experiences,
   socials,
   recentRepos,
-  latestPost,
+  topRepos,
   articles,
   talks = [],
   publications = [],
@@ -76,23 +76,20 @@ export function PortfolioGrid({
         />
 
         <div className="flex-1 min-h-0 section-gutter grid grid-cols-1 lg:grid-cols-[1fr_440px] gap-x-10 gap-y-10 lg:[align-items:safe_center] py-8 lg:py-0">
-          <HeroCard
-            t={t.hero}
-            socialT={t.social}
-            socials={socials}
-            onOpenArticles={() => setArticlesModalOpen(true)}
-            onOpenSpeaking={() => setSpeakingOpen(true)}
-            onOpenProjects={() => setProjectsOpen(true)}
-            talksCount={talks.length}
-            projectsCount={projects.length}
-          />
+          <HeroCard t={t.hero} socialT={t.social} socials={socials} />
 
           <ActivityStack
             t={t}
             experiences={experiences}
             repos={recentRepos}
-            post={latestPost}
+            topRepos={topRepos}
+            articles={articles}
+            talks={talks}
+            projects={projects}
             socials={socials}
+            onOpenArticles={() => setArticlesModalOpen(true)}
+            onOpenSpeaking={() => setSpeakingOpen(true)}
+            onOpenProjects={() => setProjectsOpen(true)}
           />
         </div>
 

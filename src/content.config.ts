@@ -13,6 +13,13 @@ const experience = defineCollection({
     color: z.enum(["dot-1", "dot-2", "dot-3", "dot-4", "dot-5"]),
     highlights: z.array(z.string()).default([]),
     technologies: z.array(z.string()).default([]),
+    links: z
+      .object({
+        web: z.string().url().optional(),
+        appStore: z.string().url().optional(),
+        playStore: z.string().url().optional(),
+      })
+      .default({}),
   }),
 });
 

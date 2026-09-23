@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
+import { AppStoreIcon, PlayStoreIcon, STORE_CHIP_CLASS } from "./StoreIcons";
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -172,7 +173,7 @@ export function ProjectsModal({
                     </div>
 
                     {/* Links */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       {project.links.web && (
                         <a
                           href={project.links.web}
@@ -183,6 +184,34 @@ export function ProjectsModal({
                           data-project={project.title}
                         >
                           {t.view_web}
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
+                      {project.links.appStore && (
+                        <a
+                          href={project.links.appStore}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={STORE_CHIP_CLASS}
+                          data-track="project_link_app_store"
+                          data-project={project.title}
+                        >
+                          <AppStoreIcon />
+                          {t.view_app_store}
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
+                      {project.links.playStore && (
+                        <a
+                          href={project.links.playStore}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={STORE_CHIP_CLASS}
+                          data-track="project_link_play_store"
+                          data-project={project.title}
+                        >
+                          <PlayStoreIcon />
+                          {t.view_play_store}
                           <span aria-hidden="true">↗</span>
                         </a>
                       )}

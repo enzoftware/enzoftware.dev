@@ -17,5 +17,10 @@
     "GraphQL",
     "Mobile Architecture",
     "Accessibility"
-  ]
+  ],
+  "links": {
+    "web": "https://www.springhealth.com",
+    "appStore": "https://apps.apple.com/us/app/spring-health/id1464703978",
+    "playStore": "https://play.google.com/store/apps/details?id=com.springhealth.cherubi"
+  }
 }

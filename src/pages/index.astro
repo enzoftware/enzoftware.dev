@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import { PortfolioGrid } from "../components/PortfolioGrid";
 import { Analytics } from "../components/Analytics";
-import type { LatestPost } from "../components/ActivityStack";
 import excludedReposJson from "../data/excluded-repos.json";
 import "../styles/global.css";
 
@@ -29,39 +28,34 @@ const projects = (await getCollection("projects"))
   .sort((a, b) => a.data.order - b.data.order)
   .map((entry) => entry.data);
 
-import {
-  fetchGithubProfileAvatar,
-  fetchGithubRecentRepos,
-} from "../lib/fetchGithub";
+import { fetchGithubProfileAvatar, fetchGithubRepos } from "../lib/fetchGithub";
 import { fetchAllArticles } from "../lib/fetchArticles";
 
 // Fetch GitHub data at build time
 let avatarUrl = "https://avatars.githubusercontent.com/u/22333076?v=4";
 
-const [fetchedAvatar, recentRepos] = await Promise.all([
+const [fetchedAvatar, allRepos, articles] = await Promise.all([
   fetchGithubProfileAvatar("enzoftware"),
-  fetchGithubRecentRepos("enzoftware", excludedRepos),
+  fetchGithubRepos("enzoftware", excludedRepos),
+  fetchAllArticles(),
 ]);
 
 if (fetchedAvatar) {
   avatarUrl = fetchedAvatar;
 }
 
-// Fetch the latest Substack post at build time (falls back to null on failure)
-let latestPost: LatestPost | null = null;
-let articles = await fetchAllArticles();
+// Most recently pushed repos, for the "latest commits" side of the open
+// source section.
+const recentRepos = [...allRepos]
+  .sort(
+    (a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime(),
+  )
+  .slice(0, 3);
 
-if (articles.length > 0) {
-  const latestSubstack = articles.find((a) => a.source === "Substack");
-  if (latestSubstack) {
-    latestPost = {
-      title: latestSubstack.title,
-      url: latestSubstack.url,
-      publishedAt: latestSubstack.publishedAt,
-      source: "Substack",
-    };
-  }
-}
+// Most starred repos, for the "top repos" side of the open source section.
+const topRepos = [...allRepos]
+  .sort((a, b) => b.stargazers_count - a.stargazers_count)
+  .slice(0, 3);
 
 const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY ?? "";
 const posthogHost =
@@ -76,7 +70,7 @@ const posthogHost =
       experiences={experiences}
       socials={socials}
       recentRepos={recentRepos}
-      latestPost={latestPost}
+      topRepos={topRepos}
       articles={articles}
       talks={talks}
       publications={publications}

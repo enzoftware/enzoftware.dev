@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
+import { AppStoreIcon, PlayStoreIcon, STORE_CHIP_CLASS } from "./StoreIcons";
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -18,6 +19,11 @@ export interface ExperienceEntry {
   color: ExperienceDotColor;
   highlights?: string[];
   technologies?: string[];
+  links?: {
+    web?: string | undefined;
+    appStore?: string | undefined;
+    playStore?: string | undefined;
+  };
 }
 
 // Written out as full class names (rather than built with template
@@ -47,6 +53,7 @@ interface ExperienceGroup {
   company: string;
   color: ExperienceDotColor;
   roles: ExperienceRole[];
+  links?: ExperienceEntry["links"];
 }
 
 // Collapses consecutive entries at the same company (no other company in
@@ -78,6 +85,7 @@ function groupExperiences(experiences: ExperienceEntry[]): ExperienceGroup[] {
       company: exp.company,
       color: exp.color,
       roles: [roleItem],
+      links: exp.links,
     });
   }
 
@@ -242,24 +250,83 @@ export function ExperienceModal({
                     )}
                   </div>
 
-                  <div className="flex-1 pb-10 last:pb-0">
-                    <p className="font-semibold text-ink leading-snug">
-                      {group.company}
-                    </p>
+                  <div
+                    className={`flex-1 ${index < groups.length - 1 ? "pb-14" : ""}`}
+                  >
+                    {group.links?.appStore || group.links?.playStore ? (
+                      <>
+                        <p className="font-semibold text-ink leading-snug">
+                          {group.company}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {group.links.appStore && (
+                            <a
+                              href={group.links.appStore}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={STORE_CHIP_CLASS}
+                              data-track="experience_link_app_store"
+                              data-company={group.company}
+                            >
+                              <AppStoreIcon />
+                              {t.view_app_store}
+                              <span aria-hidden="true">↗</span>
+                            </a>
+                          )}
+                          {group.links.playStore && (
+                            <a
+                              href={group.links.playStore}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={STORE_CHIP_CLASS}
+                              data-track="experience_link_play_store"
+                              data-company={group.company}
+                            >
+                              <PlayStoreIcon />
+                              {t.view_play_store}
+                              <span aria-hidden="true">↗</span>
+                            </a>
+                          )}
+                        </div>
+                      </>
+                    ) : group.links?.web ? (
+                      <a
+                        href={group.links.web}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-block"
+                        data-track="experience_link_web"
+                        data-company={group.company}
+                      >
+                        <span className="font-semibold text-ink leading-snug group-hover:text-accent transition-colors">
+                          {group.company}
+                          <span
+                            className="ml-1 text-xs text-ink-faint group-hover:text-accent transition-colors"
+                            aria-hidden="true"
+                          >
+                            ↗
+                          </span>
+                        </span>
+                      </a>
+                    ) : (
+                      <p className="font-semibold text-ink leading-snug">
+                        {group.company}
+                      </p>
+                    )}
 
                     {group.roles.length === 1 && group.roles[0] ? (
-                      <div className="mt-1 flex flex-col gap-2">
-                        <div>
+                      <div className="mt-2 flex flex-col gap-3">
+                        <div className="flex flex-col gap-1">
                           <p className="text-ink-muted">
                             {group.roles[0].role}
                           </p>
-                          <p className="font-mono text-xs text-ink-faint mt-0.5">
+                          <p className="font-mono text-xs text-ink-faint">
                             {group.roles[0].period} · {group.roles[0].location}
                           </p>
                         </div>
 
                         {group.roles[0].highlights.length > 0 && (
-                          <ul className="flex flex-col gap-1.5 text-xs text-ink-muted list-disc list-inside mt-0.5">
+                          <ul className="flex flex-col gap-2 text-xs text-ink-muted list-disc list-inside">
                             {group.roles[0].highlights.map((h) => (
                               <li key={h} className="leading-relaxed">
                                 <span>{h}</span>
@@ -269,11 +336,11 @@ export function ExperienceModal({
                         )}
 
                         {group.roles[0].technologies.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mt-1">
+                          <div className="flex flex-wrap gap-2">
                             {group.roles[0].technologies.map((tech) => (
                               <span
                                 key={tech}
-                                className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-surface border border-border text-ink-faint"
+                                className="text-[10px] font-mono px-2 py-1 rounded-md bg-surface border border-border text-ink-faint"
                               >
                                 {tech}
                               </span>
@@ -282,20 +349,20 @@ export function ExperienceModal({
                         )}
                       </div>
                     ) : (
-                      <ul className="flex flex-col gap-4 mt-2 border-l border-border pl-3.5">
+                      <ul className="flex flex-col gap-5 mt-3 border-l border-border pl-4">
                         {group.roles.map((role) => (
-                          <li key={role.role} className="flex flex-col gap-2">
-                            <div>
+                          <li key={role.role} className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-1">
                               <p className="text-ink-muted font-medium">
                                 {role.role}
                               </p>
-                              <p className="font-mono text-xs text-ink-faint mt-0.5">
+                              <p className="font-mono text-xs text-ink-faint">
                                 {role.period} · {role.location}
                               </p>
                             </div>
 
                             {role.highlights.length > 0 && (
-                              <ul className="flex flex-col gap-1.5 text-xs text-ink-muted list-disc list-inside">
+                              <ul className="flex flex-col gap-2 text-xs text-ink-muted list-disc list-inside">
                                 {role.highlights.map((h) => (
                                   <li key={h} className="leading-relaxed">
                                     <span>{h}</span>
@@ -305,11 +372,11 @@ export function ExperienceModal({
                             )}
 
                             {role.technologies.length > 0 && (
-                              <div className="flex flex-wrap gap-1.5 mt-0.5">
+                              <div className="flex flex-wrap gap-2">
                                 {role.technologies.map((tech) => (
                                   <span
                                     key={tech}
-                                    className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-surface border border-border text-ink-faint"
+                                    className="text-[10px] font-mono px-2 py-1 rounded-md bg-surface border border-border text-ink-faint"
                                   >
                                     {tech}
                                   </span>

@@ -7,14 +7,8 @@ export interface Translations {
     subtitle: string;
     headlines: string[];
     bio: string;
-    badge_kodeco: string;
-    badge_article_author: string;
-    badge_flutter: string;
-    badge_projects: string;
-    bubble_hint: string;
     resume_cta: string;
     contact_cta: string;
-    expertise_topics_label: string;
   };
   current: { label: string; cta: string };
   modal: {
@@ -23,6 +17,9 @@ export interface Translations {
     linkedin_cta: string;
     highlights_label: string;
     tech_label: string;
+    view_web: string;
+    view_app_store: string;
+    view_play_store: string;
   };
   speaking_modal: {
     eyebrow: string;
@@ -54,11 +51,20 @@ export interface Translations {
     tech_label: string;
     view_web: string;
     view_github: string;
+    view_app_store: string;
+    view_play_store: string;
     close: string;
   };
   signature: { role_at: string };
-  latest_post: { label: string; empty: string };
-  recent_activity: { label: string; empty: string };
+  author_row: { label: string; empty: string; cta: string };
+  speaking_row: { label: string; empty: string; cta: string };
+  projects_row: { label: string; empty: string; cta: string };
+  opensource_row: {
+    label: string;
+    top_repos_label: string;
+    latest_commits_label: string;
+    empty: string;
+  };
   social: { title: string };
   contact: {
     headline_1: string;
@@ -104,18 +110,13 @@ export const translations: Record<Locale, Translations> = {
         "Mobile & full-stack engineer, from iOS/Android to cloud APIs",
         "Leading engineering teams from 0→1 to production scale",
         "End-to-end ownership — architecture, delivery & mentorship",
+        "Claude Certified Architect",
         "Conference speaker at FlutterConf LATAM",
-        "Published technical author at Kodeco",
+        "Published technical author across Medium, Substack & Kodeco",
       ],
-      bio: "7+ years building reliable, well-crafted software products end to end — from 0-to-1 launches to leading engineering teams at scale.",
-      badge_kodeco: "Kodeco Author",
-      badge_article_author: "Author",
-      badge_flutter: "FlutterConf LATAM Speaker",
-      badge_projects: "Featured Projects",
-      bubble_hint: "Click to explore",
+      bio: "7+ years engineering reliable, accessible mobile & full-stack products — from Flutter architecture and 0-to-1 launches to leading engineering teams, speaking at conferences, and writing for developers worldwide.",
       resume_cta: "View Resume",
       contact_cta: "Get in touch",
-      expertise_topics_label: "Interactive expertise topics",
     },
     current: { label: "Currently at", cta: "View full experience" },
     modal: {
@@ -124,6 +125,9 @@ export const translations: Record<Locale, Translations> = {
       linkedin_cta: "See full experience on LinkedIn",
       highlights_label: "Key Impact & Contributions",
       tech_label: "Technologies",
+      view_web: "Visit Website",
+      view_app_store: "App Store",
+      view_play_store: "Google Play",
     },
     speaking_modal: {
       eyebrow: "Community & Leadership",
@@ -158,13 +162,31 @@ export const translations: Record<Locale, Translations> = {
       tech_label: "Stack & Tools",
       view_web: "Visit Website",
       view_github: "View GitHub",
+      view_app_store: "App Store",
+      view_play_store: "Google Play",
       close: "Close",
     },
     signature: { role_at: "at" },
-    latest_post: { label: "Latest post", empty: "Nothing published yet" },
-    recent_activity: {
-      label: "Latest commits",
-      empty: "No public commits recently",
+    author_row: {
+      label: "Article author",
+      empty: "Nothing published yet",
+      cta: "See all articles",
+    },
+    speaking_row: {
+      label: "Speaker",
+      empty: "No talks announced yet",
+      cta: "See all talks",
+    },
+    projects_row: {
+      label: "Featured project",
+      empty: "No projects listed yet",
+      cta: "See all projects",
+    },
+    opensource_row: {
+      label: "Open source contributor",
+      top_repos_label: "Most starred",
+      latest_commits_label: "Latest commits",
+      empty: "No public repos recently",
     },
     social: { title: "Find me on" },
     contact: {
@@ -214,18 +236,13 @@ export const translations: Record<Locale, Translations> = {
         "Ingeniero mobile y full-stack, de iOS/Android a APIs en la nube",
         "Liderando equipos de ingeniería de 0→1 hasta producción a escala",
         "Responsabilidad de punta a punta — arquitectura, entrega y mentoría",
+        "Arquitecto Certificado por Claude",
         "Speaker en FlutterConf LATAM",
-        "Autor técnico publicado en Kodeco",
+        "Autor técnico publicado en Medium, Substack y Kodeco",
       ],
-      bio: "7+ años construyendo productos de software confiables y bien hechos, de punta a punta — desde lanzamientos 0-a-1 hasta liderar equipos de ingeniería a escala.",
-      badge_kodeco: "Autor en Kodeco",
-      badge_article_author: "Autor",
-      badge_flutter: "Speaker FlutterConf LATAM",
-      badge_projects: "Proyectos Destacados",
-      bubble_hint: "Haz clic para explorar",
+      bio: "7+ años construyendo productos móviles y full-stack confiables y accesibles — desde arquitectura en Flutter y lanzamientos 0-a-1 hasta liderar equipos de ingeniería, dar charlas en conferencias y escribir para miles de desarrolladores.",
       resume_cta: "Ver Currículum",
       contact_cta: "Contáctame",
-      expertise_topics_label: "Temas de experiencia interactivos",
     },
     current: { label: "Actualmente en", cta: "Ver experiencia completa" },
     modal: {
@@ -234,6 +251,9 @@ export const translations: Record<Locale, Translations> = {
       linkedin_cta: "Ver experiencia completa en LinkedIn",
       highlights_label: "Impacto y Contribuciones Clave",
       tech_label: "Tecnologías",
+      view_web: "Visitar Sitio",
+      view_app_store: "App Store",
+      view_play_store: "Google Play",
     },
     speaking_modal: {
       eyebrow: "Comunidad y Liderazgo",
@@ -268,13 +288,31 @@ export const translations: Record<Locale, Translations> = {
       tech_label: "Stack y Herramientas",
       view_web: "Visitar Sitio",
       view_github: "Ver GitHub",
+      view_app_store: "App Store",
+      view_play_store: "Google Play",
       close: "Cerrar",
     },
     signature: { role_at: "en" },
-    latest_post: { label: "Último artículo", empty: "Nada publicado aún" },
-    recent_activity: {
-      label: "Últimos commits",
-      empty: "Sin commits públicos recientes",
+    author_row: {
+      label: "Autor de artículos",
+      empty: "Nada publicado aún",
+      cta: "Ver todos los artículos",
+    },
+    speaking_row: {
+      label: "Speaker",
+      empty: "Aún no hay charlas anunciadas",
+      cta: "Ver todas las charlas",
+    },
+    projects_row: {
+      label: "Proyecto destacado",
+      empty: "Aún no hay proyectos listados",
+      cta: "Ver todos los proyectos",
+    },
+    opensource_row: {
+      label: "Contribuidor open source",
+      top_repos_label: "Más destacados",
+      latest_commits_label: "Últimos commits",
+      empty: "Sin repos públicos recientes",
     },
     social: { title: "Encuéntrame en" },
     contact: {

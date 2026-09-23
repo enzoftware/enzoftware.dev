@@ -96,13 +96,44 @@ test.describe("accessibility", () => {
     await expect(trigger).toBeFocused();
   });
 
+  test("experience modal gives every entry but the last generous bottom spacing", async ({
+    page,
+  }) => {
+    // Regression test: `last:pb-0` was matching Tailwind's `:last-child`
+    // selector relative to each entry's own two-child <li> (rail + content),
+    // not "the last entry in the list" — so it silently zeroed the bottom
+    // padding on every entry, not just the final one.
+    await page.goto("/");
+    await page.getByRole("button", { name: /view full experience/i }).click();
+
+    const dialog = page.getByRole("dialog", { name: /full experience/i });
+    await expect(dialog).toBeVisible();
+
+    // Each <li> is a flex row of [avatar rail, content] — the breathing
+    // room between entries lives in the content div's own padding-bottom,
+    // not in any margin between <li> elements.
+    const paddings = await dialog
+      .locator("ol > li > div:nth-child(2)")
+      .evaluateAll((divs) =>
+        divs.map((div) => parseFloat(getComputedStyle(div).paddingBottom)),
+      );
+
+    expect(paddings.length).toBeGreaterThan(1);
+    // Every entry except the last should have generous bottom spacing.
+    for (const padding of paddings.slice(0, -1)) {
+      expect(padding).toBeGreaterThanOrEqual(32);
+    }
+    // The last entry needs none — it already sits at the bottom of the list.
+    expect(paddings[paddings.length - 1]).toBe(0);
+  });
+
   test("speaking modal opens, traps focus, and passes the scan", async ({
     page,
   }) => {
     await page.goto("/");
 
     const trigger = page.getByRole("button", {
-      name: /flutterconf latam speaker/i,
+      name: /see all talks/i,
     });
     await trigger.click();
 
@@ -127,7 +158,7 @@ test.describe("accessibility", () => {
     await page.goto("/");
 
     const trigger = page.getByRole("button", {
-      name: /featured projects/i,
+      name: /see all projects/i,
     });
     await trigger.click();
 
@@ -146,13 +177,18 @@ test.describe("accessibility", () => {
     await expect(trigger).toBeFocused();
   });
 
-  test("keyboard navigation (Tab) reaches all interactive elements including bubbles", async ({
+  test("keyboard navigation (Tab) reaches all interactive elements including activity stack CTAs", async ({
     page,
   }) => {
     await page.goto("/");
 
+    // The activity stack's rows briefly render a loading shimmer (no
+    // focusable content) before swapping in real data — wait for that swap
+    // so the Tab loop below doesn't race it.
+    await page.getByRole("button", { name: /see all articles/i }).waitFor();
+
     const seen: string[] = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 40; i++) {
       await page.keyboard.press("Tab");
       const label = await page.evaluate(() => {
         const el = document.activeElement as HTMLElement | null;
@@ -166,15 +202,15 @@ test.describe("accessibility", () => {
 
     // Key interactive controls should all be keyboard-reachable via Tab,
     // in document order: avatar/back-to-top link, theme toggle, language
-    // toggle, interactive bubbles, social links, and the "view full experience" trigger.
+    // toggle, social links, and the activity stack's row CTAs.
     expect(seen).toEqual(
       expect.arrayContaining([
         "Back to top",
         expect.stringMatching(/switch to (light|dark) theme/i),
         expect.stringMatching(/en|es/i),
-        expect.stringMatching(/flutterconf/i),
-        expect.stringMatching(/author/i),
-        expect.stringMatching(/featured projects/i),
+        expect.stringMatching(/see all articles/i),
+        expect.stringMatching(/see all talks/i),
+        expect.stringMatching(/see all projects/i),
         "LinkedIn",
         "GitHub",
       ]),
