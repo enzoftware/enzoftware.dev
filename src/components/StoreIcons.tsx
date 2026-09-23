@@ -1,3 +1,9 @@
+// Shared style for App Store / Google Play chips — used by ActivityStack,
+// ExperienceModal, and ProjectsModal so all three render the same badge
+// instead of drifting into slightly different one-off class strings.
+export const STORE_CHIP_CLASS =
+  "inline-flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-1.5 rounded-md border border-ink-faint/30 bg-surface hover:border-accent hover:bg-surface-elevated text-ink-faint hover:text-ink transition-colors";
+
 export function AppStoreIcon() {
   return (
     <svg

@@ -2,13 +2,10 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
-import { AppStoreIcon, PlayStoreIcon } from "./StoreIcons";
+import { AppStoreIcon, PlayStoreIcon, STORE_CHIP_CLASS } from "./StoreIcons";
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-const STORE_CHIP_CLASS =
-  "inline-flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-1.5 rounded-md border border-ink-faint/30 bg-surface hover:border-accent hover:bg-surface-elevated text-ink-faint hover:text-ink transition-colors";
 
 export type ExperienceDotColor =
   "dot-1" | "dot-2" | "dot-3" | "dot-4" | "dot-5";

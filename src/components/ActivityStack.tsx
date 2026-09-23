@@ -8,12 +8,9 @@ import type { Article } from "./ArticlesModal";
 import type { SpeakingEntry } from "./SpeakingModal";
 import type { ProjectEntry } from "./ProjectsModal";
 import type { GithubRepo } from "../lib/fetchGithub";
-import { AppStoreIcon, PlayStoreIcon } from "./StoreIcons";
+import { AppStoreIcon, PlayStoreIcon, STORE_CHIP_CLASS } from "./StoreIcons";
 
 export type RecentRepo = GithubRepo;
-
-const STORE_CHIP_CLASS =
-  "inline-flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-1.5 rounded-md border border-ink-faint/30 bg-surface hover:border-accent hover:bg-surface-elevated text-ink-faint hover:text-ink transition-colors";
 
 interface ActivityStackProps {
   t: Pick<
@@ -188,7 +185,8 @@ export function ActivityStack({
 
   const latestArticle = articles[0] ?? null;
   const latestTalk = talks[0] ?? null;
-  const featuredProject = projects[0] ?? null;
+  const featuredProject =
+    projects.find((p) => p.featured) ?? projects[0] ?? null;
 
   useEffect(() => {
     const id = setTimeout(() => setLoading(false), 550);

@@ -13,7 +13,8 @@ Treat every item below as part of the feature, not a follow-up task. If an item 
 
 This skill orchestrates the repo's other guidelines — it doesn't replace them:
 
-- Analytics mechanics → `add-analytic-event` skill + [`docs/analytics.md`](../../../docs/analytics.md)
+- Whether a given interaction needs tracking → [`.agents/rules/analytics-coverage.md`](../../rules/analytics-coverage.md)
+- Analytics mechanics (how to implement it) → `add-analytic-event` skill + [`docs/analytics.md`](../../../docs/analytics.md)
 - PR process → `create-pr` skill
 - Architectural invariants (layout, i18n, theming) → [`AGENTS.md`](../../../AGENTS.md)
 
@@ -25,7 +26,7 @@ This skill orchestrates the repo's other guidelines — it doesn't replace them:
 
 This is the item most likely to get skipped, because the feature "works" without it.
 
-- [ ] Every new button, link, or clickable card that represents a meaningful user action has `data-track="<event_name>"` (snake_case, `<subject>_<action>`), plus any useful `data-*` context (e.g. `data-repo`, `data-project`).
+- [ ] Every new button, link, or clickable card that represents a meaningful user action has `data-track="<event_name>"` (snake_case, `<subject>_<action>`), plus any useful `data-*` context (e.g. `data-repo`, `data-project`). Unsure whether a given interaction counts? Check `analytics-coverage.md`'s trigger condition and exceptions rather than guessing.
 - [ ] If an existing event's meaning changed (e.g. it now fires on different data, or a row was renamed), decide whether to keep the name or rename it — don't let the name silently drift from what it tracks.
 - [ ] `docs/analytics.md`'s Event Catalog is updated: new events added under the right section, renamed/removed events noted in the "Renamed or removed events" table so historical PostHog data stays interpretable.
 - [ ] Non-click interactions (modal opens on mount, timers, form submits) use `posthog.capture(...)` directly — see `add-analytic-event` for the pattern.

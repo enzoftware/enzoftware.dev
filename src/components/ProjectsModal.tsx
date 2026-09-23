@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
-import { AppStoreIcon, PlayStoreIcon } from "./StoreIcons";
+import { AppStoreIcon, PlayStoreIcon, STORE_CHIP_CLASS } from "./StoreIcons";
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -192,7 +192,7 @@ export function ProjectsModal({
                           href={project.links.appStore}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-mono px-2.5 py-1.5 rounded-md border border-ink-faint/30 bg-surface hover:border-accent hover:bg-surface-elevated text-ink-muted hover:text-ink transition-colors"
+                          className={STORE_CHIP_CLASS}
                           data-track="project_link_app_store"
                           data-project={project.title}
                         >
@@ -206,7 +206,7 @@ export function ProjectsModal({
                           href={project.links.playStore}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-mono px-2.5 py-1.5 rounded-md border border-ink-faint/30 bg-surface hover:border-accent hover:bg-surface-elevated text-ink-muted hover:text-ink transition-colors"
+                          className={STORE_CHIP_CLASS}
                           data-track="project_link_play_store"
                           data-project={project.title}
                         >
