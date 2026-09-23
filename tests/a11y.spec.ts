@@ -96,6 +96,37 @@ test.describe("accessibility", () => {
     await expect(trigger).toBeFocused();
   });
 
+  test("experience modal gives every entry but the last generous bottom spacing", async ({
+    page,
+  }) => {
+    // Regression test: `last:pb-0` was matching Tailwind's `:last-child`
+    // selector relative to each entry's own two-child <li> (rail + content),
+    // not "the last entry in the list" — so it silently zeroed the bottom
+    // padding on every entry, not just the final one.
+    await page.goto("/");
+    await page.getByRole("button", { name: /view full experience/i }).click();
+
+    const dialog = page.getByRole("dialog", { name: /full experience/i });
+    await expect(dialog).toBeVisible();
+
+    // Each <li> is a flex row of [avatar rail, content] — the breathing
+    // room between entries lives in the content div's own padding-bottom,
+    // not in any margin between <li> elements.
+    const paddings = await dialog
+      .locator("ol > li > div:nth-child(2)")
+      .evaluateAll((divs) =>
+        divs.map((div) => parseFloat(getComputedStyle(div).paddingBottom)),
+      );
+
+    expect(paddings.length).toBeGreaterThan(1);
+    // Every entry except the last should have generous bottom spacing.
+    for (const padding of paddings.slice(0, -1)) {
+      expect(padding).toBeGreaterThanOrEqual(32);
+    }
+    // The last entry needs none — it already sits at the bottom of the list.
+    expect(paddings[paddings.length - 1]).toBe(0);
+  });
+
   test("speaking modal opens, traps focus, and passes the scan", async ({
     page,
   }) => {

@@ -397,7 +397,11 @@ export function ActivityStack({
                           {repo.name}
                         </span>
                         <span className="font-mono text-xs text-ink-faint flex-shrink-0 flex items-center gap-1 w-12">
-                          <span className="text-sm leading-none text-dot-5" aria-hidden="true">
+                          <span
+                            className="text-sm leading-none text-dot-5"
+                            aria-hidden="true"
+                            data-testid="repo-star-icon"
+                          >
                             ★
                           </span>
                           <span className="flex-1 text-right tabular-nums">

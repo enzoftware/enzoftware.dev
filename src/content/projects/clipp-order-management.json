@@ -10,7 +10,14 @@
     "Engineered fault-tolerant B2B payment flows supporting ACH, credit card, and cash",
     "Reduced cold start latency and improved battery consumption during active ordering sessions"
   ],
-  "technologies": ["Flutter", "Dart", "WebSockets", "Payments", "iOS", "Android"],
+  "technologies": [
+    "Flutter",
+    "Dart",
+    "WebSockets",
+    "Payments",
+    "iOS",
+    "Android"
+  ],
   "links": {
     "web": "https://www.getclipp.com/",
     "appStore": "https://apps.apple.com/us/app/clipp-restaurant/id6468764465",
