@@ -7,17 +7,21 @@
   "order": 1,
   "color": "dot-3",
   "highlights": [
-    "Engineered core dispatch, live vehicle telemetry, and geolocation streaming features using WebSockets.",
-    "Integrated payment gateways and digital wallet checkout systems with high fault-tolerance.",
-    "Streamlined app startup time and optimized memory consumption across iOS and Android."
+    "Engineered real-time order tracking and inventory management features for restaurant buyers and suppliers using WebSockets.",
+    "Integrated multiple B2B payment methods (ACH, credit card, cash) with high fault-tolerance for supplier transactions.",
+    "Streamlined mobile app startup time and optimized memory consumption across iOS and Android."
   ],
   "technologies": [
     "Flutter",
     "Dart",
     "WebSockets",
-    "Mapbox",
     "Payments",
     "iOS",
     "Android"
-  ]
+  ],
+  "links": {
+    "web": "https://www.getclipp.com/",
+    "appStore": "https://apps.apple.com/us/app/clipp-restaurant/id6468764465",
+    "playStore": "https://play.google.com/store/apps/details?id=com.getclipp.clippapp"
+  }
 }

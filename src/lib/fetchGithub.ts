@@ -1,6 +1,12 @@
 import { isValidHttpsUrl } from "./validation";
-import type { RecentRepo } from "../components/ActivityStack";
 import { reportFetchError } from "./telemetry";
+
+export interface GithubRepo {
+  name: string;
+  html_url: string;
+  pushed_at: string;
+  stargazers_count: number;
+}
 
 const TIMEOUT_MS = 10000;
 
@@ -43,13 +49,13 @@ export async function fetchGithubProfileAvatar(
   return null;
 }
 
-export async function fetchGithubRecentRepos(
+export async function fetchGithubRepos(
   username: string,
   excludedRepos: string[],
-): Promise<RecentRepo[]> {
+): Promise<GithubRepo[]> {
   try {
     const reposRes = await fetchWithTimeout(
-      `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=20`,
+      `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=100`,
       TIMEOUT_MS,
     );
     if (!reposRes.ok)
@@ -63,11 +69,11 @@ export async function fetchGithubRecentRepos(
           !excludedRepos.includes(r.name as string) &&
           isValidHttpsUrl(r.html_url as string),
       )
-      .slice(0, 3)
       .map((r: Record<string, unknown>) => ({
         name: r.name as string,
         html_url: r.html_url as string,
         pushed_at: r.pushed_at as string,
+        stargazers_count: (r.stargazers_count as number) ?? 0,
       }));
   } catch (error) {
     await reportFetchError("GitHub_Repos", error);

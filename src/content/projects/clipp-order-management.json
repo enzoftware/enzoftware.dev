@@ -1,0 +1,22 @@
+{
+  "title": "Clipp Restaurant Order Management",
+  "tagline": "AI-powered order management platform connecting restaurant buyers with food distributors and suppliers.",
+  "role": "Senior Software Engineer",
+  "period": "2025 – 2026",
+  "description": "Engineered real-time order tracking, inventory management, and B2B payment processing for restaurant buyers and their suppliers.",
+  "architecture": "Event-driven mobile architecture with WebSocket streaming for live order and inventory updates, plus multi-method payment gateway integrations.",
+  "highlights": [
+    "Delivered real-time order tracking and supplier inventory sync across iOS and Android",
+    "Engineered fault-tolerant B2B payment flows supporting ACH, credit card, and cash",
+    "Reduced cold start latency and improved battery consumption during active ordering sessions"
+  ],
+  "technologies": ["Flutter", "Dart", "WebSockets", "Payments", "iOS", "Android"],
+  "links": {
+    "web": "https://www.getclipp.com/",
+    "appStore": "https://apps.apple.com/us/app/clipp-restaurant/id6468764465",
+    "playStore": "https://play.google.com/store/apps/details?id=com.getclipp.clippapp"
+  },
+  "featured": true,
+  "order": 3,
+  "color": "dot-3"
+}

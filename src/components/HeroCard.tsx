@@ -7,7 +7,6 @@ import {
 } from "framer-motion";
 import type { Translations } from "../i18n/translations";
 import { SocialsRow, type SocialEntry } from "./SocialsRow";
-import { InteractiveBubble } from "./InteractiveBubble";
 
 const HEADLINE_ROTATION_MS = 8000;
 
@@ -15,23 +14,9 @@ interface HeroCardProps {
   t: Translations["hero"];
   socialT: Translations["social"];
   socials: SocialEntry[];
-  onOpenArticles: () => void;
-  onOpenSpeaking: () => void;
-  onOpenProjects: () => void;
-  talksCount?: number;
-  projectsCount?: number;
 }
 
-export function HeroCard({
-  t,
-  socialT,
-  socials,
-  onOpenArticles,
-  onOpenSpeaking,
-  onOpenProjects,
-  talksCount = 1,
-  projectsCount = 3,
-}: HeroCardProps) {
+export function HeroCard({ t, socialT, socials }: HeroCardProps) {
   const headlines = t.headlines?.length ? t.headlines : [t.subtitle];
   const [headlineIndex, setHeadlineIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();
@@ -117,41 +102,6 @@ export function HeroCard({
       >
         {t.bio}
       </motion.p>
-
-      {/* Interactive Bubbles inviting the visitor to explore expertise */}
-      <motion.div
-        variants={item}
-        className="flex flex-wrap items-center gap-2 mt-2"
-        role="group"
-        aria-label={t.expertise_topics_label}
-      >
-        <InteractiveBubble
-          label={t.badge_article_author}
-          count={3}
-          hint={t.bubble_hint}
-          colorVariant="accent"
-          onClick={onOpenArticles}
-          dataTrack="hero_bubble_articles"
-        />
-
-        <InteractiveBubble
-          label={t.badge_flutter}
-          count={talksCount}
-          hint={t.bubble_hint}
-          colorVariant="signal"
-          onClick={onOpenSpeaking}
-          dataTrack="hero_bubble_speaking"
-        />
-
-        <InteractiveBubble
-          label={t.badge_projects}
-          count={projectsCount}
-          hint={t.bubble_hint}
-          colorVariant="flair"
-          onClick={onOpenProjects}
-          dataTrack="hero_bubble_projects"
-        />
-      </motion.div>
 
       <motion.div
         variants={item}
