@@ -1,5 +1,5 @@
 import { useEffect, useState, type ComponentType } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { Translations } from "../i18n/translations";
 import { relativeTime } from "../lib/relativeTime";
 import { ExperienceModal, type ExperienceEntry } from "./ExperienceModal";
@@ -106,14 +106,21 @@ function FadeIn({
   loading: boolean;
   children: React.ReactNode;
 }) {
+  // MotionConfig(reducedMotion="user") only suppresses transform/layout
+  // animations, not opacity — without this, the fade from shimmer to real
+  // content still runs its full duration for reduced-motion users, which
+  // can race an a11y scan mid-transition and report a false-positive
+  // contrast violation on partially-transparent text.
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={loading ? "skeleton" : "content"}
-        initial={{ opacity: 0 }}
+        initial={{ opacity: shouldReduceMotion ? 1 : 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
+        exit={{ opacity: shouldReduceMotion ? 1 : 0 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
       >
         {loading ? <ShimmerLines /> : children}
       </motion.div>
@@ -170,6 +177,11 @@ export function ActivityStack({
   onOpenProjects,
 }: ActivityStackProps) {
   const [loading, setLoading] = useState(true);
+  // See the comment on FadeIn's own useReducedMotion() call below — the
+  // MotionConfig(reducedMotion="user") set higher up only suppresses
+  // transform/layout animations, not opacity, so this card's own fade-in
+  // needs the same explicit guard.
+  const shouldReduceMotion = useReducedMotion();
   const [modalOpen, setModalOpen] = useState(false);
   const current = experiences.find((exp) => exp.current);
   const linkedinUrl = socials.find((s) => s.label === "LinkedIn")?.url;
@@ -187,10 +199,16 @@ export function ActivityStack({
     <>
       <motion.div
         className="flex flex-col divide-y divide-border rounded-2xl border border-border bg-glass backdrop-blur-xl overflow-x-hidden overflow-y-auto lg:max-h-[75dvh]"
-        initial={{ opacity: 0, y: 16 }}
+        initial={{
+          opacity: shouldReduceMotion ? 1 : 0,
+          y: shouldReduceMotion ? 0 : 16,
+        }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10%" }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{
+          duration: shouldReduceMotion ? 0 : 0.5,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
         {current &&
           (() => {

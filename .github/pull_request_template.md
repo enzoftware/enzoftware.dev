@@ -16,6 +16,7 @@
 - [ ] **Single-Screen Desktop Layout**: Still fits within `100dvh` on `lg:`+ without vertical scroll (or N/A).
 - [ ] **Strict i18n**: All visible UI copy is defined in `src/i18n/translations.ts` in both `en` and `es` (or N/A).
 - [ ] **Theme System**: Uses CSS variables / Tailwind tokens; no hardcoded colors (or N/A).
+- [ ] **Analytics**: Every new clickable/interactive element has a `data-track` event, and `docs/analytics.md` is updated to match (or N/A). See the `add-analytic-event` skill.
 
 ## Verification Checklist
 
